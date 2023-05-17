@@ -20,5 +20,10 @@
 		"typescript": "^5.0.0",
 		"vite": "^4.3.0"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@kahi-ui/framework": "^0.6.4",
+		"sass": "^1.62.1",
+		"svelte-i18n": "^3.6.0"
+	}
 }

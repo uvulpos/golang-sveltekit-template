@@ -1,12 +1,15 @@
 # Commands
 ################################
 
-run: build ## start watcher for hot reloading
-	@./bin/app-for-this-system/main
+# run: build ## start watcher for hot reloading
+# 	@./bin/app-for-this-system/main
 
 build: install-deps ## build the binary for the current plattform
 	@(cd ./sveltekit ; npm run build)
 	@(cd ./golang ; go build -o ../bin/app-for-this-system/ src/main.go) 
+
+build-run: build ## build the binary for the current plattform and run it
+	@./bin/app-for-this-system/main
 
 install-deps: ## install all dependencies
 	@(cd ./sveltekit ; npm i)
