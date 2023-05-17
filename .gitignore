@@ -3,3 +3,4 @@ dist
 svelitekit/.svelte-kit
 svelitekit/node_modules
 golang/src/frontend
+
