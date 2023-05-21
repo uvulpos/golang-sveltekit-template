@@ -22,6 +22,11 @@ var svelteFS embed.FS
 
 func main() {
 
+	publicFS, err := fs.Sub(svelteFS, "frontend")
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	fmt.Println("Version ", appversion)
 	fmt.Println("Build-Commit ", appbuildcommit)
 	fmt.Println("Build-Date ", appbuilddate)
@@ -30,13 +35,12 @@ func main() {
 		DisableStartupMessage: appversion == "",
 	})
 
-	publicFS, err := fs.Sub(svelteFS, "frontend")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	app.Get("/hello-world", func(f *fiber.Ctx) error {
-		return f.SendString("Hello World")
+	api := app.Group("/api")
+	api.Use(func(c *fiber.Ctx) error {
+		return c.Status(http.StatusNotFound).JSON(fiber.Map{
+			"code": http.StatusNotFound,
+			"age":  "status not found",
+		})
 	})
 
 	app.Use("/", filesystem.New(filesystem.Config{
@@ -45,13 +49,4 @@ func main() {
 	}))
 
 	app.Listen(":3000")
-}
-
-func existsID(id int, ids []int) bool {
-	for _, searchingID := range ids {
-		if searchingID == id {
-			return true
-		}
-	}
-	return false
 }
