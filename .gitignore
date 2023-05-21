@@ -4,3 +4,4 @@ svelitekit/.svelte-kit
 svelitekit/node_modules
 golang/src/frontend
 
+.DS_Store
