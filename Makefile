@@ -7,10 +7,10 @@ build-full: install-deps ## build the binary for the current plattform with inst
 	@(cd ./golang ; go build -o ../bin/app-for-this-system/ src/main.go) 
 
 build-run: build ## build the binary for the current plattform and run it
-	@./bin/app-for-this-system/main
+	@./bin/app-for-this-system/main run
 
 build-run-full: build-full ## build the binary for the current plattform with installing dependencies and run it
-	@./bin/app-for-this-system/main
+	@./bin/app-for-this-system/main run
 
 install-deps: ## install all dependencies
 	@(cd ./sveltekit ; npm i)
@@ -21,7 +21,7 @@ reload: install-deps ## start debugging
 	@modd
 
 release-locally: install-deps ## build the application for all operating systems locally on your pc
-	@(cd golang ; goreleaser build --snapshot --clean -f ../.goreleaser.yaml)
+	@(cd ./golang ; pwd && goreleaser release -f ../.goreleaser.yaml --skip-publish --snapshot --clean)
 
 help: ## print our all commands to commandline
 	@echo "\033[34m"

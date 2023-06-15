@@ -35,6 +35,7 @@
       .header {
         margin-top: 1rem;
         text-align: center;
+        color: #f60;
       }
       .text {
         text-align: justify;

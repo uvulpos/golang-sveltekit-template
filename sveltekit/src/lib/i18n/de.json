@@ -9,7 +9,7 @@
     "page": {
         "home": {
             "header-1": "Nutze Golang und SvelteKit in einem Binary!",
-            "text": "Dieses OpenSource Repository bietet ein SvelteKit Frontend Template, das speziell für die Integration in eine Golang Fiber API angepasst wurde. Mit dem Binary-Kompilierungsprozess wird das Frontend vollständig in die API integriert, wodurch eine sehr leichte Installation für die Serveradministratoren ermöglicht wird, welche kein Docker nutzen können (aufgrund der Virtualisierungsart), oder möchten. Dank des dynamischen Routings kann das Template flexibel auf verschiedene URL-Strukturen angepasst werden."
+            "text": "Dieses OpenSource Repository bietet ein SvelteKit Frontend Template, das speziell für die Integration in eine Golang Fiber API angepasst wurde. Mit dem Binary-Kompilierungsprozess wird das Frontend vollständig in die API integriert, wodurch auch eine sehr leichte Installation für die Serveradministratoren ermöglicht wird, welche kein Docker nutzen können (aufgrund der Virtualisierungsart), oder möchten. Dank des dynamischen Routings kann das Template flexibel auf verschiedene URL-Strukturen angepasst werden."
         }
     },
     "error": {
