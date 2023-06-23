@@ -2,6 +2,6 @@ bin
 dist
 svelitekit/.svelte-kit
 svelitekit/node_modules
-golang/src/frontend
+golang/src/assets/frontend
 
 .DS_Store

@@ -1,6 +1,4 @@
-before:
-  hooks:
-    - go mod tidy
+project_name: go-svelte
 
 builds:
   - main: ./src
@@ -10,32 +8,27 @@ builds:
       - linux
       - windows
       - darwin
-    ldflags:
-      - -s -w -X main.appversion={{.Version}} -X main.appbuildcommit={{.Commit}} -X main.appbuilddate={{ .CommitDate }}
+    goarch:
+      - amd64
+      - arm64
+    # ldflags:
+    #   - -s -w -X main.appversion={{.Version}} -X main.appbuildcommit={{.Commit}} -X main.appbuilddate={{ .CommitDate }}
 
-archives:
-  - format: tar.gz
-    # this name template makes the OS and Arch compatible with the results of uname.
-    name_template: >-
-      {{ .ProjectName }}_
-      {{- title .Os }}_
-      {{- if eq .Arch "amd64" }}x86_64
-      {{- else if eq .Arch "386" }}i386
-      {{- else }}{{ .Arch }}{{ end }}
-      {{- if .Arm }}v{{ .Arm }}{{ end }}
-    # use zip for windows archives
-    format_overrides:
-      - goos: windows
-        format: zip
-checksum:
-  name_template: "checksums.txt"
-snapshot:
-  name_template: "{{ incpatch .Version }}-next"
-changelog:
-  sort: asc
-  filters:
-    exclude:
-      - "^docs:"
-      - "^test:"
+nfpms:
+  - homepage: "https://github.com/uvulpos/golang-sveltekit-binary"
+    maintainer: "uvulpos@users.noreply.github.com"
+    license: MIT
+    description: "An Awesome Application"
+    id: go-svelte
+    formats:
+      - deb
+      - rpm
+      - apk
+    file_name_template: "{{ .ProjectName }}.{{ .Os }}-{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}"
+    bindir: /usr/bin
+
+# .goreleaser.yaml
+universal_binaries:
+  - replace: true
 
 dist: ../bin

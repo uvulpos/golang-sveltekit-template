@@ -15,8 +15,8 @@ const config = {
 		adapter: adapter({
             // default options are shown. On some platforms
             // these options are set automatically — see below
-            pages: './../golang/src/frontend',
-            assets: './../golang/src/frontend',
+            pages: '../golang/src/assets/frontend',
+            assets: '../golang/src/assets/frontend',
             fallback: "index.html",
             precompress: false,
             strict: false,
