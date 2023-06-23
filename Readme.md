@@ -1,13 +1,14 @@
 <div style="text-align: center; color: red; font-weight: bolder;">
-    <h1>! STILL EXPERIMENTAL!</h1>
+    <h1 align="center">! STILL EXPERIMENTAL!</h1>
 </div>
 
-<div style="text-align: center;">
-<img src="./.git-assets/svelte-society-gopher.png" width="200" height="170">
-</div>
+<p align="center">
+  <img src="./.git-assets/svelte-society-gopher.png" width="300" height="270">
+</p>
+
 
 <div style="text-align: center; margin: 10px;">
-    <h1>Use Golang + Svelte ❤️</h1>
+    <h1 align="center">Use Golang + Svelte ❤️</h1>
 </div>
 
 Golang and Svelte are some truely beautiful technologies and very powerful. But sometimes it is just overkill to deploy a docker compose stack or kubernetes cluster yet.
