@@ -24,7 +24,7 @@ require (
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.47.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
-	go.uber.org/atomic v1.7.0 // indirect
+	go.uber.org/atomic v1.11.0 // indirect
 )
 
 require (
@@ -45,7 +45,7 @@ require (
 
 require (
 	github.com/gofiber/fiber/v2 v2.46.0
-	github.com/golang-migrate/migrate/v4 v4.16.1
+	github.com/golang-migrate/migrate/v4 v4.16.2
 	github.com/lib/pq v1.10.9
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.18 // indirect

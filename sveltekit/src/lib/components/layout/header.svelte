@@ -1,5 +1,6 @@
 <script>
   import { _ } from "svelte-i18n";
+  import Avatar from "../avatar/avatar.svelte";
 </script>
 
 <header>
@@ -20,6 +21,13 @@
       <a href="/login">
         <button>Login</button>
       </a>
+    </div>
+    <div class="authorized">
+      <Avatar
+        imgAlt="user profil picture"
+        imgUrl="/assets/gifs/gophesr-dance.gif"
+        name="Tim Riedl"
+      />
     </div>
   </div>
 </header>
@@ -72,6 +80,9 @@
     }
 
     div.account {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
       div.not-login {
         a button {
           cursor: pointer;
