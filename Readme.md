@@ -29,8 +29,6 @@ But don't worry, with this repository, I'm giving you the chance to make your in
   - Svelte Frontend just works
   - Hotreload is working
 - Database Schema can be migrated automatically or via command `app migrate up`
-- ~~You can already use the integrated user management, to create user by api or via LDAP~~ (comming next)
-- ~~Deployment Files are ready to use~~ (comming next)
 
 ## 🤝🏻 Thank you!
 
