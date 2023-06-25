@@ -10,6 +10,12 @@
 <div style="text-align: center; margin: 10px;">
     <h1 align="center">Use Golang + Svelte ❤️</h1>
 </div>
+<div align="center">
+    <img src="https://img.shields.io/github/go-mod/go-version/uvulpos/golang-sveltekit-binary?filename=golang%2Fgo.mod">
+    <img src="https://img.shields.io/github/issues-raw/uvulpos/golang-sveltekit-binary">
+    <img src="https://img.shields.io/github/issues/uvulpos/golang-sveltekit-binary/easy-implementation?label=Quick%20Win%20Issues&color=%231D76DB">
+</div>
+<br>
 
 Golang and Svelte are some truely beautiful technologies and very powerful. But sometimes it is just overkill to deploy a docker compose stack or kubernetes cluster yet.
 
