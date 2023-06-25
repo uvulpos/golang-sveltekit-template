@@ -3,7 +3,6 @@ name: "\U0001F4A1 Feature Request"
 about: Suggest an idea / feature for this project
 title: ''
 labels: feature, unrefined
-assignees: uvulpos
 
 ---
 
