@@ -10,6 +10,7 @@
         src="/assets/images/svelte-society-gopher.png"
       />
     </div>
+
     <div class="header">
       <h1>{$_("page.home.header-1")}</h1>
     </div>

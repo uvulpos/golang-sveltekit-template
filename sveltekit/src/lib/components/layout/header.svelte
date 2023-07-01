@@ -10,9 +10,9 @@
   </div>
   <nav>
     <ul>
-      <li><a href="/">Home</a></li>
+      <li><a href="/">{$_("header.navigation.home")}</a></li>
       <li>
-        <a href="/github">GitHub</a>
+        <a href="/github">{$_("header.navigation.github")}</a>
       </li>
     </ul>
   </nav>

@@ -39,5 +39,6 @@ func (a *App) RunApp(showFrontend bool, webserverPort int) {
 	}
 
 	serverPort := fmt.Sprintf(":%d", webserverPort)
+	log.Printf("server listens on %s\n", serverPort)
 	router.Listen(serverPort)
 }
