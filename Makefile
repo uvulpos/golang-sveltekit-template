@@ -1,15 +1,17 @@
-build: ## build the binary for the current plattform
+build: ## build current plattform
 	@(cd ./sveltekit ; npm run build)
+	@(cd ./sveltekit ; cp -R dist/ ../golang/src/assets/frontend/)
 	@(cd ./golang ; go build -o ../bin/app-for-this-system/ src/main.go) 
 
-build-full: install-deps ## build the binary for the current plattform with installing dependencies
+build-full: install-deps ## build current plattform with installing dependencies
 	@(cd ./sveltekit ; npm run build)
+	@(cd .sveltekit ; cp -R dist/ ../golang/src/assets/frontend/)
 	@(cd ./golang ; go build -o ../bin/app-for-this-system/ src/main.go) 
 
-build-run: build ## build the binary for the current plattform and run it
+build-run: build ## build current plattform and run it
 	@./bin/app-for-this-system/main run
 
-build-run-full: build-full ## build the binary for the current plattform with installing dependencies and run it
+build-run-full: build-full ## build current plattform with dependencies and run it
 	@./bin/app-for-this-system/main run
 
 install-deps: ## install all dependencies
@@ -20,7 +22,7 @@ install-deps: ## install all dependencies
 reload: install-deps ## start debugging
 	@modd
 
-release-locally: install-deps ## build the application for all operating systems locally on your pc
+release-locally: install-deps ## build all locally
 	@(cd ./golang ; pwd && goreleaser release -f ../.goreleaser.yaml --skip-publish --snapshot --clean)
 
 help: ## print our all commands to commandline
