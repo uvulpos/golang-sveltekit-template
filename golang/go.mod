@@ -4,12 +4,13 @@ go 1.20
 
 require (
 	github.com/cortesi/modd v0.0.0-20211215124449-6083f9d1c171
+	github.com/golang-jwt/jwt/v5 v5.0.0
+	github.com/google/uuid v1.3.0
 	golang.org/x/tools v0.9.1
 )
 
 require (
 	github.com/andybalholm/brotli v1.0.5 // indirect
-	github.com/google/uuid v1.3.0 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect

@@ -7,11 +7,13 @@ import (
 )
 
 func (a *App) createRoutes(router *fiber.App) {
-	api := router.Group("/api")
+	api := router.Group("/api/v1")
 
-	api.All("/test", func(c *fiber.Ctx) error {
+	api.All("/profile/getProfile", func(c *fiber.Ctx) error {
+		var permissions []string = []string{"read_posts", "write_posts"}
 		return c.Status(http.StatusOK).JSON(fiber.Map{
-			"message": "api is working",
+			"username":    "uVulpos",
+			"permissions": permissions,
 		})
 	})
 
@@ -20,6 +22,7 @@ func (a *App) createRoutes(router *fiber.App) {
 			"code":    http.StatusNotFound,
 			"message": "status not found",
 		})
+
 	})
 
 }
