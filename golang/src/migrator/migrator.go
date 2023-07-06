@@ -3,9 +3,9 @@ package migrator
 import (
 	"database/sql"
 	"embed"
-	"fmt"
 
 	_ "github.com/lib/pq"
+	dbHelper "github.com/uvulpos/go-svelte/src/helper/database"
 )
 
 //go:embed migration-files/*.sql
@@ -16,25 +16,7 @@ type Migrator struct {
 }
 
 func NewMigrator() *Migrator {
-	connStr := fmt.Sprintf(
-		"postgres://%s:%s@%s/%s?sslmode=%s",
-		"postgres",
-		"mysecretpassword",
-		"127.0.0.1:5432",
-		"postgres",
-		"disable",
-	)
-	db, dbErr := sql.Open("postgres", connStr)
-	if dbErr != nil {
-		panic(dbErr)
-	}
-
-	err := db.Ping()
-	if err != nil {
-		panic(err)
-	}
-
 	return &Migrator{
-		db,
+		db: dbHelper.CreateDatabase(),
 	}
 }

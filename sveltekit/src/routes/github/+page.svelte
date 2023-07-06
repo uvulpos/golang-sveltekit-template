@@ -1,4 +1,4 @@
-<div class="content">
+<!-- <div class="content">
   <div class="repo">
     <h2>Golang-Sveltekit-Binary</h2>
     <p>
@@ -27,4 +27,4 @@
       opacity: 0.05;
     }
   }
-</style>
+</style> -->

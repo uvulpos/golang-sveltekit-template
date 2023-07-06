@@ -9,13 +9,29 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
 	"github.com/uvulpos/go-svelte/src/assets"
+
+	dbHelper "github.com/uvulpos/go-svelte/src/helper/database"
+
+	userHttp "github.com/uvulpos/go-svelte/src/resources/users/http"
+	userService "github.com/uvulpos/go-svelte/src/resources/users/service"
+	userStorage "github.com/uvulpos/go-svelte/src/resources/users/storage"
 )
 
 type App struct {
+	UserHandler UserHandler
 }
 
 func NewApp() *App {
-	return &App{}
+
+	dbConn := dbHelper.CreateDatabase()
+
+	userStore := userStorage.NewUserStore(dbConn)
+	userSvc := userService.NewUserSvc(userStore)
+	userHandler := userHttp.NewUserHandler(userSvc)
+
+	return &App{
+		UserHandler: userHandler,
+	}
 }
 
 func (a *App) RunApp(showFrontend bool, webserverPort int) {
