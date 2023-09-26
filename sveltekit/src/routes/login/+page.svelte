@@ -1,57 +1,74 @@
-<script>
-  import Button from "$lib/components/button/Button.svelte";
-  import { InputTypes } from "$lib/components/input";
-  import Input from "$lib/components/input/input.svelte";
+<script lang="ts">
+  import Alert from "$lib/components/alert/alert.svelte";
+  import { Button } from "$lib/components/button";
+  import { Card } from "$lib/components/card";
+  import { Input } from "$lib/components/input";
+  import { userProfileStore } from "$lib/stores/userProfile";
+  import axios from "axios";
+
+  let username: string;
+  let password: string;
+
+  async function submitLogin() {
+    try {
+      const loginRequest = await axios.post(
+        "/api/login",
+        {
+          username: username,
+          password: password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+
+      const statusCode = loginRequest.status;
+      console.log("Login:", { statusCode });
+    } catch (error) {
+      console.log("test");
+    }
+  }
 </script>
 
-<div class="content">
-  <form>
-    <h1>Login</h1>
-    <div>
-      <Input label="Username" inputType={InputTypes.Text} />
-    </div>
-    <div>
-      <Input label="Password" inputType={InputTypes.Password} />
-    </div>
-    <div class="submit">
-      <Button>Login</Button>
-    </div>
-    <div class="forgot-passowrd">
-      <a href="/login/password-reset">I forgot my password</a>
-    </div>
-  </form>
-</div>
+{#if $userProfileStore !== undefined}
+  <Alert>
+    <span>Already logged in</span>
+  </Alert>
+{:else}
+  <div class="m-auto card">
+    <Card cssClass="w-96">
+      <form class="flex flex-col space-y-6" action="/">
+        <h3 class="text-xl font-medium text-gray-900 dark:text-white">Login</h3>
+        <div class="space-y-2">
+          <Input label="Username / E-Mail" bind:value={username} />
+        </div>
+        <div class="space-y-2">
+          <Input bind:value={password} label="Password" />
+        </div>
+        <Button on:click={submitLogin}>Login</Button>
+        <div class="flex items-start gap-2 flex-col">
+          <a
+            href="/login/reset-password"
+            class="text-sm text-primary-700 hover:underline dark:text-primary-500"
+            >Lost password?</a
+          >
+          <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
+            Not registered? <a
+              href="/login/signup"
+              class="text-primary-700 hover:underline dark:text-primary-500"
+              >Create account</a
+            >
+          </div>
+        </div>
+      </form>
+    </Card>
+  </div>
+{/if}
 
 <style lang="scss">
-  .content {
-    form {
-      width: fit-content;
-      margin: 10vh auto;
-      border-radius: 10px;
-      padding: 3rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      background-color: rgb(29, 29, 32);
-
-      h1 {
-        text-align: center;
-        margin-bottom: 1rem;
-      }
-
-      div.submit {
-        margin-top: 1rem;
-        text-align: center;
-      }
-
-      .forgot-passowrd {
-        text-align: center;
-        a {
-          text-decoration: none;
-          color: inherit;
-          opacity: 0.4;
-        }
-      }
+  .card {
+    :global(& > div) {
+      max-width: 60vw;
     }
   }
 </style>
