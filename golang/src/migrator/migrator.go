@@ -3,9 +3,12 @@ package migrator
 import (
 	"database/sql"
 	"embed"
-	"fmt"
 
+	"github.com/golang-migrate/migrate/v4"
+	"github.com/golang-migrate/migrate/v4/database/postgres"
+	"github.com/golang-migrate/migrate/v4/source/iofs"
 	_ "github.com/lib/pq"
+	dbHelper "github.com/uvulpos/go-svelte/src/helper/database"
 )
 
 //go:embed migration-files/*.sql
@@ -16,25 +19,26 @@ type Migrator struct {
 }
 
 func NewMigrator() *Migrator {
-	connStr := fmt.Sprintf(
-		"postgres://%s:%s@%s/%s?sslmode=%s",
-		"postgres",
-		"mysecretpassword",
-		"127.0.0.1:5432",
-		"postgres",
-		"disable",
-	)
-	db, dbErr := sql.Open("postgres", connStr)
-	if dbErr != nil {
-		panic(dbErr)
-	}
-
-	err := db.Ping()
-	if err != nil {
-		panic(err)
-	}
-
 	return &Migrator{
-		db,
+		db: dbHelper.CreateDatabase(),
 	}
+}
+
+func (migrator Migrator) setupMigration() (*migrate.Migrate, error) {
+	source, err := iofs.New(migrationDir, "migration-files")
+	if err != nil {
+		return nil, err
+	}
+
+	db, err := postgres.WithInstance(migrator.db, &postgres.Config{})
+	if err != nil {
+		return nil, err
+	}
+
+	m, err := migrate.NewWithInstance("iofs", source, "postgres", db)
+	if err != nil {
+		return nil, err
+	}
+
+	return m, nil
 }
