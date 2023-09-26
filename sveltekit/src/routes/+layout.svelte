@@ -11,11 +11,10 @@
   import { Footer } from "$lib/components/footer";
 
   import { addMessages, getLocaleFromNavigator, init } from "svelte-i18n";
-  import { onDestroy, onMount } from "svelte";
+  import { onMount } from "svelte";
   import { getThemePreference } from "$lib/function/setTheme";
   import {
     setUserProfile,
-    userProfileStore,
     type userProfileType,
   } from "$lib/stores/userProfile";
   import { getUserProfile } from "$lib/function/getProfile";
@@ -28,17 +27,9 @@
     initialLocale: getLocaleFromNavigator(),
   });
 
-  let intervalSetUserProfile: number;
-
   onMount(() => {
     getThemePreference();
     setSession();
-
-    // intervalSetUserProfile = setInterval(setSession, 10 * 1000);
-  });
-
-  onDestroy(() => {
-    // clearInterval(intervalSetUserProfile);
   });
 
   async function setSession() {
@@ -50,7 +41,6 @@
     } catch (error) {
       user = undefined;
     }
-
     setUserProfile(user);
   }
 </script>

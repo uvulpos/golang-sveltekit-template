@@ -57,28 +57,25 @@ services:
         restart: true
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.backend.rule=Host(`web.localhost`)&&PathPrefix(`/api`)"
+      - "traefik.http.routers.backend.rule=Host(`web.localhost`)&&(PathPrefix(`/api`)||PathPrefix(`/swagger`))"
       - "traefik.http.routers.backend.priority=2"
       - "traefik.http.routers.backend.service=backend"
       - "traefik.http.services.backend.loadbalancer.server.port=3000"
       - "traefik.http.routers.backend.entrypoints=web"
-    command:
-      [
-        "sh",
-        "-c",
-        "cd /app && go mod download && go install github.com/cortesi/modd/cmd/modd@latest && modd",
-      ]
+    command: ["sh", "-c", "cd /app && bash devops/scripts/run-local-docker.sh"]
 
   postgres:
     image: postgres
     restart: always
     environment:
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
       PGDATA: /var/lib/postgresql/data/pgdata
     networks:
       - intranet
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready"]
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U postgres -d postgres'"]
       interval: 10s
       timeout: 5s
       retries: 5

@@ -14,6 +14,8 @@ func CreateDatabase() *sql.DB {
 		"postgres",
 		"disable",
 	)
+
+	fmt.Println("DB CONN: ", connStr)
 	db, dbErr := sql.Open("postgres", connStr)
 	if dbErr != nil {
 		panic(dbErr)
