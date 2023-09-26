@@ -1,3 +1,6 @@
+
+dev: reload-microservices ## alias for make reload-microservices
+
 build: ## build current plattform
 	@(cd ./sveltekit ; npm run build)
 	@(cd ./sveltekit ; cp -R dist/ ../golang/src/assets/frontend/)
@@ -19,8 +22,11 @@ install-deps: ## install all dependencies
 	@(cd ./golang ; go mod download && go mod tidy)
 	@go install github.com/cortesi/modd/cmd/modd@latest
 
-reload: install-deps ## start debugging
+reload-single-binary: install-deps ## start debugging all in one binary
 	@modd
+
+reload-microservices: install-deps ## start debugging in docker compose microservices (faster)
+	@docker compose -f compose-dev.yaml up
 
 release-locally: install-deps ## build all locally
 	@(cd ./golang ; pwd && goreleaser release -f ../.goreleaser.yaml --skip-publish --snapshot --clean)

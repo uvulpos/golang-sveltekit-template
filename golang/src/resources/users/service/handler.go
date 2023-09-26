@@ -1,13 +1,16 @@
 package service
 
-import "github.com/uvulpos/go-svelte/src/resources/users/storage"
-
 type UserSvc struct {
-	storage *storage.UserStore
+	storage UserStorage
 }
 
-func NewUserSvc(storage *storage.UserStore) *UserSvc {
+func NewUserSvc(storage UserStorage) *UserSvc {
 	return &UserSvc{
 		storage,
 	}
+}
+
+type UserStorage interface {
+	GetUserByUsernameOrEmail(identifier string) (*UserWithPermission, error)
+	GetUserByUUID(uuid string) (*UserWithPermission, error)
 }

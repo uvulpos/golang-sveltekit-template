@@ -10,6 +10,7 @@ import (
 
 var (
 	showNoFrontend bool
+	showSwaggger   bool
 	webserverPort  int
 )
 
@@ -20,6 +21,7 @@ var RunAppCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		webApp.NewApp().RunApp(
 			!showNoFrontend,
+			!showSwaggger,
 			webserverPort,
 		)
 	},
@@ -27,5 +29,6 @@ var RunAppCmd = &cobra.Command{
 
 func init() {
 	RunAppCmd.Flags().BoolVar(&showNoFrontend, "no-frontend", false, "disable the frontend and deliver just an api")
+	RunAppCmd.Flags().BoolVar(&showNoFrontend, "show-swagger", true, "enable the swagger api for developing")
 	RunAppCmd.Flags().IntVarP(&webserverPort, "port", "p", 3000, "define a port, where the application should listen to")
 }

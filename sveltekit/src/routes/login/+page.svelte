@@ -2,9 +2,32 @@
   import Alert from "$lib/components/alert/alert.svelte";
   import { Button } from "$lib/components/button";
   import { Card } from "$lib/components/card";
-  import Checkbox from "$lib/components/checkbox/checkbox.svelte";
   import { Input } from "$lib/components/input";
   import { userProfileStore } from "$lib/stores/userProfile";
+  import axios from "axios";
+
+  let username: string;
+  let password: string;
+
+  async function submitLogin() {
+    try {
+      const loginRequest = await axios.post(
+        "/api/login",
+        {
+          username: username,
+          password: password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+
+      const statusCode = loginRequest.status;
+      console.log("Login:", { statusCode });
+    } catch (error) {
+      console.log("test");
+    }
+  }
 </script>
 
 {#if $userProfileStore !== undefined}
@@ -17,12 +40,12 @@
       <form class="flex flex-col space-y-6" action="/">
         <h3 class="text-xl font-medium text-gray-900 dark:text-white">Login</h3>
         <div class="space-y-2">
-          <Input label="Username / E-Mail" />
+          <Input label="Username / E-Mail" bind:value={username} />
         </div>
         <div class="space-y-2">
-          <Input label="Password" />
+          <Input bind:value={password} label="Password" />
         </div>
-        <Button>Login</Button>
+        <Button on:click={submitLogin}>Login</Button>
         <div class="flex items-start gap-2 flex-col">
           <a
             href="/login/reset-password"
