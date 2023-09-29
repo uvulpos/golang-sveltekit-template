@@ -5,18 +5,18 @@
 
 version: 2
 updates:
-   # Maintain dependencies for GitHub Actions
+  # Maintain dependencies for GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "daily"
-   # Maintain dependencies for SvelteKit
+    # Maintain dependencies for SvelteKit
   - package-ecosystem: "npm"
-    directory: "/services/sveltekit"
+    directory: "/services/frontend"
     schedule:
       interval: "daily"
-   # Maintain dependencies for Golang
+    # Maintain dependencies for Golang
   - package-ecosystem: "gomod"
-    directory: "/services/golang"
+    directory: "/services/backend-1"
     schedule:
       interval: "daily"
