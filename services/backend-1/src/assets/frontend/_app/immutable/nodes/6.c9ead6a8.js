@@ -1,1 +1,0 @@
-import{S as i,i as l,s as c,k as m,q as p,l as h,m as d,r as u,h as o,b as _,J as f,T as s}from"../chunks/index.22c0949a.js";function x(r){let e,n;return{c(){e=m("h1"),n=p("Signup")},l(t){e=h(t,"H1",{});var a=d(e);n=u(a,"Signup"),a.forEach(o)},m(t,a){_(t,e,a),f(e,n)},p:s,i:s,o:s,d(t){t&&o(e)}}}class S extends i{constructor(e){super(),l(this,e,null,x,c,{})}}export{S as component};

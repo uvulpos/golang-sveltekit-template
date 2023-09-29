@@ -1,7 +1,3 @@
-<div style="text-align: center; color: red; font-weight: bolder;">
-    <h1 align="center">! STILL EXPERIMENTAL!</h1>
-</div>
-
 <p align="center">
   <img src="./.git-assets/svelte-society-gopher.png" width="300" height="270">
 </p>
