@@ -1,17 +1,13 @@
-<script>
-  import {
-    Footer,
-    FooterCopyright,
-    FooterLinkGroup,
-    FooterLink,
-  } from "flowbite-svelte";
+<script lang="ts">
+  import { _ } from "svelte-i18n";
 </script>
 
-<Footer>
-  <FooterCopyright href="/" by="uVulpos" year={2023} />
-  <FooterLinkGroup
-    ulClass="flex flex-wrap items-center mt-3 text-sm text-gray-500 dark:text-gray-400 sm:mt-0"
-  >
-    <FooterLink href="/github">GitHub</FooterLink>
-  </FooterLinkGroup>
-</Footer>
+<footer>
+  <p>© 2023 uVulpos {$_("page.footer.allrightsreserved")}</p>
+</footer>
+
+<style lang="sass">
+  footer
+    padding-top: 1rem
+    text-align: center
+</style>

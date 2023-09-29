@@ -1,26 +1,14 @@
 {
-    "header": {
+    "page": {
         "navigation": {
             "home": "Home",
             "github": "GitHub"
-        }
-    },
-    "page": {
+        },
         "home": {
-            "header-1": "Use Golang and SvelteKit in a standalone app!",
-            "text": "This open-source repository provides a SvelteKit frontend template that has been specifically adapted for integration with a Golang Fiber API. Using the binary compilation process, the frontend is fully integrated into the API, allowing for a very lightweight installation for server administrators who cannot or do not want to use Docker (due to the virtualization method). Thanks to dynamic routing, the template can be flexibly adapted to different URL structures."
-        }
-    },
-    "error": {
-        "http": {
-            "404": {
-                "text": "Page Not Found"
-            }
-        }
-    },
-    "api": {
-        "endpoints": {
-            "pokemon-all": "https://www.pokemon.com/us/api/pokedex/kalos"
+            "hello-world": "Hello World"
+        },
+        "footer": {
+            "allrightsreserved": "All Rights Reserved."
         }
     }
 }
