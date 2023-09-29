@@ -25,14 +25,14 @@ services:
     image: node:latest
     container_name: web-ui
     volumes:
-      - ./services/sveltekit/tailwind.config.cjs:/app/tailwind.config.cjs
-      - ./services/sveltekit/postcss.config.cjs:/app/postcss.config.cjs
-      - ./services/sveltekit/package.json:/app/package.json
-      - ./services/sveltekit/svelte.config.js:/app/svelte.config.js
-      - ./services/sveltekit/tsconfig.json:/app/tsconfig.json
-      - ./services/sveltekit/vite.config.ts:/app/vite.config.ts
-      - ./services/sveltekit/static:/app/static
-      - ./services/sveltekit/src:/app/src
+      - ./services/frontend/tailwind.config.cjs:/app/tailwind.config.cjs
+      - ./services/frontend/postcss.config.cjs:/app/postcss.config.cjs
+      - ./services/frontend/package.json:/app/package.json
+      - ./services/frontend/svelte.config.js:/app/svelte.config.js
+      - ./services/frontend/tsconfig.json:/app/tsconfig.json
+      - ./services/frontend/vite.config.ts:/app/vite.config.ts
+      - ./services/frontend/static:/app/static
+      - ./services/frontend/src:/app/src
     networks:
       - intranet
     labels:
@@ -48,7 +48,7 @@ services:
     image: golang:latest
     container_name: web-api
     volumes:
-      - ./services/golang:/app
+      - ./services/backend-1:/app
     networks:
       - intranet
     depends_on:
@@ -68,7 +68,7 @@ services:
     image: golang:latest
     container_name: web-api-test
     volumes:
-      - ./services/golang:/app
+      - ./services/backend-1:/app
     networks:
       - intranet
     depends_on:
