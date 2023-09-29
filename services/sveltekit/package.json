@@ -31,7 +31,7 @@
     "axios": "^1.4.0",
     "flowbite": "^1.8.1",
     "flowbite-svelte": "^0.39.1",
-    "sass": "^1.62.1",
+    "sass": "^1.68.0",
     "svelte-i18n": "^3.6.0",
     "tailwind-merge": "^1.13.2",
     "typescript-cookie": "^1.0.6"
