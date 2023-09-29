@@ -3,13 +3,25 @@ name: goreleaser
 on:
   push:
     tags:
-      - '*'
+      - "*"
 
 permissions:
   contents: write
 
 jobs:
+  backendTests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - run: git fetch --force --tags
+      - uses: actions/setup-go@v4
+        with:
+          go-version: stable
+
   goreleaser:
+    needs: backendTests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
