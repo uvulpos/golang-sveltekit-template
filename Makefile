@@ -1,18 +1,18 @@
 
 .install-deps: ## install all dependencies
-	@(cd ./services/sveltekit ; npm i)
-	@(cd ./services/golang ; go mod download && go mod tidy)
+	@(cd ./services/frontend ; npm i)
+	@(cd ./services/backend-1 ; go mod download && go mod tidy)
 
 dev: .install-deps ## start debugging in docker compose microservices (auto reload)
 	@docker compose -f compose-dev.yaml up backend frontend
 
 build-full: .install-deps ## build current plattform
-	@(cd ./services/sveltekit ; npm run build)
-	@(cd .services/sveltekit ; cp -R dist/ ../golang/src/assets/frontend/)
-	@(cd ./services/golang ; go build -o ../../bin/app-for-this-system/ src/main.go) 
+	@(cd ./services/frontend ; npm run build)
+	@(cd ./services/frontend ; cp -R dist/ ../backend-1/src/assets/frontend/)
+	@(cd ./services/backend-1 ; go build -o ../../bin/app-for-this-system/ src/main.go) 
 
 local-release: .install-deps ## build all app versions locally
-	@(cd ./services/golang ; goreleaser release -f ../../.goreleaser.yaml --skip-publish --snapshot --clean)
+	@(cd ./services/backend-1 ; goreleaser release -f ../../.goreleaser.yaml --skip-publish --snapshot --clean)
 
 test-be: ## run backend tests
 	@docker compose -f compose-dev.yaml up backend-tests
