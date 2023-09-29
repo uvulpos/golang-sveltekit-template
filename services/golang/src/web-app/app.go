@@ -18,7 +18,6 @@ import (
 	userHttp "github.com/uvulpos/go-svelte/src/resources/users/http"
 	userService "github.com/uvulpos/go-svelte/src/resources/users/service"
 	userStorage "github.com/uvulpos/go-svelte/src/resources/users/storage"
-	// "github.com/gofiber/contrib/swagger"
 )
 
 type App struct {
