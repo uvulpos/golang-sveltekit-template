@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "^2.0.0",
-    "@sveltejs/adapter-static": "^2.0.2",
+    "@sveltejs/adapter-static": "^2.0.3",
     "@sveltejs/kit": "^1.5.0",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.24",
@@ -29,7 +29,7 @@
     "@kahi-ui/framework": "^0.6.4",
     "@popperjs/core": "^2.11.8",
     "axios": "^1.4.0",
-    "flowbite": "^1.6.6",
+    "flowbite": "^1.8.1",
     "flowbite-svelte": "^0.39.1",
     "sass": "^1.68.0",
     "svelte-i18n": "^3.6.0",
