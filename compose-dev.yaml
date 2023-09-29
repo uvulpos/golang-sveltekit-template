@@ -25,14 +25,14 @@ services:
     image: node:latest
     container_name: web-ui
     volumes:
-      - ./sveltekit/tailwind.config.cjs:/app/tailwind.config.cjs
-      - ./sveltekit/postcss.config.cjs:/app/postcss.config.cjs
-      - ./sveltekit/package.json:/app/package.json
-      - ./sveltekit/svelte.config.js:/app/svelte.config.js
-      - ./sveltekit/tsconfig.json:/app/tsconfig.json
-      - ./sveltekit/vite.config.ts:/app/vite.config.ts
-      - ./sveltekit/static:/app/static
-      - ./sveltekit/src:/app/src
+      - ./services/sveltekit/tailwind.config.cjs:/app/tailwind.config.cjs
+      - ./services/sveltekit/postcss.config.cjs:/app/postcss.config.cjs
+      - ./services/sveltekit/package.json:/app/package.json
+      - ./services/sveltekit/svelte.config.js:/app/svelte.config.js
+      - ./services/sveltekit/tsconfig.json:/app/tsconfig.json
+      - ./services/sveltekit/vite.config.ts:/app/vite.config.ts
+      - ./services/sveltekit/static:/app/static
+      - ./services/sveltekit/src:/app/src
     networks:
       - intranet
     labels:
@@ -48,7 +48,7 @@ services:
     image: golang:latest
     container_name: web-api
     volumes:
-      - ./golang:/app
+      - ./services/golang:/app
     networks:
       - intranet
     depends_on:
@@ -62,7 +62,23 @@ services:
       - "traefik.http.routers.backend.service=backend"
       - "traefik.http.services.backend.loadbalancer.server.port=3000"
       - "traefik.http.routers.backend.entrypoints=web"
-    command: ["sh", "-c", "cd /app && bash devops/scripts/run-local-docker.sh"]
+    command: ["sh", "-c", "cd /app && bash scripts/run-local-docker.sh"]
+
+  backend-tests:
+    image: golang:latest
+    container_name: web-api-test
+    volumes:
+      - ./services/golang:/app
+    networks:
+      - intranet
+    depends_on:
+      postgres:
+        condition: service_healthy
+        restart: true
+    tty: true
+    environment:
+      - TERM=xterm-256color`
+    command: ["sh", "-c", "cd /app && bash scripts/test-local-docker.sh"]
 
   postgres:
     image: postgres
@@ -72,6 +88,8 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: postgres
       PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
     networks:
       - intranet
     healthcheck:

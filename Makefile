@@ -1,35 +1,24 @@
 
-dev: reload-microservices ## alias for make reload-microservices
+.install-deps: ## install all dependencies
+	@(cd ./services/sveltekit ; npm i)
+	@(cd ./services/golang ; go mod download && go mod tidy)
 
-build: ## build current plattform
-	@(cd ./sveltekit ; npm run build)
-	@(cd ./sveltekit ; cp -R dist/ ../golang/src/assets/frontend/)
-	@(cd ./golang ; go build -o ../bin/app-for-this-system/ src/main.go) 
+dev: .install-deps ## start debugging in docker compose microservices (auto reload)
+	@docker compose -f compose-dev.yaml up backend frontend
 
-build-full: install-deps ## build current plattform with installing dependencies
-	@(cd ./sveltekit ; npm run build)
-	@(cd .sveltekit ; cp -R dist/ ../golang/src/assets/frontend/)
-	@(cd ./golang ; go build -o ../bin/app-for-this-system/ src/main.go) 
+build-full: .install-deps ## build current plattform
+	@(cd ./services/sveltekit ; npm run build)
+	@(cd .services/sveltekit ; cp -R dist/ ../golang/src/assets/frontend/)
+	@(cd ./services/golang ; go build -o ../../bin/app-for-this-system/ src/main.go) 
 
-build-run: build ## build current plattform and run it
-	@./bin/app-for-this-system/main run
+local-release: .install-deps ## build all app versions locally
+	@(cd ./services/golang ; goreleaser release -f ../../.goreleaser.yaml --skip-publish --snapshot --clean)
 
-build-run-full: build-full ## build current plattform with dependencies and run it
-	@./bin/app-for-this-system/main run
+test-be: ## run backend tests
+	@docker compose -f compose-dev.yaml up backend-tests
 
-install-deps: ## install all dependencies
-	@(cd ./sveltekit ; npm i)
-	@(cd ./golang ; go mod download && go mod tidy)
-	@go install github.com/cortesi/modd/cmd/modd@latest
-
-reload-single-binary: install-deps ## start debugging all in one binary
-	@modd
-
-reload-microservices: install-deps ## start debugging in docker compose microservices (faster)
-	@docker compose -f compose-dev.yaml up
-
-release-locally: install-deps ## build all locally
-	@(cd ./golang ; pwd && goreleaser release -f ../.goreleaser.yaml --skip-publish --snapshot --clean)
+test-fe: ## run frontend tests
+	@docker compose -f compose-dev.yaml up fontend-tests
 
 help: ## print our all commands to commandline
 	@echo "\033[34m"

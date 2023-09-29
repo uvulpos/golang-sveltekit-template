@@ -31,4 +31,4 @@ nfpms:
 universal_binaries:
   - replace: true
 
-dist: ../bin
+dist: ../../bin
