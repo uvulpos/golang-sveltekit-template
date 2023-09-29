@@ -29,7 +29,7 @@
     "@kahi-ui/framework": "^0.6.4",
     "@popperjs/core": "^2.11.8",
     "axios": "^1.4.0",
-    "flowbite": "^1.6.6",
+    "flowbite": "^1.8.1",
     "flowbite-svelte": "^0.39.1",
     "sass": "^1.62.1",
     "svelte-i18n": "^3.6.0",
