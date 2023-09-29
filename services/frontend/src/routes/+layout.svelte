@@ -1,6 +1,4 @@
 <script lang="ts">
-  import "../app.postcss";
-
   import en from "$lib/i18n/en.json";
   import de from "$lib/i18n/de.json";
 
@@ -8,8 +6,10 @@
   import { Footer } from "$lib/components/footer";
 
   import { addMessages, getLocaleFromNavigator, init } from "svelte-i18n";
-  import { onMount } from "svelte";
-  import { getThemePreference } from "$lib/function/setTheme";
+
+  export const prerender = false;
+  export const ssr = false;
+  export const trailingSlash = "always";
 
   addMessages("en", en);
   addMessages("de", de);
@@ -18,13 +18,9 @@
     fallbackLocale: "en",
     initialLocale: getLocaleFromNavigator(),
   });
-
-  onMount(() => {
-    getThemePreference();
-  });
 </script>
 
-<div class="root bg-white dark:bg-gray-900">
+<div class="root">
   <header>
     <Navbar />
   </header>

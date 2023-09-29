@@ -20,13 +20,11 @@ services:
       - "--entrypoints.web.address=:80"
     networks:
       - intranet
-
   frontend:
     image: node:latest
     container_name: web-ui
+    restart: always
     volumes:
-      - ./services/frontend/tailwind.config.cjs:/app/tailwind.config.cjs
-      - ./services/frontend/postcss.config.cjs:/app/postcss.config.cjs
       - ./services/frontend/package.json:/app/package.json
       - ./services/frontend/svelte.config.js:/app/svelte.config.js
       - ./services/frontend/tsconfig.json:/app/tsconfig.json
@@ -54,7 +52,7 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-        restart: true
+    restart: always
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.backend.rule=Host(`web.localhost`)&&(PathPrefix(`/api`)||PathPrefix(`/swagger`))"

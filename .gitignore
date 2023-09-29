@@ -1,6 +1,7 @@
 bin/
-services/svelitekit/.svelte-kit
-services/svelitekit/node_modules
-services/golang/src/assets/frontend
+services/frontend/.svelte-kit
+services/frontend/node_modules
+services/frontend.old/
+services/backend-1/src/assets/frontend
 
 .DS_Store
