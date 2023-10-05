@@ -17,6 +17,6 @@ updates:
       interval: "daily"
     # Maintain dependencies for Golang
   - package-ecosystem: "gomod"
-    directory: "/services/backend-1"
+    directory: "/services/backend"
     schedule:
       interval: "daily"
