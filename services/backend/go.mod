@@ -53,9 +53,9 @@ require (
 require (
 	github.com/cortesi/termlog v0.0.0-20210222042314-a1eec763abec
 	github.com/fatih/color v1.15.0
-	golang.org/x/crypto v0.13.0 // indirect
-	golang.org/x/net v0.15.0 // indirect
-	golang.org/x/term v0.12.0 // indirect
+	golang.org/x/crypto v0.14.0 // indirect
+	golang.org/x/net v0.17.0 // indirect
+	golang.org/x/term v0.13.0 // indirect
 )
 
 require (
@@ -69,5 +69,5 @@ require (
 	github.com/mattn/go-isatty v0.0.19 // indirect
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/viper v1.17.0
-	golang.org/x/sys v0.12.0 // indirect
+	golang.org/x/sys v0.13.0 // indirect
 )
