@@ -8,6 +8,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
+	"github.com/spf13/viper"
 
 	"github.com/gofiber/swagger"
 	_ "github.com/uvulpos/go-svelte/swagger-docs"
@@ -37,16 +38,6 @@ func NewApp() *App {
 	}
 }
 
-// @title			Fiber Example API
-// @version		1.0
-// @description	This is a sample swagger for Fiber
-// @termsOfService	http://swagger.io/terms/
-// @contact.name	API Support
-// @contact.email	fiber@swagger.io
-// @license.name	Apache 2.0
-// @license.url	http://www.apache.org/licenses/LICENSE-2.0.html
-// @host			localhost:8080
-// @BasePath		/
 func (a *App) RunApp(showFrontend, showSwagger bool, webserverPort int) {
 
 	publicFS, err := fs.Sub(assets.SvelteFS, "frontend")
@@ -56,11 +47,16 @@ func (a *App) RunApp(showFrontend, showSwagger bool, webserverPort int) {
 
 	router := fiber.New(fiber.Config{
 		DisableStartupMessage: true,
+		ErrorHandler: func(c *fiber.Ctx, err error) error {
+			// for internal use you can print error to response
+			// "Unexpected Error Occured " + "\n" + err.Error()
+			return c.Status(fiber.StatusInternalServerError).SendString("Unexpected Error Occured")
+		},
 	})
 
 	a.createRoutes(router)
 
-	if showSwagger {
+	if viper.GetBool("show-swagger") {
 		router.Get("/swagger/*", swagger.HandlerDefault)
 	}
 

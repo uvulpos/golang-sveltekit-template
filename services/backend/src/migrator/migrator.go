@@ -20,7 +20,7 @@ type Migrator struct {
 
 func NewMigrator() *Migrator {
 	return &Migrator{
-		db: dbHelper.CreateDatabase(),
+		db: dbHelper.CreateDatabase().DB.DB,
 	}
 }
 
@@ -39,6 +39,8 @@ func (migrator Migrator) setupMigration() (*migrate.Migrate, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	// migrateBackup.CreateBuckup()
 
 	return m, nil
 }
