@@ -40,8 +40,8 @@ require (
 )
 
 require (
-	github.com/gofiber/fiber/v2 v2.49.2
-	github.com/gofiber/swagger v0.1.13
+	github.com/gofiber/fiber/v2 v2.50.0
+	github.com/gofiber/swagger v0.1.14
 	github.com/golang-migrate/migrate/v4 v4.16.2
 	github.com/lib/pq v1.10.9
 	github.com/mattn/go-colorable v0.1.13 // indirect
