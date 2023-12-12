@@ -4,7 +4,7 @@
 	@(cd ./services/backend ; go mod download && go mod tidy)
 
 dev: .install-deps ## start debugging in docker compose microservices (auto reload)
-	@docker compose -f compose-dev.yaml up backend frontend
+	@docker compose -f compose-dev.yaml up backend frontend reverse-proxy
 
 build-full: .install-deps ## build current plattform
 	@(cd ./services/frontend ; npm run build)
