@@ -15,7 +15,7 @@ You don't have to use it, but having it is better than needing it
 
 ## 2. How to create a new table
 
-Go to your backend service and then to `src/migrator/migration-files` and create two new files: `<number>_<name>.up.sql` and `<number>_<name>.up.sql`. The number and description must match. Just increment the number for the following migrations.
+Go to your backend service and then to `src/migrator/migration-files` and create two new files: `<number>_<name>.up.sql` and `<number>_<name>.down.sql`. The number and description must match. Just increment the number for the following migrations.
 
 ## 3. Execute the migration
 
