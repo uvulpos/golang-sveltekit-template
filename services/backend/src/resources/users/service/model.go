@@ -13,5 +13,13 @@ type UserWithPermission struct {
 	AdminReviewRequired bool
 	RoleID              string
 	RoleName            string
-	Permissions         string
+	Permissions         UserPermissions
+}
+
+type UserPermissions []UserPermission
+type UserPermission struct {
+	ID          uuid.UUID
+	Name        string
+	Description string
+	Identifier  string
 }

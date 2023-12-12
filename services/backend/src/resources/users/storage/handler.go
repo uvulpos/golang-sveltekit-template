@@ -1,17 +1,16 @@
 package storage
 
 import (
-	"database/sql"
-
 	"github.com/google/uuid"
+	"github.com/uvulpos/go-svelte/src/helper/database"
 	"github.com/uvulpos/go-svelte/src/resources/users/service"
 )
 
 type UserStore struct {
-	db *sql.DB
+	dbstore database.Sql
 }
 
-func NewUserStore(db *sql.DB) *UserStore {
+func NewUserStore(db database.Sql) *UserStore {
 	return &UserStore{
 		db,
 	}
@@ -19,15 +18,24 @@ func NewUserStore(db *sql.DB) *UserStore {
 
 type UserWithPermissions []UserWithPermission
 type UserWithPermission struct {
-	Id                  uuid.UUID `db:"id"`
-	Username            string    `db:"username"`
-	Email               string    `db:"email"`
-	LdapUUID            string    `db:"ldap_uuid"`
-	AuthSource          string    `db:"auth_source"`
-	AdminReviewRequired bool      `db:"admin_review_required"`
-	RoleID              string    `db:"role_id"`
-	RoleName            string    `db:"role_name"`
-	Permissions         string    `db:"permissions"`
+	Id                  uuid.UUID       `db:"id"`
+	Username            string          `db:"username"`
+	Email               string          `db:"email"`
+	Password            string          `db:"password"`
+	LdapUUID            string          `db:"ldap_uuid"`
+	AuthSource          string          `db:"auth_source"`
+	AdminReviewRequired bool            `db:"admin_review_required"`
+	RoleID              string          `db:"role_id"`
+	RoleName            string          `db:"role_name"`
+	Permissions         UserPermissions `db:"permissions"`
+}
+
+type UserPermissions []UserPermission
+type UserPermission struct {
+	ID          uuid.UUID `json:"id" db:"id"`
+	Name        string    `json:"name" db:"name"`
+	Description string    `json:"description" db:"description"`
+	Identifier  string    `json:"identifier" db:"identifier"`
 }
 
 func ToUserWithPermissionsSvcModels(u UserWithPermissions) []*service.UserWithPermission {
@@ -48,6 +56,21 @@ func (u UserWithPermission) ToUserWithPermissionsSvcModel() *service.UserWithPer
 		AdminReviewRequired: u.AdminReviewRequired,
 		RoleID:              u.RoleID,
 		RoleName:            u.RoleName,
-		Permissions:         u.Permissions,
+		Permissions:         toSvcPermissions(u.Permissions),
 	}
+}
+
+func toSvcPermissions(perms UserPermissions) service.UserPermissions {
+	var permissions service.UserPermissions
+
+	for _, p := range perms {
+		permissions = append(permissions, service.UserPermission{
+			ID:          p.ID,
+			Name:        p.Name,
+			Description: p.Description,
+			Identifier:  p.Identifier,
+		})
+	}
+
+	return permissions
 }

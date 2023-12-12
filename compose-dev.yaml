@@ -5,6 +5,10 @@ networks:
     internal: false
     driver: bridge
 
+volumes:
+  gosvelte-postgres:
+  gosvelte-gotify:
+
 services:
   reverse-proxy:
     image: "traefik:latest"
@@ -80,6 +84,9 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+      gotify:
+        condition: service_started
+
     restart: always
     labels:
       - "traefik.enable=true"
@@ -113,7 +120,7 @@ services:
   # -----------------------------------------------------------------------------------------------------
 
   postgres:
-    image: postgres
+    image: postgis/postgis
     restart: always
     environment:
       POSTGRES_USER: postgres
@@ -124,8 +131,27 @@ services:
       - "5432:5432"
     networks:
       - intranet
+    volumes:
+      - "gosvelte-postgres:/var/lib/postgresql/data"
     healthcheck:
       test: ["CMD-SHELL", "sh -c 'pg_isready -U postgres -d postgres'"]
       interval: 10s
       timeout: 5s
       retries: 5
+
+  gotify:
+    image: gotify/server-arm64 # may change due to architecture
+    volumes:
+      - "gosvelte-gotify:/app/data gotify/server"
+    ports:
+      - "8087:80"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.gotify.rule=Host(`web.localhost`)&&(PathPrefix(`/gotify`))"
+      - "traefik.http.routers.gotify.priority=3"
+      - "traefik.http.routers.gotify.service=gotify"
+      - "traefik.http.routers.gotify.entrypoints=web"
+      - "traefik.http.services.gotify.loadbalancer.server.port=80"
+
+      # - "traefik.http.routers.gotify.middlewares=gotify-stripprefix"
+      # - "traefik.http.middlewares.gotify-stripprefix.stripprefix.prefixes=/gotify"

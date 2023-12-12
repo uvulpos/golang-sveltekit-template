@@ -1,11 +1,12 @@
 package database
 
 import (
-	"database/sql"
 	"fmt"
+
+	"github.com/go-sqlx/sqlx"
 )
 
-func CreateDatabase() *sql.DB {
+func CreateDatabase() Sql {
 	connStr := fmt.Sprintf(
 		"postgres://%s:%s@%s/%s?sslmode=%s",
 		"postgres",
@@ -16,7 +17,8 @@ func CreateDatabase() *sql.DB {
 	)
 
 	fmt.Println("DB CONN: ", connStr)
-	db, dbErr := sql.Open("postgres", connStr)
+	db, dbErr := sqlx.Connect("postgres", connStr)
+	// db, dbErr := sql.Open("postgres", connStr)
 	if dbErr != nil {
 		panic(dbErr)
 	}
@@ -26,5 +28,9 @@ func CreateDatabase() *sql.DB {
 		panic(err)
 	}
 
-	return db
+	var sqlWrapper Sql = Sql{
+		DB: db,
+	}
+
+	return sqlWrapper
 }

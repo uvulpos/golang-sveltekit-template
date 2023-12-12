@@ -5,6 +5,7 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 	webApp "github.com/uvulpos/go-svelte/src/web-app"
 )
 
@@ -32,4 +33,7 @@ func init() {
 	RunAppCmd.Flags().BoolVar(&showNoFrontend, "no-frontend", false, "disable the frontend and deliver just an api")
 	RunAppCmd.Flags().BoolVar(&showSwaggger, "show-swagger", false, "enable the swagger api for developing")
 	RunAppCmd.Flags().IntVarP(&webserverPort, "port", "p", 3000, "define a port, where the application should listen to")
+
+	flagSet := RunAppCmd.Flags()
+	viper.BindPFlags(flagSet)
 }
