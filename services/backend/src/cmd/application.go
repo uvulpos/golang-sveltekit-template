@@ -2,9 +2,11 @@ package cmd
 
 import (
 	"log"
+	// "time"
 
 	"github.com/spf13/cobra"
 
+	// "github.com/spf13/cobra/doc"
 	migrate "github.com/uvulpos/go-svelte/src/cmd/migrate"
 	runApp "github.com/uvulpos/go-svelte/src/cmd/run"
 	version "github.com/uvulpos/go-svelte/src/cmd/version"
@@ -28,6 +30,17 @@ func init() {
 }
 
 func Execute() {
+	// header := &doc.GenManHeader{
+	// 	Title:   "MINE",
+	// 	Section: "3",
+	// }
+	// err := doc.GenManTree(runCmd, header, "/tmp")
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// time.Sleep(time.Minute * 10)
+
 	config.LoadData()
 	err := runCmd.Execute()
 	if err != nil {

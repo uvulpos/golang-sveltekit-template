@@ -2,10 +2,12 @@
     "page": {
         "navigation": {
             "home": "Startseite",
-            "github": "GitHub"
+            "login": "Login",
+            "logout": "Logout",
+            "goto-landingpage": "Gehe zur Landingpage"
         },
         "home": {
-            "hello-world": "Hallo Welt"
+            "welcome-human": "Willkommen, Mensch"
         },
         "footer": {
             "allrightsreserved": "Alle Rechts Vorbehalten."

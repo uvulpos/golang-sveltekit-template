@@ -67,6 +67,8 @@ func (a *App) RunApp(showFrontend, showSwagger bool, webserverPort int) {
 		}))
 	}
 
+	router.Use(Handle404)
+
 	serverPort := fmt.Sprintf(":%d", webserverPort)
 	log.Printf("server listens on %s\n", serverPort)
 	router.Listen(serverPort)
