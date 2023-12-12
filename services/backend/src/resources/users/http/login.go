@@ -1,11 +1,12 @@
 package http
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/uvulpos/go-svelte/src/helper/cookies"
+	"github.com/uvulpos/go-svelte/src/helper/errors"
+	"github.com/uvulpos/go-svelte/src/helper/jwt"
 )
 
 type LoginPayload struct {
@@ -15,21 +16,21 @@ type LoginPayload struct {
 
 func (h *UserHandler) HandleLogin(c *fiber.Ctx) error {
 	payload := LoginPayload{}
-
 	if err := c.BodyParser(&payload); err != nil {
 		return err
 	}
 
-	user, userErr := h.service.GetProfileByUsernameOrEmail(payload.Username)
-	if userErr != nil {
-		c.Status(http.StatusInternalServerError)
-		return userErr
+	user, authErr := h.service.GetAuthenticatedUserByCredentials(payload.Username, payload.Password)
+	if authErr != nil {
+		return c.Status(http.StatusUnauthorized).SendString(authErr.Error())
 	}
 
-	fmt.Println(user)
+	token, tokenErr := jwt.NewJWT(user.Id.String(), user.Permissions)
+	if tokenErr != nil {
+		return errors.NewInternalServerErrorApp("could not create jwt").ToHttpError()
+	}
 
-	jwtToken := fmt.Sprintf("User %s, Pass %s", payload.Username, payload.Password)
-	authCookie := cookies.CreateAuthenticationFiberCookie(jwtToken)
+	authCookie := cookies.CreateAuthenticationFiberCookie(token)
 	c.Cookie(authCookie)
 
 	return nil

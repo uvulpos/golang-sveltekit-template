@@ -1,9 +1,10 @@
 <script lang="ts">
+  import { jwtDataStore } from "$lib/stores/jwt/jwt";
   import { _ } from "svelte-i18n";
 </script>
 
 <header>
-  <div class="branding">
+  <a href="/" class="branding" title={$_("page.navigation.goto-landingpage")}>
     <img
       src="/assets/gifs/gopher-dance.gif"
       class="mr-3 h-6 sm:h-9"
@@ -14,33 +15,46 @@
     >
       Go Svelte!
     </span>
-  </div>
+  </a>
   <nav>
     <ul>
-      <li>
-        <a href="/">{$_("page.navigation.home")}</a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/uvulpos/golang-sveltekit-binary"
-          target="_blank">{$_("page.navigation.github")}</a
-        >
-      </li>
+      {#if $jwtDataStore !== undefined}
+        <li>
+          <a href="/dashboard">{$_("page.navigation.home")}</a>
+        </li>
+        <li>
+          <span>{$jwtDataStore.username}</span>
+        </li>
+        <li>
+          <a href="/logout">{$_("page.navigation.logout")}</a>
+        </li>
+      {:else}
+        <li>
+          <a href="/">{$_("page.navigation.home")}</a>
+        </li>
+        <li>
+          <a href="/login">{$_("page.navigation.login")}</a>
+        </li>
+      {/if}
     </ul>
   </nav>
 </header>
 
 <style lang="sass">
+  @import "../../variables/sass/main"
+
   header
     display: flex
     justify-content: space-between
     padding: .2rem 1rem
-    background-color: #ccc
+    background-color: #272b2f
 
-    .branding
+    a.branding
       display: flex
       align-items: center
       gap: .5rem
+      color: $ui-font-color
+      text-decoration: none
 
       img
         height: 2.5rem
@@ -55,8 +69,8 @@
 
         a
           text-decoration: none
-          color: #000
           font-weight: bold
+          color: $ui-font-color
 
 
 </style>

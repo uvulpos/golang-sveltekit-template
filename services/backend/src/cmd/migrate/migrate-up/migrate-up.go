@@ -10,7 +10,10 @@ var MigrateUpCmd = &cobra.Command{
 	Short: "🚀 Migrate your database to a newer version",
 	Long:  `🚀 Migrate your database to a newer version`,
 	Run: func(cmd *cobra.Command, args []string) {
-		migrator.NewMigrator().Migrate()
+		err := migrator.NewMigrator().MigrateUp()
+		if err != nil {
+			panic(err)
+		}
 	},
 }
 
