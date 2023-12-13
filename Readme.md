@@ -33,6 +33,13 @@ But don't worry, with this repository, I'm giving you the chance to make your in
   - Hotreload is working
 - Database Schema can be migrated automatically or via command `app migrate up`
 
+## Screenshots
+
+<div>
+  <img alt="welcome page" src=".git-assets/app-screenshots/welcome-page.png" width="500px" style="float: left;">
+  <img alt="welcome page" src=".git-assets/app-screenshots/swagger.png" width="500px">
+</div>
+
 ## 🤝🏻 Thank you!
 
 - For this awesome gopher on the landing page [umbralynx](https://github.com/umbralynx)!
