@@ -27,11 +27,20 @@ But don't worry, with this repository, I'm giving you the chance to make your in
 
 ## Why you should use this Template?
 
-- Project architecture is already ready to implement
-  - Golang Backend just works
-  - Svelte Frontend just works
-  - Hotreload is working
-- Database Schema can be migrated automatically or via command `app migrate up`
+- Dynamic Infrastructure
+  - deploy this app as binary
+  - or microservice via Docker / K8s
+- Database Migration Tool integrated
+- Swagger API Documentation integrated
+- File structure for Domain-Driven-Development is already there
+- Basic Login or login via LDAP already implemented (soon)
+
+## Screenshots
+
+<div>
+  <img alt="welcome page" src=".git-assets/app-screenshots/welcome-page.png" width="500px" style="float: left;">
+  <img alt="welcome page" src=".git-assets/app-screenshots/swagger.png" width="500px">
+</div>
 
 ## 🤝🏻 Thank you!
 
