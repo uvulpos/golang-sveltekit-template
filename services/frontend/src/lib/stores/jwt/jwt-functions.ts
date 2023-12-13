@@ -1,5 +1,6 @@
 import Cookies from "js-cookie";
 import { jwtStore } from "./jwt";
+import { goto } from "$app/navigation";
 
 export function loginUser(username: string, password: string) {
     // request the backend
@@ -18,4 +19,5 @@ export function loginUser(username: string, password: string) {
         authCreated: now,
         authRefreshed: now
     })
+    goto("/dashboard")
 }

@@ -2,6 +2,7 @@
     "page": {
         "navigation": {
             "home": "Home",
+            "dashbord": "Dashboard",
             "login": "Login",
             "logout": "Logout",
             "goto-landingpage": "Go to landingpage"
