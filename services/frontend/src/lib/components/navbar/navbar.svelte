@@ -20,7 +20,7 @@
     <ul>
       {#if $jwtDataStore !== undefined}
         <li>
-          <a href="/dashboard">{$_("page.navigation.home")}</a>
+          <a href="/dashboard">{$_("page.navigation.dashbord")}</a>
         </li>
         <li>
           <span>{$jwtDataStore.username}</span>
