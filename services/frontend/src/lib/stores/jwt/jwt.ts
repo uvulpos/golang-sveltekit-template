@@ -1,5 +1,6 @@
 import { writable } from "svelte/store";
 import Cookies from 'js-cookie'
+import { parseJWT } from "$lib/functions/parse-jwt";
 
 export type jwtStoreType = {
     jwtToken: string,
@@ -8,23 +9,26 @@ export type jwtStoreType = {
     authExpires: Date,
 }
 
-export let jwtStore = writable<jwtStoreType | undefined>(undefined);
-
 export type jwtDataType = {
     username: string;
 }
 
+export let jwtStore = writable<jwtStoreType | undefined>(undefined);
 export let jwtDataStore = writable<jwtDataType | undefined>(undefined);
-
 
 // store as cookie
 jwtStore.subscribe((jwt) => {
     if (jwt === undefined) {
+        jwtDataStore.set(undefined);
         return
     }
 
+    // process answer
+    const parsedJWT = parseJWT(jwt.jwtToken)
     jwtDataStore.set({
-        username: "uvulpos",
+        // uuid: parsedJWT?.{ "user-uuid"},
+        username: parsedJWT?.username,
+        // roles: parsedJWT?.roles,
     })
 
     const jwtToken = JSON.stringify({
@@ -35,11 +39,7 @@ jwtStore.subscribe((jwt) => {
     })
 
     Cookies.set("jwt", jwtToken, {
-        expires: 30,
-        domain: undefined,
-        path: "/",
-        secure: false,
-        sameSite: undefined,
+        sameSite: "lax",
     })
 })
 
@@ -48,6 +48,7 @@ export function loginUserFromCookie() {
     if (userJWTString === undefined) {
         return
     }
+
     const userJWT = JSON.parse(userJWTString) as jwtStoreType
     jwtStore.set({
         jwtToken: userJWT.jwtToken,
@@ -58,7 +59,6 @@ export function loginUserFromCookie() {
 }
 
 export function jwtSessionDestroy() {
-    jwtStore.set(undefined)
-    jwtDataStore.set(undefined)
-    Cookies.remove("jwt")
+    jwtStore.set(undefined);
+    Cookies.remove("jwt");
 }

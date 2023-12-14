@@ -23,10 +23,27 @@
           <a href="/dashboard">{$_("page.navigation.dashbord")}</a>
         </li>
         <li>
-          <span>{$jwtDataStore.username}</span>
-        </li>
-        <li>
-          <a href="/logout">{$_("page.navigation.logout")}</a>
+          <div class="dropdown-menu">
+            <div class="dropdown-header">
+              <span>{$jwtDataStore.username}</span>
+              <img
+                src="/assets/vector/arrow-dropdown.svg"
+                alt="Dropdown Arrow"
+              />
+            </div>
+            <div class="dropdown-wrapper">
+              <div class="dropdown">
+                <ul>
+                  <li>Something</li>
+                  <li><hr /></li>
+                  <li>
+                    <a href="/settings">{$_("page.navigation.settings")}</a>
+                  </li>
+                  <li><a href="/logout">{$_("page.navigation.logout")}</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </li>
       {:else}
         <li>
@@ -62,7 +79,7 @@
         object-fit: contain
     
     nav
-      ul
+      &>ul
         display: flex
         gap: .5rem
         list-style-type: none
@@ -71,6 +88,40 @@
           text-decoration: none
           font-weight: bold
           color: $ui-font-color
+
+        .dropdown-menu
+          position: relative
+
+          .dropdown-header
+            display: flex
+            align-items: center
+
+            img
+              height: 1rem
+              filter: invert(1)
+
+          &:hover > .dropdown-wrapper
+            display: block
+
+          .dropdown-wrapper
+            z-index: 99999
+            display: none
+            position: absolute
+            padding-top: 10px
+            right: 0
+            .dropdown
+              background-color: #272b2f
+              border: 1px solid $ui-font-color
+              border-radius: 5px
+              padding: .8rem
+              min-width: 150px
+              ul
+                padding: 0
+                list-style: none
+                white-space: nowrap
+                display: flex
+                flex-direction: column
+                gap: .5rem
 
 
 </style>
