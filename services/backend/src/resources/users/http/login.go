@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/uvulpos/go-svelte/src/helper/cookies"
 	"github.com/uvulpos/go-svelte/src/helper/errors"
 	"github.com/uvulpos/go-svelte/src/helper/jwt"
 )
@@ -25,13 +24,15 @@ func (h *UserHandler) HandleLogin(c *fiber.Ctx) error {
 		return c.Status(http.StatusUnauthorized).SendString(authErr.Error())
 	}
 
-	token, tokenErr := jwt.NewJWT(user.Id.String(), user.Permissions)
+	token, tokenErr := jwt.NewJWT(user)
 	if tokenErr != nil {
 		return errors.NewInternalServerErrorApp("could not create jwt").ToHttpError()
 	}
 
-	authCookie := cookies.CreateAuthenticationFiberCookie(token)
-	c.Cookie(authCookie)
+	// authCookie := cookies.CreateAuthenticationFiberCookie(token)
+	// c.Cookie(authCookie)
+
+	c.SendString(token)
 
 	return nil
 }

@@ -1,5 +1,6 @@
 <script lang="ts">
-  export let type: string;
+  type ButtonType = "button" | "submit" | "reset" | null | undefined;
+  export let type: ButtonType;
 </script>
 
 <button on:click {type}><slot /></button>

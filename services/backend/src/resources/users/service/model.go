@@ -8,7 +8,7 @@ type UserWithPermission struct {
 	Id                  uuid.UUID
 	Username            string
 	Email               string
-	LdapUUID            string
+	LdapUUID            *string
 	AuthSource          string
 	AdminReviewRequired bool
 	RoleID              string

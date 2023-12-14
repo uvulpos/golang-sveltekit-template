@@ -5,9 +5,14 @@
   export let autocomplete: string;
   export let type: HTMLInputTypeAttribute | null | undefined = "text";
   export let placeholder: string = "";
+  export let value: string;
 </script>
 
-<input {name} {autocomplete} {type} {placeholder} />
+{#if type === "password"}
+  <input {name} {autocomplete} type="password" {placeholder} bind:value />
+{:else}
+  <input {name} {autocomplete} type="text" {placeholder} bind:value />
+{/if}
 
 <style lang="sass">
     @import "../../variables/sass/main"

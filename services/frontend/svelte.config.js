@@ -3,9 +3,7 @@ import { vitePreprocess } from "@sveltejs/kit/vite";
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	preprocess: [vitePreprocess({
-	})],
-
+	preprocess: [vitePreprocess()],
 	kit: {
 		adapter: adapter({
 			pages: "./dist",
@@ -14,6 +12,9 @@ const config = {
 			precompress: false,
 			strict: false,
 		}),
+	},
+	vitePlugin: {
+		inspector: true,
 	},
 };
 
