@@ -3,6 +3,7 @@
         "navigation": {
             "home": "Home",
             "dashbord": "Dashboard",
+            "settings": "Settings",
             "login": "Login",
             "logout": "Logout",
             "goto-landingpage": "Go to landingpage"
@@ -12,6 +13,13 @@
         },
         "footer": {
             "allrightsreserved": "All Rights Reserved."
+        }
+    },
+    "error": {
+        "http": {
+            "404": {
+                "text": "Page could not be found / shown"
+            }
         }
     }
 }

@@ -3,6 +3,7 @@
         "navigation": {
             "home": "Startseite",
             "dashbord": "Dashboard",
+            "settings": "Einstellungen",
             "login": "Login",
             "logout": "Logout",
             "goto-landingpage": "Gehe zur Landingpage"
@@ -11,7 +12,14 @@
             "welcome-human": "Willkommen, Mensch"
         },
         "footer": {
-            "allrightsreserved": "Alle Rechts Vorbehalten."
+            "allrightsreserved": "Alle Rechte Vorbehalten."
+        }
+    },
+    "error": {
+        "http": {
+            "404": {
+                "text": "Seite konnte nicht gefunden / angezeigt werden"
+            }
         }
     }
 }

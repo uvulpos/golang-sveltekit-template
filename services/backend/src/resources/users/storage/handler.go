@@ -1,6 +1,11 @@
 package storage
 
 import (
+	"database/sql"
+	"database/sql/driver"
+	"encoding/json"
+	"errors"
+
 	"github.com/google/uuid"
 	"github.com/uvulpos/go-svelte/src/helper/database"
 	"github.com/uvulpos/go-svelte/src/resources/users/service"
@@ -22,7 +27,7 @@ type UserWithPermission struct {
 	Username            string          `db:"username"`
 	Email               string          `db:"email"`
 	Password            string          `db:"password"`
-	LdapUUID            string          `db:"ldap_uuid"`
+	LdapUUID            sql.NullString  `db:"ldap_uuid"`
 	AuthSource          string          `db:"auth_source"`
 	AdminReviewRequired bool            `db:"admin_review_required"`
 	RoleID              string          `db:"role_id"`
@@ -47,11 +52,15 @@ func ToUserWithPermissionsSvcModels(u UserWithPermissions) []*service.UserWithPe
 }
 
 func (u UserWithPermission) ToUserWithPermissionsSvcModel() *service.UserWithPermission {
+	var ldapUuid *string = nil
+	if u.LdapUUID.Valid {
+		ldapUuid = &u.LdapUUID.String
+	}
 	return &service.UserWithPermission{
 		Id:                  u.Id,
 		Username:            u.Username,
 		Email:               u.Email,
-		LdapUUID:            u.LdapUUID,
+		LdapUUID:            ldapUuid,
 		AuthSource:          u.AuthSource,
 		AdminReviewRequired: u.AdminReviewRequired,
 		RoleID:              u.RoleID,
@@ -73,4 +82,18 @@ func toSvcPermissions(perms UserPermissions) service.UserPermissions {
 	}
 
 	return permissions
+}
+
+func (up *UserPermissions) Value() (driver.Value, error) {
+	return json.Marshal(up)
+}
+
+func (up *UserPermissions) Scan(value interface{}) error {
+	switch v := value.(type) {
+	case []byte:
+		return json.Unmarshal(v, up)
+	case string:
+		return json.Unmarshal([]byte(v), up)
+	}
+	return errors.New("failed to assert db type")
 }
