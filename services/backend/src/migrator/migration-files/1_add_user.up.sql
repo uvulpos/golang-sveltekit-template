@@ -56,9 +56,10 @@ INSERT INTO role_permissions (role_id, permission_id) VALUES
 ((SELECT id FROM roles WHERE name = 'User'), (SELECT id FROM permissions WHERE identifier = 'GREET_USER')),
 ((SELECT id FROM roles WHERE name = 'Admin'), (SELECT id FROM permissions WHERE identifier = 'GREET_ADMIN'));
 
+-- password is default "123"
 INSERT INTO users (username, email, password, ldap_uuid, auth_source, role_id) VALUES
-('uvulpos', 'uvulpos@home.de', '123', NULL, 'basic', (SELECT id FROM roles WHERE name = 'Admin')),
-('umbra', 'umbra@home.de', '123', NULL, 'basic', (SELECT id FROM roles WHERE name = 'User')),
+('uvulpos', 'uvulpos@home.de', '$2a$08$J3nf0/vYoiG0HVrLOBneEum5b9zrZo64lBmf48Zxf8flgL0oY3RPy', NULL, 'basic', (SELECT id FROM roles WHERE name = 'Admin')),
+('umbra', 'umbra@home.de', '$2a$08$J3nf0/vYoiG0HVrLOBneEum5b9zrZo64lBmf48Zxf8flgL0oY3RPy', NULL, 'basic', (SELECT id FROM roles WHERE name = 'User')),
 ('ldap-user', 'ldap-user@home.de', NULL, 'a56eff7d-5fb8-3574-92f1-136f6344777d', 'ldap', (SELECT id FROM roles WHERE name = 'User'));
 
 CREATE VIEW full_user_with_permission AS 

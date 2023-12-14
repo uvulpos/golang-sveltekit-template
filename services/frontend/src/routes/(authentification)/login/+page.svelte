@@ -1,7 +1,10 @@
-<script>
+<script lang="ts">
   import Button from "$lib/components/button/button.svelte";
   import Textinput from "$lib/components/input/textinput.svelte";
   import { loginUser } from "$lib/stores/jwt/jwt-functions";
+
+  let username: string = "uvulpos";
+  let password: string = "123";
 </script>
 
 <div class="loginform">
@@ -13,6 +16,7 @@
         name="username"
         autocomplete="username"
         placeholder="username"
+        bind:value={username}
       />
     </label>
     <!-- svelte-ignore a11y-label-has-associated-control -->
@@ -23,10 +27,11 @@
         autocomplete="off"
         type="password"
         placeholder="password"
+        bind:value={password}
       />
     </label>
     <div class="submit">
-      <Button on:click={() => loginUser("my", "jwt-token")} type="submit"
+      <Button on:click={() => loginUser(username, password)} type="submit"
         >Login</Button
       >
     </div>
