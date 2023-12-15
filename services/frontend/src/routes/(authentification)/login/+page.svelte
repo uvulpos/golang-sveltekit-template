@@ -11,8 +11,6 @@
 
   async function tryLoginUser() {
     const result = await loginUser(username, password);
-    console.log("return", result);
-
     if (result === false) {
       password = "";
     }

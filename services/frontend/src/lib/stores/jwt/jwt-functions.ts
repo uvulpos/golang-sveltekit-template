@@ -22,8 +22,6 @@ export async function loginUser(username: string, password: string): Promise<boo
         // handle errors
         if (!request.ok || statusCode < 200 || statusCode > 299) {
             // do error handling
-            console.log("error, statuscode:", statusCode);
-            console.log(responseText);
             return false
         }
 
@@ -37,7 +35,6 @@ export async function loginUser(username: string, password: string): Promise<boo
             authCreated: now,
             authRefreshed: now
         })
-        console.log("no error");
         goto("/dashboard")
         return true
     } catch (error) {
