@@ -13,13 +13,31 @@
         },
         "footer": {
             "allrightsreserved": "Alle Rechte Vorbehalten."
+        },
+        "login": {
+            "wrong-credientials": "Username / Password ist inkorrekt"
         }
     },
     "error": {
         "http": {
-            "404": {
-                "text": "Seite konnte nicht gefunden / angezeigt werden"
+            "statuscode": {
+                "401": {
+                    "header": "Fehler 401",
+                    "text": "Sie müssen sich einloggen, um auf die Seite zugreifen zu können"
+                },
+                "403": {
+                    "header": "Fehler 403",
+                    "text": "Ihnen fehlen leider die Rechte die angefragte Seite sehen zu können"
+                },
+                "404": {
+                    "header": "Fehler 404",
+                    "text": "Seite konnte nicht gefunden / angezeigt werden"
+                }
             }
         }
+    },
+    "mock": {
+        "something": "Irgendwas",
+        "something-else": "Irgendwas anderes"
     }
 }

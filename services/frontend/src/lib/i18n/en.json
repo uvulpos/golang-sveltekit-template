@@ -13,13 +13,31 @@
         },
         "footer": {
             "allrightsreserved": "All Rights Reserved."
+        },
+        "login": {
+            "wrong-credientials": "Username / Password is incorrect"
         }
     },
     "error": {
         "http": {
-            "404": {
-                "text": "Page could not be found / shown"
+            "statuscode": {
+                "401": {
+                    "header": "Error 401",
+                    "text": "You must log in to access the page"
+                },
+                "403": {
+                    "header": "Error 403",
+                    "text": "Unfortunately, you do not have the rights to view the requested page"
+                },
+                "404": {
+                    "header": "Error 404",
+                    "text": "Page could not be found / shown"
+                }
             }
         }
+    },
+    "mock": {
+        "something": "Something",
+        "something-else": "Something else"
     }
 }
