@@ -34,7 +34,7 @@
             <div class="dropdown-wrapper">
               <div class="dropdown">
                 <ul>
-                  <li>Something</li>
+                  <li>{$_("mock.something")}</li>
                   <li><hr /></li>
                   <li>
                     <a href="/settings">{$_("page.navigation.settings")}</a>

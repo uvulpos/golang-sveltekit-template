@@ -1,5 +1,7 @@
 <script>
+  import Errorpage from "$lib/components/errorpage/errorpage.svelte";
   import { jwtStore } from "$lib/stores/jwt/jwt";
+  import { _ } from "svelte-i18n";
 </script>
 
 {#if $jwtStore != null}
@@ -7,8 +9,8 @@
     <div class="navigation">
       <ul>
         <li><a href="/dashboard">Dashboard</a></li>
-        <li>Some Stuff</li>
-        <li>Some more Stuff</li>
+        <li>{$_("mock.something")}</li>
+        <li>{$_("mock.something-else")}</li>
         <li><hr /></li>
         <li><a href="/settings">Settings</a></li>
         <li><a href="/logout">Logout</a></li>
@@ -19,7 +21,7 @@
     </div>
   </div>
 {:else}
-  <p>Nicht eingeloggt</p>
+  <Errorpage errorcode={401} />
 {/if}
 
 <style lang="sass">
