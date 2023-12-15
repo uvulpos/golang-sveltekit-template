@@ -2,13 +2,33 @@
   import Button from "$lib/components/button/button.svelte";
   import Textinput from "$lib/components/input/textinput.svelte";
   import { loginUser } from "$lib/stores/jwt/jwt-functions";
+  import { _ } from "svelte-i18n";
 
   let username: string = "uvulpos";
   let password: string = "123";
+
+  let loginFailed: boolean = false;
+
+  async function tryLoginUser() {
+    const result = await loginUser(username, password);
+    console.log("return", result);
+
+    if (result === false) {
+      password = "";
+    }
+    loginFailed = !result;
+  }
 </script>
 
 <div class="loginform">
   <div class="form">
+    <p>Login Failed: {loginFailed ? "true" : "false"}</p>
+    {#if loginFailed}
+      <div class="errormessage">
+        <p>{$_("page.login.wrong-credientials")}</p>
+      </div>
+    {/if}
+
     <!-- svelte-ignore a11y-label-has-associated-control -->
     <label>
       <span>Username / E-Mail</span>
@@ -31,9 +51,7 @@
       />
     </label>
     <div class="submit">
-      <Button on:click={() => loginUser(username, password)} type="submit"
-        >Login</Button
-      >
+      <Button on:click={tryLoginUser} type="submit">Login</Button>
     </div>
   </div>
 </div>
@@ -49,6 +67,15 @@
             display: flex
             flex-direction: column
             gap: 1rem
+
+            .errormessage
+              background-color: rgba(255,0,0,.2)
+              padding: 1rem
+              border-radius: 5px
+              p
+                padding: 0
+                margin: 0
+
             label
                 display: flex
                 flex-direction: column
