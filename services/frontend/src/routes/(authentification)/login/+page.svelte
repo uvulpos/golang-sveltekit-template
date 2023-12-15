@@ -20,7 +20,6 @@
 
 <div class="loginform">
   <div class="form">
-    <p>Login Failed: {loginFailed ? "true" : "false"}</p>
     {#if loginFailed}
       <div class="errormessage">
         <p>{$_("page.login.wrong-credientials")}</p>
