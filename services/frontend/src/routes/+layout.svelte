@@ -1,11 +1,8 @@
 <script lang="ts">
   // import code
   import { onMount } from "svelte";
-  import {
-    jwtDataStore,
-    jwtStore,
-    loginUserFromCookie,
-  } from "$lib/stores/jwt/jwt";
+  import { _ } from "svelte-i18n";
+  import { loginUserFromCookie } from "$lib/stores/jwt/jwt";
   import { addMessages, getLocaleFromNavigator, init } from "svelte-i18n";
   import "@fontsource/inter";
 
@@ -39,13 +36,6 @@
 
 {#if !preMount}
   <div class="root">
-    {#if false}
-      <div style="overflow: scroll;">
-        <p>
-          {JSON.stringify($jwtStore)}
-        </p>
-      </div>
-    {/if}
     <header>
       <Navbar />
     </header>

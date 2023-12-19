@@ -6,6 +6,7 @@ require (
 	github.com/google/uuid v1.5.0
 	github.com/keighl/barkup v0.0.0-20170220130926-692ec4e5a83a
 	github.com/swaggo/swag v1.16.2
+	gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df
 )
 
 require (
@@ -45,6 +46,7 @@ require (
 	golang.org/x/exp v0.0.0-20231206192017-f3f8817b8deb // indirect
 	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/tools v0.16.0 // indirect
+	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	launchpad.net/goamz v0.0.0-20140813150539-000000000049 // indirect

@@ -1,3 +1,11 @@
+<script lang="ts">
+  import { _ } from "svelte-i18n";
+</script>
+
+<svelte:head>
+  <title>{$_("page.titles.dashboard")}</title>
+</svelte:head>
+
 <div class="header">
   <div class="content">
     <p>Dashboard</p>
@@ -10,7 +18,7 @@
     .header
         height: 5rem
         width: 100%
-        background-color: $ui-font-color
+        background-color: $ui-background-secondary
         position: relative
         
         .content
@@ -19,7 +27,6 @@
             top: 50%
             left: 50%
             p
-                color: black
                 font-weight: bolder
                 font-size: 2rem
 </style>
