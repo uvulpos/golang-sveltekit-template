@@ -26,7 +26,7 @@ type UserWithPermission struct {
 	Id                  uuid.UUID       `db:"id"`
 	Username            string          `db:"username"`
 	Email               string          `db:"email"`
-	Password            string          `db:"password"`
+	Password            sql.NullString  `db:"password"`
 	LdapUUID            sql.NullString  `db:"ldap_uuid"`
 	AuthSource          string          `db:"auth_source"`
 	AdminReviewRequired bool            `db:"admin_review_required"`

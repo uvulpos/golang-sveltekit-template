@@ -5,6 +5,8 @@ import (
 	userService "github.com/uvulpos/go-svelte/src/resources/users/service"
 )
 
+const jwtTokenSecret = `loafofbread`
+
 func NewJWT(user *userService.UserWithPermission) (string, error) {
 	var key []byte // *ecdsa.PrivateKey  ->> https://golang-jwt.github.io/jwt/usage/create/
 	var t *jwt.Token
@@ -16,10 +18,10 @@ func NewJWT(user *userService.UserWithPermission) (string, error) {
 	}
 
 	key = []byte("loafofbread")
-	t = jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"user-uuid": user.Id.String(),
-		"username":  user.Username,
-		"roles":     roleIndicators,
+	t = jwt.NewWithClaims(jwt.SigningMethodHS512, jwt.MapClaims{
+		"user-uuid":   user.Id.String(),
+		"username":    user.Username,
+		"permissions": roleIndicators,
 	})
 	return t.SignedString(key)
 

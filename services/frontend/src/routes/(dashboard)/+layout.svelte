@@ -7,14 +7,16 @@
 {#if $jwtStore != null}
   <div class="root">
     <div class="navigation">
-      <ul>
-        <li><a href="/dashboard">Dashboard</a></li>
-        <li>{$_("mock.something")}</li>
-        <li>{$_("mock.something-else")}</li>
-        <li><hr /></li>
-        <li><a href="/settings">Settings</a></li>
-        <li><a href="/logout">Logout</a></li>
-      </ul>
+      <div class="navigation-panel">
+        <ul>
+          <li><a href="/dashboard">Dashboard</a></li>
+          <li>{$_("mock.something")}</li>
+          <li>{$_("mock.something-else")}</li>
+          <li><hr /></li>
+          <li><a href="/settings">Settings</a></li>
+          <li><a href="/logout">Logout</a></li>
+        </ul>
+      </div>
     </div>
     <div class="content">
       <slot />
@@ -31,21 +33,22 @@
         display: flex
         gap: 2rem
     .navigation
-        border-radius: 5px
-        border: 1px solid $ui-font-color
-        padding: 1rem 2rem
         margin: 2rem 0
-        ul
-            padding: 0
-            list-style-type: none
-            display: flex
-            flex-direction: column
-            gap: .5rem
+        .navigation-panel
+            border-radius: 5px
+            border: 1px solid $ui-font-color
+            padding: 1rem 2rem
+            ul
+                padding: 0
+                list-style-type: none
+                display: flex
+                flex-direction: column
+                gap: .5rem
 
-            a
-                text-decoration: none
-                color: $ui-font-color
-                font-weight: bolder
+                a
+                    text-decoration: none
+                    color: $ui-font-color
+                    font-weight: bolder
     
     .content
         flex-grow: 1

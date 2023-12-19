@@ -1,5 +1,10 @@
 {
     "page": {
+        "titles": {
+            "home": "Startseite",
+            "dashboard": "Dashboard",
+            "settings": "Einstellungen"
+        },
         "navigation": {
             "home": "Startseite",
             "dashbord": "Dashboard",

@@ -4,9 +4,6 @@ import { parseJWT } from "$lib/functions/parse-jwt";
 
 export type jwtStoreType = {
     jwtToken: string,
-    authCreated: Date,
-    authRefreshed: Date,
-    authExpires: Date,
 }
 
 export type jwtDataType = {
@@ -31,14 +28,7 @@ jwtStore.subscribe((jwt) => {
         // roles: parsedJWT?.roles,
     })
 
-    const jwtToken = JSON.stringify({
-        jwtToken: jwt.jwtToken,
-        authCreated: jwt.authCreated,
-        authRefreshed: jwt.authRefreshed,
-        authExpires: jwt.authExpires
-    })
-
-    Cookies.set("jwt", jwtToken, {
+    Cookies.set("jwt", jwt.jwtToken, {
         sameSite: "lax",
     })
 })
@@ -49,12 +39,8 @@ export function loginUserFromCookie() {
         return
     }
 
-    const userJWT = JSON.parse(userJWTString) as jwtStoreType
     jwtStore.set({
-        jwtToken: userJWT.jwtToken,
-        authCreated: userJWT.authCreated,
-        authRefreshed: userJWT.authRefreshed,
-        authExpires: userJWT.authExpires,
+        jwtToken: userJWTString,
     })
 }
 

@@ -13,4 +13,5 @@ func NewUserSvc(storage UserStorage) *UserSvc {
 type UserStorage interface {
 	GetUserByCredentials(username, password string) (*UserWithPermission, error)
 	GetUserByUUID(uuid string) (*UserWithPermission, error)
+	SetPasswordByID(uuid, newPassword string) error
 }

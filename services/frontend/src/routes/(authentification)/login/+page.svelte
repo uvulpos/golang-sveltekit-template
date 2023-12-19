@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Banner from "$lib/components/banner/banner.svelte";
   import Button from "$lib/components/button/button.svelte";
   import Textinput from "$lib/components/input/textinput.svelte";
   import { loginUser } from "$lib/stores/jwt/jwt-functions";
@@ -21,9 +22,7 @@
 <div class="loginform">
   <div class="form">
     {#if loginFailed}
-      <div class="errormessage">
-        <p>{$_("page.login.wrong-credientials")}</p>
-      </div>
+      <Banner text={$_("page.login.wrong-credientials")}></Banner>
     {/if}
 
     <!-- svelte-ignore a11y-label-has-associated-control -->
@@ -78,12 +77,6 @@
                 flex-direction: column
                 gap: .5rem
 
-                input
-                    border: none
-                    padding: .3rem .7rem
-                    border: 1px solid #fff
-                    border-radius: 5px
-                    outline: none
             .submit
                 margin-top: .5rem
 

@@ -5,16 +5,15 @@ import (
 	_ "github.com/uvulpos/go-svelte/swagger-docs"
 )
 
-//	@title			Fiber Example API
-//	@version		1.0
-//	@description	This is a sample swagger for Fiber
-//	@termsOfService	http://swagger.io/terms/
-//	@contact.name	API Support
-//	@contact.email	fiber@swagger.io
-//	@license.name	Apache 2.0
-//	@license.url	http://www.apache.org/licenses/LICENSE-2.0.html
-//	@host			localhost:8080
-//	@BasePath		/
 func main() {
+
+	// mailer := sendmail.NewMailer("mail.tim-riedl.de", 465, "sysintern@tim-riedl.de", "sysintern@tim-riedl.de", "4bbT::VQSZvUjS:iZLDn:mxTVQXFX3WnTL,PLDVqJRz:DWTdgJV3CPDen.7;4R;DrtqNFh")
+
+	// mail := mailer.NewMail()
+	// mail.SetReceipiants([]string{"mail@tim-riedl.de"})
+	// mail.SetSubject("hallo")
+	// mail.SetHTMLMessage("hallo welt")
+	// mail.SendMail()
+
 	cmd.Execute()
 }
