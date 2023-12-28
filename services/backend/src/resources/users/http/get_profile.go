@@ -20,7 +20,7 @@ func (h *UserHandler) HandleGetProfile(c *fiber.Ctx) error {
 		return c.Status(http.StatusUnauthorized).SendString(userErr.Error())
 	}
 
-	httpUser := ToUserWithPermission(user)
+	httpUser := ToSelfUserWithPermission(user)
 
 	responeJson, responeJsonErr := json.Marshal(httpUser)
 	if responeJsonErr != nil {

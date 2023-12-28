@@ -7,4 +7,7 @@ type UserHandler interface {
 	HandleLogout(c *fiber.Ctx) error
 	HandleChangePassword(c *fiber.Ctx) error
 	HandleGetProfile(c *fiber.Ctx) error
+	HandleCheckUsername(c *fiber.Ctx) error
+	HandleCheckEmail(c *fiber.Ctx) error
+	HandleUpdateUserData(c *fiber.Ctx) error
 }

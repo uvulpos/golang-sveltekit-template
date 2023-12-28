@@ -4,7 +4,7 @@ import (
 	"errors"
 )
 
-func (h *UserSvc) ChangePasswordByUsername(username, newPassword, oldPassword string) error {
+func (h *UserSvc) UpdatePasswordByUsername(username, newPassword, oldPassword string) error {
 
 	if newPassword == "" || oldPassword == "" {
 		return errors.New("password cannot be empty")

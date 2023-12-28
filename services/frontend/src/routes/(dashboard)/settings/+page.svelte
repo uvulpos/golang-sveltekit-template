@@ -1,11 +1,14 @@
 <script lang="ts">
+  import { checkEmail, checkUsername } from "$lib/api/self";
   import { changeUserPassword } from "$lib/api/login/change-password";
+  import { updateUser } from "$lib/api/self";
   import { getUser, type SelfUser } from "$lib/api/self/getUser";
   import Banner from "$lib/components/banner/banner.svelte";
   import Button from "$lib/components/button/button.svelte";
   import { CopyInput } from "$lib/components/input";
   import Textinput from "$lib/components/input/textinput.svelte";
   import { jwtDataStore } from "$lib/stores/jwt/jwt";
+  import { toast } from "$lib/stores/toast";
   import { onMount } from "svelte";
   import { _ } from "svelte-i18n";
 
@@ -21,23 +24,25 @@
     selfUserAccount = getUser();
   });
 
-  async function changePassword() {
-    if (password === passwordRepeat) {
-      let username: string = "";
-      if ($jwtDataStore !== undefined) {
-        username = $jwtDataStore?.username;
-      }
+  // async function changeUserData() {
+  //   selfUserAccount = updateUser();
+  // }
 
-      const changePasswordResponse = await changeUserPassword(
-        password,
-        oldPassword
-      );
-      console.log(changePasswordResponse);
-    } else {
-      console.log(
-        "error could not handle error case of changing user password"
+  async function changePassword() {
+    if (password !== passwordRepeat) {
+      toast.push(
+        "error",
+        "Error",
+        "could not change password. They are not equal"
       );
     }
+    let username: string = "";
+    if ($jwtDataStore !== undefined) {
+      username = $jwtDataStore?.username;
+    }
+
+    await changeUserPassword(password, oldPassword);
+    toast.push("success", "Success!", "Password got changed");
   }
 </script>
 
@@ -68,69 +73,74 @@
   </div>
   <div class="input-form">
     <h2>General Information</h2>
-    <!-- <pre>{JSON.stringify(selfUser, null, 4)}</pre> -->
-    <div class="flex-gap">
-      <CopyInput value={selfUser?.uuid} showDefaultMargin={false} />
-      <div class="grid-2-rows">
-        <Textinput
-          labelName="Username"
-          value={selfUser?.username}
-          disabled={selfUser?.auth_source !== "basic"}
-          showDefaultMargin={false}
-        />
-        <Textinput
-          labelName="Email"
-          value={selfUser?.email}
-          disabled={selfUser?.auth_source !== "basic"}
-          showDefaultMargin={false}
-        />
+    <form>
+      <div class="flex-gap">
+        <CopyInput value={selfUser?.uuid} showDefaultMargin={false} />
+        <div class="grid-2-rows">
+          <Textinput
+            labelName="Username"
+            value={selfUser?.username}
+            disabled={selfUser?.auth_source !== "basic"}
+            showDefaultMargin={false}
+            validateFunction={checkUsername}
+          />
+          <Textinput
+            labelName="Email"
+            value={selfUser?.email}
+            disabled={selfUser?.auth_source !== "basic"}
+            showDefaultMargin={false}
+            validateFunction={checkEmail}
+          />
+        </div>
+        <div>
+          <Button>Save</Button>
+        </div>
       </div>
-      <div>
-        <Button>Save</Button>
-      </div>
-    </div>
+    </form>
   </div>
 
   <br />
 
   <div class="input-form">
     <h2>Change Password</h2>
-    <div class="flex-gap">
-      <div>
-        <Textinput
-          disabled={selfUser?.auth_source !== "basic"}
-          type="password"
-          autocomplete="old-password"
-          bind:value={oldPassword}
-          labelName="Old Password"
-          showDefaultMargin={false}
-          placeholder="old password"
-        />
+    <form>
+      <div class="flex-gap">
+        <div>
+          <Textinput
+            disabled={selfUser?.auth_source !== "basic"}
+            type="password"
+            autocomplete="old-password"
+            bind:value={oldPassword}
+            labelName="Old Password"
+            showDefaultMargin={false}
+            placeholder="old password"
+          />
+        </div>
+        <div class="grid-2-rows">
+          <Textinput
+            disabled={selfUser?.auth_source !== "basic"}
+            type="password"
+            autocomplete="new-password"
+            bind:value={password}
+            labelName="Password"
+            showDefaultMargin={false}
+            placeholder="password"
+          />
+          <Textinput
+            disabled={selfUser?.auth_source !== "basic"}
+            type="password"
+            autocomplete="off"
+            bind:value={passwordRepeat}
+            labelName="Password again"
+            showDefaultMargin={false}
+            placeholder="repeat password"
+          />
+        </div>
+        <div>
+          <Button on:click={changePassword}>Save</Button>
+        </div>
       </div>
-      <div class="grid-2-rows">
-        <Textinput
-          disabled={selfUser?.auth_source !== "basic"}
-          type="password"
-          autocomplete="new-password"
-          bind:value={password}
-          labelName="Password"
-          showDefaultMargin={false}
-          placeholder="password"
-        />
-        <Textinput
-          disabled={selfUser?.auth_source !== "basic"}
-          type="password"
-          autocomplete="off"
-          bind:value={passwordRepeat}
-          labelName="Password again"
-          showDefaultMargin={false}
-          placeholder="repeat password"
-        />
-      </div>
-      <div>
-        <Button on:click={changePassword}>Save</Button>
-      </div>
-    </div>
+    </form>
   </div>
   <br />
 {:catch error}

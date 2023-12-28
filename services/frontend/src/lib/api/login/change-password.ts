@@ -2,7 +2,7 @@ export async function changeUserPassword(password: string, oldPassword: string):
     try {
         let request: Response
         let statusCode: number
-        request = await fetch("/api/login/change-password", {
+        request = await fetch("/api/v1/login/change-password", {
             method: "POST",
             body: JSON.stringify({
                 newPassword: password,

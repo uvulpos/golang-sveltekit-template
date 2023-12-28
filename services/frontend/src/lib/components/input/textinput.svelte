@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { toast } from "$lib/stores/toast";
+  import { debounce } from "throttle-debounce";
   import type { HTMLInputTypeAttribute } from "svelte/elements";
 
   export let labelName: string | undefined = undefined;
@@ -10,6 +12,45 @@
   export let placeholder: string = "";
   export let value: string = "";
   export let disabled: boolean = false;
+  export let validateFunction:
+    | undefined
+    | ((input: string) => Promise<boolean | null>) = undefined;
+
+  type validStatus = "empty" | "invalid" | "valid" | "checking" | "unknown";
+
+  let isValid: validStatus = "empty";
+
+  const debounceFunc = debounce(2000, (textValue: string) => {
+    runValidation(textValue);
+  });
+
+  async function onInputHandler() {
+    if (validateFunction === undefined) return;
+    isValid = "checking";
+    debounceFunc(value);
+  }
+
+  async function runValidation(textValue: string) {
+    if (validateFunction === undefined) return;
+    const result = await validateFunction(textValue);
+    if (result === null) {
+      toast.push(
+        "error",
+        "Internal Server Error",
+        `Could not validate ${name}`
+      );
+      isValid = "unknown";
+      toast.push("error", "Internal Server Error", "could not validate input");
+      return;
+    }
+
+    if (result === true) {
+      isValid = "valid";
+      return;
+    }
+
+    isValid = "invalid";
+  }
 </script>
 
 <label class:showDefultMargin={showDefaultMargin}>
@@ -17,25 +58,32 @@
     <span>{labelName}</span>
   {/if}
 
-  {#if type === "password"}
-    <input
-      {name}
-      {autocomplete}
-      type="password"
-      {placeholder}
-      bind:value
-      {disabled}
-    />
-  {:else}
-    <input
-      {name}
-      {autocomplete}
-      type="text"
-      {placeholder}
-      bind:value
-      {disabled}
-    />
-  {/if}
+  <div class="input">
+    {#if type === "password"}
+      <input
+        {name}
+        {autocomplete}
+        type="password"
+        {placeholder}
+        bind:value
+        {disabled}
+        on:input={onInputHandler}
+      />
+    {:else}
+      <input
+        {name}
+        {autocomplete}
+        type="text"
+        {placeholder}
+        bind:value
+        {disabled}
+        on:input={onInputHandler}
+      />
+    {/if}
+    {#if isValid !== "empty"}
+      <img src={`/assets/vector/status-${isValid}.svg`} alt="validation icon" />
+    {/if}
+  </div>
 </label>
 
 <style lang="sass">
@@ -47,15 +95,23 @@
       gap: .5rem
       &.showDefultMargin
         margin: 1rem
-      input
-          border: none
-          padding: .5rem 1rem
-          border-radius: 5px
-          outline: none
-          font-size: 1rem
-          background-color: $ui-inputs-textinputs-background
-          color: $ui-font-color
-          &:disabled
-            cursor: not-allowed
-            opacity: .3
+      
+      .input
+        display: flex
+        align-items: center
+        justify-content: space-between
+        padding: .5rem 1rem
+        border-radius: 5px
+        font-size: 1rem
+        background-color: $ui-inputs-textinputs-background
+        input
+            unset: all
+            flex-grow: 1
+            border: none
+            outline: none
+            background: none
+            color: $ui-font-color
+            &:disabled
+              cursor: not-allowed
+              opacity: .3
 </style>

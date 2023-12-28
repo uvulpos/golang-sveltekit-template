@@ -23,3 +23,14 @@ type UserPermission struct {
 	Description string
 	Identifier  string
 }
+
+func (u UserWithPermission) IsSameUser(uuid string) bool {
+	return u.Id.String() == uuid
+}
+
+func (u *UserWithPermission) IsSameUserOrUndefined(uuid string) bool {
+	if u == nil {
+		return true
+	}
+	return u.Id.String() == uuid
+}

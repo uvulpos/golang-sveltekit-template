@@ -23,7 +23,7 @@ func (h *UserHandler) HandleChangePassword(c *fiber.Ctx) error {
 		return err
 	}
 
-	authErr := h.service.ChangePasswordByUsername(username, payload.NewPassword, payload.OldPassword)
+	authErr := h.service.UpdatePasswordByUsername(username, payload.NewPassword, payload.OldPassword)
 	if authErr != nil {
 		return c.Status(http.StatusBadRequest).SendString(authErr.Error())
 	}
