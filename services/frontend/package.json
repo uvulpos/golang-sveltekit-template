@@ -20,7 +20,7 @@
         "svelte-loading-spinners": "^0.3.4",
         "tslib": "^2.4.1",
         "typescript": "^5.0.0",
-        "vite": "^5.0.0"
+        "vite": "^5.0.11"
     },
     "type": "module",
     "dependencies": {
