@@ -10,6 +10,7 @@
         "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
     },
     "devDependencies": {
+        "@macfja/svelte-multi-adapter": "^1.0.2",
         "@sveltejs/adapter-auto": "^3.0.0",
         "@sveltejs/adapter-static": "^3.0.0",
         "@sveltejs/kit": "^2.0.3",

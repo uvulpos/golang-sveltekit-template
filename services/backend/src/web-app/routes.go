@@ -21,6 +21,7 @@ func (a *App) createRoutes(router *fiber.App) {
 	apiV1.Post("logout", a.UserHandler.HandleLogout)
 
 	apiV1.Use(middlewares.Authentication)
+	apiV1.Post("refresh-jwt", a.UserHandler.HandleJWTRefresh)
 	apiV1.Post("login/is-available-email", a.UserHandler.HandleCheckEmail)
 	apiV1.Post("login/is-available-username", a.UserHandler.HandleCheckUsername)
 	apiV1.Post("login/change-password", a.UserHandler.HandleChangePassword)

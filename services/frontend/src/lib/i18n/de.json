@@ -20,7 +20,39 @@
             "allrightsreserved": "Alle Rechte Vorbehalten."
         },
         "login": {
+            "username": "Username / E-Mail",
+            "password": "Passwort",
+            "login": "Login",
+            "password-forgotten": "Passwort vergessen",
             "wrong-credientials": "Username / Password ist inkorrekt"
+        },
+        "password-forgotten": {
+            "username": "Username / E-Mail",
+            "login": "Einloggen",
+            "rather-login": "Doch besser einloggen"
+        },
+        "settings": {
+            "ldap-user-no-edit-header": "Warnung!",
+            "ldap-user-no-edit-text": "Du verwendest nicht die integrierte Nutzerverwaltung. Zur Änderung von persöhnlichen Information, benutze bitte ein anderes Tool / oder wende dich bitte an deinen Administrator. Falls Daten mit einem anderen Systemn syncronisiert werden müssen, kann dies eine kleine Weile dauern."
+        }
+    },
+    "banners": {
+        "warning": "Warnung",
+        "information": "Information",
+        "error": "Fehler",
+        "custom": {
+            "not-update-userdata": {
+                "header": "Nutzerdaten konnten nicht geupdatet werden",
+                "body": "Der Server hat die Änderungen abgelehnt. Überprüfe nochmal deine Werte und versuche es (später) erneut."
+            },
+            "not-refresh-session": {
+                "header": "Die Session konnte nicht aktualisiert werden.",
+                "body": "Bitte logge dich einmal aus und wieder ein, damit alle Änderungen korrekt übernommen werden können."
+            },
+            "successful-updated": {
+                "header": "Daten wurden erfolgreich geupdatet",
+                "body": "Die Daten wurden erfolgreich gespeichert"
+            }
         }
     },
     "error": {

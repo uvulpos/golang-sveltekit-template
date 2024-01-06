@@ -18,7 +18,7 @@ func NewUserSvc(storage UserStorage) *UserSvc {
 type UserStorage interface {
 	CreateTransaction() (*sqlx.Tx, error)
 	GetUserByCredentials(username, password string) (*UserWithPermission, error)
-	GetUserByUUID(uuid string) (*UserWithPermission, error)
+	GetUserByUUID(tx *sqlx.Tx, uuid string) (*UserWithPermission, error)
 	GetUserByUsername(tx *sqlx.Tx, username string) (*UserWithPermission, error)
 	GetUserByEmail(tx *sqlx.Tx, email string) (*UserWithPermission, error)
 	SetPasswordByID(uuid, newPassword string) error

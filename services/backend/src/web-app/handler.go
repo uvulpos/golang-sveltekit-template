@@ -10,4 +10,5 @@ type UserHandler interface {
 	HandleCheckUsername(c *fiber.Ctx) error
 	HandleCheckEmail(c *fiber.Ctx) error
 	HandleUpdateUserData(c *fiber.Ctx) error
+	HandleJWTRefresh(c *fiber.Ctx) error
 }

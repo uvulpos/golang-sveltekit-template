@@ -2,6 +2,9 @@
   import { toast } from "$lib/stores/toast";
   import { debounce } from "throttle-debounce";
   import type { HTMLInputTypeAttribute } from "svelte/elements";
+  import { createEventDispatcher } from "svelte";
+
+  const dispatch = createEventDispatcher();
 
   export let labelName: string | undefined = undefined;
   export let showDefaultMargin: boolean = true;
@@ -25,6 +28,8 @@
   });
 
   async function onInputHandler() {
+    dispatch("inputchange", { value: value });
+
     if (validateFunction === undefined) return;
     isValid = "checking";
     debounceFunc(value);
@@ -81,7 +86,11 @@
       />
     {/if}
     {#if isValid !== "empty"}
-      <img src={`/assets/vector/status-${isValid}.svg`} alt="validation icon" />
+      <img
+        src={`/assets/vector/status-${isValid}.svg`}
+        class="validation-icon-{isValid}"
+        alt="validation icon"
+      />
     {/if}
   </div>
 </label>
@@ -114,4 +123,18 @@
             &:disabled
               cursor: not-allowed
               opacity: .3
+
+        img.validation-icon-checking
+          animation: rotateSpinner
+          animation-duration: 1.5s
+          animation-iteration-count: infinite
+
+
+    @keyframes rotateSpinner 
+      0%   
+        rotate: 0deg
+      100% 
+        rotate: 360deg
+
+
 </style>

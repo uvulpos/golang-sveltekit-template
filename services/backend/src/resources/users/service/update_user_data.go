@@ -32,7 +32,7 @@ func (h *UserSvc) UpdateUserData(payload httpModels.ChangeUserDataPayload, userU
 		return nil, updatedUserErr
 	}
 
-	updatedUser, updatedUserErr := h.storage.GetUserByUUID(userUuid)
+	updatedUser, updatedUserErr := h.storage.GetUserByUUID(tx, userUuid)
 	if updatedUserErr != nil {
 		return nil, updatedUserErr
 	}

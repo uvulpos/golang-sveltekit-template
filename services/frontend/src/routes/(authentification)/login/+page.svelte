@@ -27,32 +27,43 @@
 
     <!-- svelte-ignore a11y-label-has-associated-control -->
     <label>
-      <span>Username / E-Mail</span>
+      <span>{$_("page.login.username")}</span>
       <Textinput
         name="username"
         autocomplete="username"
         placeholder="username"
+        showDefaultMargin={false}
         bind:value={username}
       />
     </label>
     <!-- svelte-ignore a11y-label-has-associated-control -->
     <label>
-      <span>Password</span>
+      <span>{$_("page.login.password")}</span>
       <Textinput
         name="password"
         autocomplete="off"
         type="password"
         placeholder="password"
+        showDefaultMargin={false}
         bind:value={password}
       />
     </label>
-    <div class="submit">
-      <Button on:click={tryLoginUser} type="submit">Login</Button>
+    <div class="last-row">
+      <div class="submit">
+        <Button on:click={tryLoginUser} type="submit"
+          >{$_("page.login.login")}</Button
+        >
+      </div>
+      <div>
+        <a href="/password-forgotten">{$_("page.login.password-forgotten")}?</a>
+      </div>
     </div>
   </div>
 </div>
 
 <style lang="sass">
+    @import "../../../lib/variables/sass/main"
+
     .loginform
         transform: translate(-50%,-50%)
         top: 50%
@@ -77,8 +88,14 @@
                 flex-direction: column
                 gap: .5rem
 
-            .submit
+            .last-row
+              display: flex
+              align-items: center
+              justify-content: space-between
+              gap: 1rem
+              .submit
                 margin-top: .5rem
-
+              a 
+                color: $ui-font-color
 
 </style>
