@@ -8,7 +8,7 @@
 
 <div class="header">
   <div class="content">
-    <p>Dashboard</p>
+    <p>{$_("page.dashboard.dashboard")}</p>
   </div>
 </div>
 

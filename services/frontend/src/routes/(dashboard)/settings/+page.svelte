@@ -28,7 +28,7 @@
 
 <div class="header">
   <div class="content">
-    <p>Settings</p>
+    <p>{$_("page.settings.settings")}</p>
   </div>
 </div>
 

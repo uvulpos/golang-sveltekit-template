@@ -63,13 +63,14 @@
 </script>
 
 <div class="input-form">
-  <h2>General Information</h2>
+  <h2>{$_("page.settings.general-information")}</h2>
   <form>
     <div class="flex-gap">
       <CopyInput value={uuid} showDefaultMargin={false} />
       <div class="grid-2-rows">
         <Textinput
-          labelName="Username"
+          labelName={$_("page.settings.username")}
+          placeholder={$_("page.settings.username")}
           value={username}
           disabled={authSource !== "basic"}
           showDefaultMargin={false}
@@ -77,7 +78,8 @@
           on:inputchange={handleUsernameUpdate}
         />
         <Textinput
-          labelName="Email"
+          labelName={$_("page.settings.email")}
+          placeholder={$_("page.settings.email")}
           value={email}
           disabled={authSource !== "basic"}
           showDefaultMargin={false}
@@ -86,7 +88,9 @@
         />
       </div>
       <div>
-        <Button on:click={async () => changeUserData(userAccount)}>Save</Button>
+        <Button on:click={async () => changeUserData(userAccount)}
+          >{$_("page.settings.save")}</Button
+        >
       </div>
     </div>
   </form>

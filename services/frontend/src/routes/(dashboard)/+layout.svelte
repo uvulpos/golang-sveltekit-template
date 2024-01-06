@@ -12,20 +12,20 @@
           <li>
             <a href="/dashboard">
               <img src="/assets/vector/home.svg" alt="Home house" />
-              <span>Dashboard</span>
+              <span>{$_("page.navigation.dashbord")}</span>
             </a>
           </li>
           <li><hr /></li>
           <li>
             <a href="/settings">
               <img src="/assets/vector/grinding-gear.svg" alt="Settings Gear" />
-              <span> Settings </span>
+              <span>{$_("page.navigation.settings")}</span>
             </a>
           </li>
           <li>
             <a href="/logout">
               <img src="/assets/vector/logout.svg" alt="Logout" />
-              <span> Logout </span>
+              <span> {$_("page.navigation.logout")} </span>
             </a>
           </li>
         </ul>

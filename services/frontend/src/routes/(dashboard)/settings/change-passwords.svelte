@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
   import { changeUserPassword } from "$lib/api/login";
   import type { SelfUser } from "$lib/api/self/getUser";
   import { Button } from "$lib/components/button";
@@ -39,9 +40,9 @@
           type="password"
           autocomplete="old-password"
           bind:value={oldPassword}
-          labelName="Old Password"
+          labelName={$_("page.settings.old-password")}
           showDefaultMargin={false}
-          placeholder="old password"
+          placeholder={$_("page.settings.old-password")}
         />
       </div>
       <div class="grid-2-rows">
@@ -50,18 +51,18 @@
           type="password"
           autocomplete="new-password"
           bind:value={password}
-          labelName="Password"
+          labelName={$_("page.settings.password")}
           showDefaultMargin={false}
-          placeholder="password"
+          placeholder={$_("page.settings.password")}
         />
         <Textinput
           disabled={userAccount?.auth_source !== "basic"}
           type="password"
           autocomplete="off"
           bind:value={passwordRepeat}
-          labelName="Password again"
+          labelName={$_("page.settings.repeat-password")}
           showDefaultMargin={false}
-          placeholder="repeat password"
+          placeholder={$_("page.settings.repeat-password")}
         />
       </div>
       <div>

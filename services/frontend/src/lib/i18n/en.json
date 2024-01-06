@@ -31,7 +31,19 @@
             "login": "Login",
             "rather-login": "rather log in"
         },
+        "dashboard": {
+            "dashboard": "Dashboard"
+        },
         "settings": {
+            "settings": "Settings",
+            "general-information": "General Information",
+            "username": "Username",
+            "email": "Email",
+            "save": "Save",
+            "change-password": "Change Password",
+            "old-password": "Old Password",
+            "password": "Password",
+            "repeat-password": "Repeat Passwort",
             "ldap-user-no-edit-header": "Warning!",
             "ldap-user-no-edit-text": "You are not using the integrated authentication tool. To update your personal information, please use another tool / ask your administrator. This may take some time when user data must be syncronized with another system."
         }
