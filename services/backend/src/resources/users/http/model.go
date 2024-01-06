@@ -4,7 +4,7 @@ import (
 	"github.com/uvulpos/go-svelte/src/resources/users/service"
 )
 
-type UserWithPermission struct {
+type SelfUserWithPermission struct {
 	Id                  string          `json:"uuid"`
 	Username            string          `json:"username"`
 	Email               string          `json:"email"`
@@ -20,10 +20,10 @@ type UserPermission struct {
 	Identifier string `json:"identifier"`
 }
 
-func ToUserWithPermission(serviceUser *service.UserWithPermission) *UserWithPermission {
+func ToSelfUserWithPermission(serviceUser *service.UserWithPermission) *SelfUserWithPermission {
 	permissions := toPermissions(serviceUser.Permissions)
 
-	return &UserWithPermission{
+	return &SelfUserWithPermission{
 		Id:                  serviceUser.Id.String(),
 		Username:            serviceUser.Username,
 		Email:               serviceUser.Email,

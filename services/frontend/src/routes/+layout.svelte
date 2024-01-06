@@ -4,6 +4,7 @@
   import { _ } from "svelte-i18n";
   import { loginUserFromCookie } from "$lib/stores/jwt/jwt";
   import { addMessages, getLocaleFromNavigator, init } from "svelte-i18n";
+  import { Toast } from "$lib/components/toast/index";
   import "@fontsource/inter";
 
   // import components
@@ -40,6 +41,9 @@
       <Navbar />
     </header>
     <div class="content">
+      <div class="toasts">
+        <Toast />
+      </div>
       <slot />
     </div>
     <footer>
@@ -63,6 +67,13 @@
     display: flex
     flex-direction: column
     min-height: 100vh
+
+    .content
+      .toasts
+        position: fixed 
+        z-index: 1000 
+        right: 0
+        margin-right: 3vw
 
     footer 
       margin-top: auto

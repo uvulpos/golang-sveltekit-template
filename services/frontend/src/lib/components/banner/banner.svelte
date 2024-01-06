@@ -3,7 +3,8 @@
 
   type BannerTypes = "error" | "information" | "warning";
 
-  export let text: string = "";
+  export let header: string | undefined = undefined;
+  export let text: string;
   export let type: BannerTypes = "error";
 
   $: typeClass = `banner-${type}`;
@@ -12,17 +13,17 @@
   function getTypeHeader(type: BannerTypes) {
     switch (type) {
       case "information":
-        return "Information";
+        return $_("banners.information");
       case "warning":
-        return "Warning";
+        return $_("banners.warning");
       default:
-        return "Error";
+        return $_("banners.error");
     }
   }
 </script>
 
 <div class="errormessage {typeClass}">
-  <span>{typeHeader}</span>
+  <span class="header">{header !== undefined ? header : typeHeader}</span>
   <p>{text}</p>
 </div>
 
@@ -37,6 +38,10 @@
             background-color: rgba(60,175,252,.2)
         &.banner-warning
             background-color: rgba(252,236,60,.2)
+
+        .header
+          font-size: 1.5rem
+          font-weight: bolder
 
         p
             padding: 0

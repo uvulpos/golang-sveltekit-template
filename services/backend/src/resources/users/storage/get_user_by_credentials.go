@@ -2,16 +2,15 @@ package storage
 
 import (
 	"errors"
-	"fmt"
 
 	"github.com/uvulpos/go-svelte/src/resources/users/service"
 	"golang.org/x/crypto/bcrypt"
 )
 
 func (h *UserStore) GetUserByCredentials(username, password string) (*service.UserWithPermission, error) {
-	// Mock due to problems with the sql driver, not happy about it yet
 	rows := h.dbstore.DB.QueryRowx(
-		"SELECT * from public.full_user_with_permission WHERE auth_source='basic' AND (username=$1 OR email=$2) LIMIT 1",
+		`SELECT * from public.full_user_with_permission 
+		WHERE auth_source='basic' AND (username=$1 OR email=$2) LIMIT 1;`,
 		username,
 		username,
 	)
@@ -27,7 +26,6 @@ func (h *UserStore) GetUserByCredentials(username, password string) (*service.Us
 
 	userPasswordVerifyErr := bcrypt.CompareHashAndPassword([]byte(user.Password.String), []byte(password))
 	if userPasswordVerifyErr != nil || user.Password.String == "" || password == "" {
-		fmt.Println(userPasswordVerifyErr)
 		return nil, errors.New("no user found")
 	}
 

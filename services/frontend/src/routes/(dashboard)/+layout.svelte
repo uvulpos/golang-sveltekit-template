@@ -9,12 +9,25 @@
     <div class="navigation">
       <div class="navigation-panel">
         <ul>
-          <li><a href="/dashboard">Dashboard</a></li>
-          <li>{$_("mock.something")}</li>
-          <li>{$_("mock.something-else")}</li>
+          <li>
+            <a href="/dashboard">
+              <img src="/assets/vector/home.svg" alt="Home house" />
+              <span>{$_("page.navigation.dashbord")}</span>
+            </a>
+          </li>
           <li><hr /></li>
-          <li><a href="/settings">Settings</a></li>
-          <li><a href="/logout">Logout</a></li>
+          <li>
+            <a href="/settings">
+              <img src="/assets/vector/grinding-gear.svg" alt="Settings Gear" />
+              <span>{$_("page.navigation.settings")}</span>
+            </a>
+          </li>
+          <li>
+            <a href="/logout">
+              <img src="/assets/vector/logout.svg" alt="Logout" />
+              <span> {$_("page.navigation.logout")} </span>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
@@ -49,6 +62,13 @@
                     text-decoration: none
                     color: $ui-font-color
                     font-weight: bolder
+                    display: flex
+                    align-items: center
+                    gap: .5rem
+                    img 
+                      filter: invert(1)
+                      height: 1rem
+                      width: 1rem
     
     .content
         flex-grow: 1
