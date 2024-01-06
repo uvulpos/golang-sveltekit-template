@@ -1,43 +1,24 @@
 <script lang="ts">
-  import { changeUserPassword } from "$lib/api/login/change-password";
-  import { getUser, type SelfUser } from "$lib/api/self/getUser";
-  import Banner from "$lib/components/banner/banner.svelte";
-  import Button from "$lib/components/button/button.svelte";
-  import { CopyInput } from "$lib/components/input";
-  import Textinput from "$lib/components/input/textinput.svelte";
-  import { jwtDataStore } from "$lib/stores/jwt/jwt";
-  import { onMount } from "svelte";
+  // i18n
   import { _ } from "svelte-i18n";
+  // svelte imports
+  import { onMount } from "svelte";
+  // apis
+  import { getUser, type SelfUser } from "$lib/api/self/getUser";
+  // components
+  import Banner from "$lib/components/banner/banner.svelte";
+  import GeneralInformation from "./general-information.svelte";
+  import ChangePassword from "./change-passwords.svelte";
 
   // requested data
   let selfUserAccount: Promise<SelfUser | null>;
-
-  // inputs
-  let oldPassword: string = "";
-  let password: string = "";
-  let passwordRepeat: string = "";
 
   onMount(() => {
     selfUserAccount = getUser();
   });
 
-  async function changePassword() {
-    if (password === passwordRepeat) {
-      let username: string = "";
-      if ($jwtDataStore !== undefined) {
-        username = $jwtDataStore?.username;
-      }
-
-      const changePasswordResponse = await changeUserPassword(
-        password,
-        oldPassword
-      );
-      console.log(changePasswordResponse);
-    } else {
-      console.log(
-        "error could not handle error case of changing user password"
-      );
-    }
+  function updateSelfUserAccount(e: CustomEvent) {
+    selfUserAccount = e.detail.selfUserAccount;
   }
 </script>
 
@@ -47,105 +28,35 @@
 
 <div class="header">
   <div class="content">
-    <p>Settings</p>
+    <p>{$_("page.settings.settings")}</p>
   </div>
 </div>
 
-<br />
-<br />
-
 {#await selfUserAccount}
   <p>Loading...</p>
-{:then selfUser}
+{:then userAccount}
+  <br />
+  <br />
   <div>
-    {#if selfUser?.auth_source !== "basic"}
+    {#if userAccount?.auth_source !== "basic"}
       <Banner
-        text="You are not using the integrated authentication tool. To update your
-        personal information, you must use another tool / ask your administrator"
+        text={$_("page.settings.ldap-user-no-edit-text")}
+        header={$_("page.settings.ldap-user-no-edit-header")}
         type="warning"
       ></Banner>
     {/if}
   </div>
-  <div class="input-form">
-    <h2>General Information</h2>
-    <!-- <pre>{JSON.stringify(selfUser, null, 4)}</pre> -->
-    <div class="flex-gap">
-      <CopyInput value={selfUser?.uuid} showDefaultMargin={false} />
-      <div class="grid-2-rows">
-        <Textinput
-          labelName="Username"
-          value={selfUser?.username}
-          disabled={selfUser?.auth_source !== "basic"}
-          showDefaultMargin={false}
-        />
-        <Textinput
-          labelName="Email"
-          value={selfUser?.email}
-          disabled={selfUser?.auth_source !== "basic"}
-          showDefaultMargin={false}
-        />
-      </div>
-      <div>
-        <Button>Save</Button>
-      </div>
-    </div>
-  </div>
 
+  <GeneralInformation
+    {userAccount}
+    on:updateSelfUserAccount={updateSelfUserAccount}
+  />
   <br />
-
-  <div class="input-form">
-    <h2>Change Password</h2>
-    <div class="flex-gap">
-      <div>
-        <Textinput
-          disabled={selfUser?.auth_source !== "basic"}
-          type="password"
-          autocomplete="old-password"
-          bind:value={oldPassword}
-          labelName="Old Password"
-          showDefaultMargin={false}
-          placeholder="old password"
-        />
-      </div>
-      <div class="grid-2-rows">
-        <Textinput
-          disabled={selfUser?.auth_source !== "basic"}
-          type="password"
-          autocomplete="new-password"
-          bind:value={password}
-          labelName="Password"
-          showDefaultMargin={false}
-          placeholder="password"
-        />
-        <Textinput
-          disabled={selfUser?.auth_source !== "basic"}
-          type="password"
-          autocomplete="off"
-          bind:value={passwordRepeat}
-          labelName="Password again"
-          showDefaultMargin={false}
-          placeholder="repeat password"
-        />
-      </div>
-      <div>
-        <Button on:click={changePassword}>Save</Button>
-      </div>
-    </div>
-  </div>
+  <ChangePassword {userAccount} />
   <br />
 {:catch error}
-  <p>Error: {error}</p>
+  <p>Could not load data. Try again later</p>
 {/await}
-
-<!-- 
-    if account is not of type basic dont make it deletable
- -->
-<!-- <div>
-  <h2>Delete Account</h2>
-  <div>
-    <Button>Delete Account</Button>
-  </div>
-</div> -->
 
 <style lang="sass">
       @import "../../../lib/variables/sass/main"
@@ -164,13 +75,4 @@
               p
                   font-weight: bolder
                   font-size: 2rem
-      .input-form
-        .flex-gap
-          display: flex
-          flex-direction: column
-          gap: 1.5rem 
-          .grid-2-rows
-            display: grid
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr))
-            gap: 1.5rem
 </style>

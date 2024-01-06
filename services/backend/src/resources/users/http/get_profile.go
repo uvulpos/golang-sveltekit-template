@@ -15,12 +15,12 @@ func (h *UserHandler) HandleGetProfile(c *fiber.Ctx) error {
 		return c.SendStatus(http.StatusUnauthorized)
 	}
 
-	user, userErr := h.service.GetUserByUUID(userUuid)
+	user, userErr := h.service.GetUserByUUID(nil, userUuid)
 	if userErr != nil {
 		return c.Status(http.StatusUnauthorized).SendString(userErr.Error())
 	}
 
-	httpUser := ToUserWithPermission(user)
+	httpUser := ToSelfUserWithPermission(user)
 
 	responeJson, responeJsonErr := json.Marshal(httpUser)
 	if responeJsonErr != nil {

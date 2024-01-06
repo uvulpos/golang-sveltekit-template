@@ -4,7 +4,7 @@ export async function loginUserByCredentials(username: string, password: string)
         let request: Response
         let statusCode: number
         let responseText: string
-        request = await fetch("/api/login", {
+        request = await fetch("/api/v1/login", {
             method: "POST",
             body: JSON.stringify({
                 username: username,

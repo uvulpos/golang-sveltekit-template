@@ -45,3 +45,4 @@ But don't worry, with this repository, I'm giving you the chance to make your in
 ## 🤝🏻 Thank you!
 
 - For this awesome gopher on the landing page [umbralynx](https://github.com/umbralynx)!
+- Gopher Assets by [egonelbre/gophers](https://github.com/egonelbre/gophers)

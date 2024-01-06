@@ -18,7 +18,7 @@ export async function getUser(): Promise<SelfUser | null> {
         let request: Response
         let statusCode: number
 
-        request = await fetch("/api/self/getProfile", {
+        request = await fetch("/api/v1/self/get-user-data", {
             method: "GET",
             headers: new Headers({ 'content-type': 'application/json' }),
         })
