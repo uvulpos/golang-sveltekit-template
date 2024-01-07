@@ -7,7 +7,10 @@ export type jwtStoreType = {
 }
 
 export type jwtDataType = {
+    uuid: string;
     username: string;
+    roleName: string;
+    permissions: string[];
 }
 
 export let jwtStore = writable<jwtStoreType | undefined>(undefined);
@@ -22,10 +25,13 @@ jwtStore.subscribe((jwt) => {
 
     // process answer
     const parsedJWT = parseJWT(jwt.jwtToken)
+    console.log(parsedJWT);
+
     jwtDataStore.set({
-        // uuid: parsedJWT?.{ "user-uuid"},
+        uuid: parsedJWT?.["user-uuid"],
         username: parsedJWT?.username,
-        // roles: parsedJWT?.roles,
+        roleName: parsedJWT?.roleName,
+        permissions: parsedJWT?.permissions,
     })
 
     Cookies.set("jwt", jwt.jwtToken, {

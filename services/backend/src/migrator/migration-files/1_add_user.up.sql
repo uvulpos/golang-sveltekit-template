@@ -62,13 +62,34 @@ INSERT INTO users (username, email, password, ldap_uuid, auth_source, role_id) V
 ('umbra', 'umbra@home.de', '$2a$08$J3nf0/vYoiG0HVrLOBneEum5b9zrZo64lBmf48Zxf8flgL0oY3RPy', NULL, 'basic', (SELECT id FROM roles WHERE name = 'User')),
 ('ldap-user', 'ldap-user@home.de', NULL, 'a56eff7d-5fb8-3574-92f1-136f6344777d', 'ldap', (SELECT id FROM roles WHERE name = 'User'));
 
+CREATE VIEW roles_with_permission_recursive AS 
+    WITH RECURSIVE cte AS (
+        SELECT r.id, r.name, r.inherit_from, rp.permission_id
+        FROM roles r
+        JOIN role_permissions rp ON rp.role_id = r.id
+        UNION ALL
+        SELECT cte.id, cte.name, r.inherit_from, rp.permission_id
+        FROM cte
+        JOIN roles r ON cte.inherit_from = r.id
+        JOIN role_permissions rp ON rp.role_id = r.id
+    ),
+    aggregated AS (
+        SELECT cte.id, cte.name, JSONB_AGG(DISTINCT p.*) AS permissions
+        FROM cte
+        JOIN permissions p ON p.id = cte.permission_id
+        GROUP BY cte.id, cte.name
+    )
+    SELECT * FROM aggregated;
+
+
 CREATE VIEW full_user_with_permission AS 
     SELECT 
         u.*, 
         r.name AS "role_name", 
-        JSON_AGG(p.*) AS "permissions" 
+        rpr.permissions        
     FROM users u 
         LEFT JOIN roles r ON u.role_id = r.id 
-        LEFT JOIN role_permissions rp ON rp.role_id = r.id 
-        LEFT JOIN permissions p ON rp.permission_id = p.id 
-    GROUP BY u.id, r.id;
+        LEFT JOIN roles_with_permission_recursive rpr ON r.id = rpr.id
+    GROUP BY u.id, r.id, rpr.permissions;
+
+

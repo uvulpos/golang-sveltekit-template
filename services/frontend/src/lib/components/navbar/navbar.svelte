@@ -52,6 +52,19 @@
                       </span>
                     </a>
                   </li>
+                  {#if $jwtDataStore?.permissions.includes("GREET_ADMIN")}
+                    <li>
+                      <a href="/admin-settings">
+                        <img
+                          src="/assets/vector/user-tie.svg"
+                          alt="Admin User"
+                        />
+                        <span>
+                          {$_("page.navigation.admin-settings")}
+                        </span>
+                      </a>
+                    </li>
+                  {/if}
                   <li>
                     <a href="/logout">
                       <img src="/assets/vector/logout.svg" alt="Logout" />

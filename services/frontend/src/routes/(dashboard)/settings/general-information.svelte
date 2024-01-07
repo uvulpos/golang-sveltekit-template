@@ -11,10 +11,13 @@
   import { createEventDispatcher } from "svelte";
 
   export let userAccount: SelfUser | null;
-  let uuid = userAccount?.uuid ?? "unknown";
+
+  let uuid = userAccount?.uuid ?? $_("error.general.unknown");
   let email = userAccount?.email ?? "";
   let username = userAccount?.username ?? "";
-  let authSource = userAccount?.auth_source ?? "unknown";
+  let authSource = userAccount?.auth_source ?? $_("error.general.unknown");
+  let roleName = userAccount?.role_name ?? $_("error.general.unknown");
+  let permissions = userAccount?.permissions ?? [];
 
   const dispatch = createEventDispatcher();
 
@@ -66,7 +69,18 @@
   <h2>{$_("page.settings.general-information")}</h2>
   <form>
     <div class="flex-gap">
-      <CopyInput value={uuid} showDefaultMargin={false} />
+      <div class="grid-2-rows">
+        <CopyInput
+          value={uuid}
+          showDefaultMargin={false}
+          labelName={$_("page.settings.uuid")}
+        />
+        <CopyInput
+          value={roleName}
+          showDefaultMargin={false}
+          labelName={$_("page.settings.role-name")}
+        />
+      </div>
       <div class="grid-2-rows">
         <Textinput
           labelName={$_("page.settings.username")}

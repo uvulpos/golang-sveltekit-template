@@ -9,6 +9,7 @@
             "home": "Startseite",
             "dashbord": "Dashboard",
             "settings": "Einstellungen",
+            "admin-settings": "Admin Einstellungen",
             "login": "Login",
             "logout": "Logout",
             "goto-landingpage": "Gehe zur Landingpage"
@@ -34,9 +35,18 @@
         "dashboard": {
             "dashboard": "Dashboard"
         },
+        "admin-settings": {
+            "admin-settings": "Admin Einstellungen",
+            "user-management": {
+                "user-management": "Nutzerverwaltung"
+            }
+        },
         "settings": {
             "settings": "Einstellungen",
             "general-information": "Grundeinstellungen",
+            "uuid": "UUID",
+            "role-name": "Rollenname",
+            "permissions": "Berechtigungen",
             "username": "Nutzername",
             "email": "E-Mail",
             "save": "Speichern",
@@ -68,6 +78,9 @@
         }
     },
     "error": {
+        "general": {
+            "unknown": "Unbekannt"
+        },
         "http": {
             "statuscode": {
                 "401": {
