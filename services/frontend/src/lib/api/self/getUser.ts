@@ -9,7 +9,7 @@ export type SelfUser = {
     "email": string;
     "auth_source": string
     "suspendet": boolean
-    "roleName": string
+    "role_name": string
     "permissions": Array<UserPermission>
 }
 

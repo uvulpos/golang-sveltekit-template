@@ -1,15 +1,15 @@
 <script lang="ts">
-  import { jwtDataStore } from "$lib/stores/jwt/jwt";
+  // i18n
   import { _ } from "svelte-i18n";
 </script>
 
 <svelte:head>
-  <title>{$_("page.titles.dashboard")}</title>
+  <title>{$_("page.titles.settings")}</title>
 </svelte:head>
 
 <div class="header">
   <div class="content">
-    <p>{$_("page.dashboard.dashboard")}</p>
+    <p>{$_("page.admin-settings.admin-settings")}</p>
   </div>
 </div>
 
