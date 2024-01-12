@@ -5,7 +5,6 @@ go 1.21
 require (
 	github.com/google/uuid v1.5.0
 	github.com/keighl/barkup v0.0.0-20170220130926-692ec4e5a83a
-	github.com/swaggo/swag v1.16.2
 	gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df
 )
 
@@ -38,6 +37,7 @@ require (
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/subosito/gotenv v1.6.0 // indirect
 	github.com/swaggo/files/v2 v2.0.0 // indirect
+	github.com/swaggo/swag v1.16.2 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.51.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
@@ -55,9 +55,9 @@ require (
 require (
 	github.com/cortesi/termlog v0.0.0-20210222042314-a1eec763abec
 	github.com/fatih/color v1.16.0
-	golang.org/x/crypto v0.17.0
+	golang.org/x/crypto v0.18.0
 	golang.org/x/net v0.19.0 // indirect
-	golang.org/x/term v0.15.0 // indirect
+	golang.org/x/term v0.16.0 // indirect
 )
 
 require (
@@ -71,6 +71,6 @@ require (
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/spf13/cobra v1.8.0
 	github.com/spf13/viper v1.18.2
-	golang.org/x/sys v0.15.0 // indirect
+	golang.org/x/sys v0.16.0 // indirect
 
 )
