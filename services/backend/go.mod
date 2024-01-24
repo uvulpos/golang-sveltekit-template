@@ -3,7 +3,7 @@ module github.com/uvulpos/go-svelte
 go 1.21
 
 require (
-	github.com/google/uuid v1.5.0
+	github.com/google/uuid v1.6.0
 	github.com/keighl/barkup v0.0.0-20170220130926-692ec4e5a83a
 	gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df
 )
