@@ -21,7 +21,7 @@ func NewJWT(user *userService.UserWithPermission) (string, error) {
 	t = jwt.NewWithClaims(jwt.SigningMethodHS512, jwt.MapClaims{
 		"user-uuid":   user.Id.String(),
 		"username":    user.Username,
-		"roleName":    user.RoleName,
+		"roleName":    user.Role.Name,
 		"permissions": roleIndicators,
 	})
 	return t.SignedString(key)

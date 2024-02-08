@@ -6,15 +6,16 @@ type Configuration struct {
 }
 
 type Webserver struct {
-	Port        string `mapstructure:"port"`
-	NoFrontend  string `mapstructure:"nofrontend"`
-	ShowSwagger string `mapstructure:"showswagger"`
+	Port        int  `mapstructure:"port"`
+	NoFrontend  bool `mapstructure:"nofrontend"`
+	ShowSwagger bool `mapstructure:"showswagger"`
 }
 
 type DatabaseCredentials struct {
 	Host     string `mapstructure:"host"`
-	Port     string `mapstructure:"port"`
+	Port     int    `mapstructure:"port"`
 	Username string `mapstructure:"username"`
 	Password string `mapstructure:"password"`
 	Database string `mapstructure:"database"`
+	SslMode  bool   `mapstructure:"sslmode"`
 }

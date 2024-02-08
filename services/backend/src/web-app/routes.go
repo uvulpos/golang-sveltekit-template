@@ -20,13 +20,20 @@ func (a *App) createRoutes(router *fiber.App) {
 	apiV1.Post("login", a.UserHandler.HandleLogin)
 	apiV1.Post("logout", a.UserHandler.HandleLogout)
 
+	// login
 	apiV1.Use(middlewares.Authentication)
 	apiV1.Post("refresh-jwt", a.UserHandler.HandleJWTRefresh)
 	apiV1.Post("login/is-available-email", a.UserHandler.HandleCheckEmail)
 	apiV1.Post("login/is-available-username", a.UserHandler.HandleCheckUsername)
 	apiV1.Post("login/change-password", a.UserHandler.HandleChangePassword)
+
+	// own user operations
 	apiV1.Get("self/get-user-data", a.UserHandler.HandleGetProfile)
 	apiV1.Post("self/update-user-data", a.UserHandler.HandleUpdateUserData)
+
+	// user administration
+	apiV1.Get("users", a.UserHandler.HandleGetUsers)
+	apiV1.Get("user/:useruuid", a.UserHandler.HandleGetUser)
 
 	apiV1.Use(Handle404)
 	api.Use(Handle404)

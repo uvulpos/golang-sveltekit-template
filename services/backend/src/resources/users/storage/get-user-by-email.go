@@ -11,9 +11,9 @@ func (h *UserStore) GetUserByEmail(tx *sqlx.Tx, email string) (*service.UserWith
 	var rows *sqlx.Rows
 	var rowErr error
 	if tx == nil {
-		rows, rowErr = h.dbstore.DB.Queryx("SELECT * from public.full_user_with_permission WHERE email=$1 LIMIT 1", email)
+		rows, rowErr = h.dbstore.DB.Queryx("SELECT * from public.user_with_permission WHERE email=$1 LIMIT 1", email)
 	} else {
-		rows, rowErr = tx.Queryx("SELECT * from public.full_user_with_permission WHERE email=$1 LIMIT 1", email)
+		rows, rowErr = tx.Queryx("SELECT * from public.user_with_permission WHERE email=$1 LIMIT 1", email)
 	}
 
 	if rowErr != nil {

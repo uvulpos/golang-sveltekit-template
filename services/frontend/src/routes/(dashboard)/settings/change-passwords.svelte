@@ -4,10 +4,12 @@
   import type { SelfUser } from "$lib/api/self/getUser";
   import { Button } from "$lib/components/button";
   import Textinput from "$lib/components/input/textinput.svelte";
-  import { jwtDataStore } from "$lib/stores/jwt/jwt";
   import { toast } from "$lib/stores/toast";
+  import type { ManagedUser } from "$lib/api/self/getUserByUUID";
+  import { changeUserPasswordByUUID } from "$lib/api/login/change-password-by-uuid";
 
-  export let userAccount: SelfUser | null;
+  export let uuid: string | undefined = undefined;
+  export let userAccount: SelfUser | ManagedUser | null;
   let oldPassword: string = "";
   let password: string = "";
   let passwordRepeat: string = "";
@@ -17,16 +19,25 @@
       toast.push(
         "error",
         "Error",
-        "could not change password. They are not equal"
+        "could not change password. They are not equal."
       );
     }
-    let username: string = "";
-    if ($jwtDataStore !== undefined) {
-      username = $jwtDataStore?.username;
+
+    let pwChanged;
+    if (uuid === undefined) {
+      pwChanged = await changeUserPassword(password, oldPassword);
+    } else {
+      pwChanged = await changeUserPasswordByUUID(uuid, password, oldPassword);
     }
 
-    await changeUserPassword(password, oldPassword);
-    toast.push("success", "Success!", "Password got changed");
+    if (pwChanged) {
+      toast.push("success", "Success!", "Password got changed");
+      oldPassword = "";
+      password = "";
+      passwordRepeat = "";
+    } else {
+      toast.push("error", "Error!", "Password could not get changed.");
+    }
   }
 </script>
 

@@ -21,6 +21,18 @@ func NewUserStore(db database.Sql) *UserStore {
 	}
 }
 
+type UserWithRole struct {
+	Id                  uuid.UUID      `db:"id"`
+	Username            string         `db:"username"`
+	Email               string         `db:"email"`
+	Password            sql.NullString `db:"password"`
+	LdapUUID            sql.NullString `db:"ldap_uuid"`
+	AuthSource          string         `db:"auth_source"`
+	AdminReviewRequired bool           `db:"admin_review_required"`
+	RoleID              string         `db:"role_id"`
+	RoleName            string         `db:"role_name"`
+}
+
 type UserWithPermissions []UserWithPermission
 type UserWithPermission struct {
 	Id                  uuid.UUID       `db:"id"`
@@ -32,6 +44,7 @@ type UserWithPermission struct {
 	AdminReviewRequired bool            `db:"admin_review_required"`
 	RoleID              string          `db:"role_id"`
 	RoleName            string          `db:"role_name"`
+	RoleIdentifier      string          `db:"role_identifier"`
 	Permissions         UserPermissions `db:"permissions"`
 }
 
@@ -41,6 +54,33 @@ type UserPermission struct {
 	Name        string    `json:"name" db:"name"`
 	Description string    `json:"description" db:"description"`
 	Identifier  string    `json:"identifier" db:"identifier"`
+}
+
+func ToUserWithRoleSvcModels(u []UserWithRole) []*service.User {
+	var users []*service.User
+	for _, user := range u {
+		users = append(users, user.ToUserWithRoleSvcModel())
+	}
+	return users
+}
+
+func (u UserWithRole) ToUserWithRoleSvcModel() *service.User {
+	var ldapUuid *string = nil
+	if u.LdapUUID.Valid {
+		ldapUuid = &u.LdapUUID.String
+	}
+	return &service.User{
+		Id:                  u.Id,
+		Username:            u.Username,
+		Email:               u.Email,
+		LdapUUID:            ldapUuid,
+		AuthSource:          u.AuthSource,
+		AdminReviewRequired: u.AdminReviewRequired,
+		Role: &service.UserRole{
+			Id:   u.RoleID,
+			Name: u.RoleName,
+		},
+	}
 }
 
 func ToUserWithPermissionsSvcModels(u UserWithPermissions) []*service.UserWithPermission {
@@ -63,9 +103,11 @@ func (u UserWithPermission) ToUserWithPermissionsSvcModel() *service.UserWithPer
 		LdapUUID:            ldapUuid,
 		AuthSource:          u.AuthSource,
 		AdminReviewRequired: u.AdminReviewRequired,
-		RoleID:              u.RoleID,
-		RoleName:            u.RoleName,
-		Permissions:         toSvcPermissions(u.Permissions),
+		Role: &service.UserRole{
+			Id:   u.RoleID,
+			Name: u.RoleName,
+		},
+		Permissions: toSvcPermissions(u.Permissions),
 	}
 }
 

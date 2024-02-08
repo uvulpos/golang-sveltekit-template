@@ -4,33 +4,54 @@ Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"fmt"
+	"os"
+
+	"github.com/charmbracelet/lipgloss"
+	gomigrator "github.com/golang-migrate/migrate/v4"
 	"github.com/spf13/cobra"
-	migratedown "github.com/uvulpos/go-svelte/src/cmd/migrate/migrate-down"
-	migrateup "github.com/uvulpos/go-svelte/src/cmd/migrate/migrate-up"
-	migrateversion "github.com/uvulpos/go-svelte/src/cmd/migrate/migrate-version"
+	"github.com/uvulpos/go-svelte/src/helper/branding"
+	"github.com/uvulpos/go-svelte/src/helper/config"
+	"github.com/uvulpos/go-svelte/src/migrator"
 )
 
-// migrateCmd represents the migrate command
 var MigrateCmd = &cobra.Command{
 	Use:   "migrate-db",
-	Short: "Migrate your database to the newest/highest or a stable version",
-	Long: `Migrate your database to the newest/highest or a stable version. 
-
-🚨 This command is for experts only who know what they are doing 🚨
-
-This makes sense, when you just updated the application via a package manager 
-and you need to migrate everything to the newest version. If you notice an error 
-in the application, check your version and specify the database migration ID, 
-which you can find in the release notes.
-`,
-
+	Short: "🚀 Migrate your database to a newer version",
+	Long:  `🚀 Migrate your database to a newer version`,
 	Run: func(cmd *cobra.Command, args []string) {
-		cmd.Help()
+
+		configuration := config.LoadData()
+		branding.PrintBranding()
+		err := migrator.NewMigrator(configuration).MigrateUp()
+
+		messageStyle := lipgloss.NewStyle().Bold(true)
+		successMessageStyle := messageStyle.Foreground(lipgloss.Color("#1eb523"))
+		errorMessageStyle := messageStyle.Foreground(lipgloss.Color("#c42f2d"))
+
+		if err != nil {
+
+			switch err {
+			case gomigrator.ErrNoChange:
+				fmt.Println(successMessageStyle.Render("Database is on the newest version"))
+			case gomigrator.ErrNilVersion:
+				fmt.Errorf("%s\n", errorMessageStyle.Render("No Migration found."))
+			case gomigrator.ErrInvalidVersion:
+				fmt.Errorf("%s\n", errorMessageStyle.Render("Database is on a newer version than your software. Please use the newer version."))
+			case gomigrator.ErrLocked:
+				fmt.Errorf("%s\n", errorMessageStyle.Render("Database is currently locked by another application."))
+			case gomigrator.ErrLockTimeout:
+				fmt.Errorf("%s\n", errorMessageStyle.Render("Database Migration timed out."))
+			default:
+				panic(err)
+			}
+
+			os.Exit(0)
+		}
+
+		fmt.Println(successMessageStyle.Render("Database Migration was successful"))
+		os.Exit(0)
 	},
 }
 
-func init() {
-	MigrateCmd.AddCommand(migrateup.MigrateUpCmd)
-	MigrateCmd.AddCommand(migratedown.MigrateDownCmd)
-	MigrateCmd.AddCommand(migrateversion.MigrateUpCmd)
-}
+func init() {}

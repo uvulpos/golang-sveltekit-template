@@ -12,7 +12,8 @@
             "admin-settings": "Admin Settings",
             "login": "Login",
             "logout": "Logout",
-            "goto-landingpage": "Go to landingpage"
+            "goto-landingpage": "Go to landingpage",
+            "environment": "Environment"
         },
         "home": {
             "welcome-human": "Welcome Human"
@@ -37,6 +38,9 @@
         },
         "admin-settings": {
             "admin-settings": "Admin Settings",
+            "user-management-link": "User management",
+            "role-management-link": "Role management",
+            "permission-management-link": "Permission management",
             "user-management": {
                 "user-management": "User Management"
             }

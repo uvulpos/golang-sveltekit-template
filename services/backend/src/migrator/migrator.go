@@ -3,11 +3,13 @@ package migrator
 import (
 	"database/sql"
 	"embed"
+	"net/http"
 
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/golang-migrate/migrate/v4/database/postgres"
-	"github.com/golang-migrate/migrate/v4/source/iofs"
+	"github.com/golang-migrate/migrate/v4/source/httpfs"
 	_ "github.com/lib/pq"
+	"github.com/uvulpos/go-svelte/src/helper/config"
 	dbHelper "github.com/uvulpos/go-svelte/src/helper/database"
 )
 
@@ -18,29 +20,25 @@ type Migrator struct {
 	db *sql.DB
 }
 
-func NewMigrator() *Migrator {
+func NewMigrator(configuration *config.Configuration) *Migrator {
 	return &Migrator{
-		db: dbHelper.CreateDatabase().DB.DB,
+		db: dbHelper.CreateDatabase(configuration).DB.DB,
 	}
 }
 
-func (migrator Migrator) setupMigration() (*migrate.Migrate, error) {
-	source, err := iofs.New(migrationDir, "migration-files")
+func (m Migrator) MigrateUp() error {
+	driver, err := postgres.WithInstance(m.db, new(postgres.Config))
 	if err != nil {
-		return nil, err
+		return err
 	}
-
-	db, err := postgres.WithInstance(migrator.db, &postgres.Config{})
+	sourceInstance, err := httpfs.New(http.FS(migrationDir), "migration-files")
 	if err != nil {
-		return nil, err
+		return err
 	}
-
-	m, err := migrate.NewWithInstance("iofs", source, "postgres", db)
-	if err != nil {
-		return nil, err
+	migrator, migratorErr := migrate.NewWithInstance("httpfs", sourceInstance, "postgres", driver)
+	if migratorErr != nil {
+		return migratorErr
 	}
-
-	// migrateBackup.CreateBuckup()
-
-	return m, nil
+	err = migrator.Up()
+	return err
 }

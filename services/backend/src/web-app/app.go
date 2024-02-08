@@ -14,6 +14,7 @@ import (
 	_ "github.com/uvulpos/go-svelte/swagger-docs"
 
 	"github.com/uvulpos/go-svelte/src/assets"
+	"github.com/uvulpos/go-svelte/src/helper/config"
 	dbHelper "github.com/uvulpos/go-svelte/src/helper/database"
 
 	userHttp "github.com/uvulpos/go-svelte/src/resources/users/http"
@@ -25,9 +26,9 @@ type App struct {
 	UserHandler UserHandler
 }
 
-func NewApp() *App {
+func NewApp(configuration *config.Configuration) *App {
 
-	dbConn := dbHelper.CreateDatabase()
+	dbConn := dbHelper.CreateDatabase(configuration)
 
 	userStore := userStorage.NewUserStore(dbConn)
 	userSvc := userService.NewUserSvc(userStore)
@@ -38,7 +39,7 @@ func NewApp() *App {
 	}
 }
 
-func (a *App) RunApp(showFrontend, showSwagger bool, webserverPort int) {
+func (a *App) RunApp(configuration *config.Configuration) {
 
 	publicFS, err := fs.Sub(assets.SvelteFS, "frontend")
 	if err != nil {
@@ -60,7 +61,7 @@ func (a *App) RunApp(showFrontend, showSwagger bool, webserverPort int) {
 		router.Get("/swagger/*", swagger.HandlerDefault)
 	}
 
-	if showFrontend {
+	if !configuration.Webserver.NoFrontend {
 		router.Use("/", filesystem.New(filesystem.Config{
 			Root:         http.FS(publicFS),
 			NotFoundFile: "index.html",
@@ -69,7 +70,24 @@ func (a *App) RunApp(showFrontend, showSwagger bool, webserverPort int) {
 
 	router.Use(Handle404)
 
-	serverPort := fmt.Sprintf(":%d", webserverPort)
+	serverPort := fmt.Sprintf(":%d", configuration.Webserver.Port)
 	log.Printf("server listens on %s\n", serverPort)
 	router.Listen(serverPort)
+}
+
+func (a *App) ReturnAppInE2EMode() *fiber.App {
+
+	router := fiber.New(fiber.Config{
+		DisableStartupMessage: true,
+		ErrorHandler: func(c *fiber.Ctx, err error) error {
+			// for internal use you can print error to response
+			// "Unexpected Error Occured " + "\n" + err.Error()
+			return c.Status(fiber.StatusInternalServerError).SendString("Unexpected Error Occured")
+		},
+	})
+
+	a.createRoutes(router)
+	router.Use(Handle404)
+
+	return router
 }

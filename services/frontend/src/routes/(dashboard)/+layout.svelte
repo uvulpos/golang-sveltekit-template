@@ -15,7 +15,6 @@
               <span>{$_("page.navigation.dashbord")}</span>
             </a>
           </li>
-          <li><hr /></li>
           <li>
             <a href="/settings">
               <img src="/assets/vector/grinding-gear.svg" alt="Settings Gear" />
@@ -24,7 +23,7 @@
           </li>
           {#if $jwtDataStore?.permissions.includes("GREET_ADMIN")}
             <li>
-              <a href="/admin-settings">
+              <a href="/settings/admin-settings">
                 <img src="/assets/vector/user-tie.svg" alt="Admin User" />
                 <span>{$_("page.navigation.admin-settings")}</span>
               </a>
@@ -50,37 +49,48 @@
 <style lang="sass">
     @import "../../lib/variables/sass/main"
     .root
-        padding: 0 2rem
+        padding: 0 2rem 0 0 
         display: flex
         gap: 2rem
-    .navigation
-        margin: 2rem 0
-        .navigation-panel
-            border-radius: 5px
-            border: 1px solid $ui-font-color
-            padding: 1rem 2rem
-            ul
-                padding: 0
-                list-style-type: none
+        width: 100%
+        .navigation
+            background-color: $ui-background-secondary
+            min-width: clamp(200px, 20ch, 25vw)
+            .navigation-panel
+                border-radius: 5px
+                padding: 1rem .5rem
                 display: flex
                 flex-direction: column
+                justify-content: space-between
                 gap: .5rem
-
-                a
-                    text-decoration: none
-                    color: $ui-font-color
-                    font-weight: bolder
+                ul
+                    padding: 0
+                    list-style-type: none
                     display: flex
-                    align-items: center
-                    gap: .5rem
-                    img 
-                      filter: invert(1)
-                      height: 1rem
-                      width: 1rem
-    
-    .content
-        flex-grow: 1
-        padding: 2rem 0
+                    flex-direction: column
+                    gap: .2rem 0
+
+                    a
+                        text-decoration: none
+                        color: $ui-font-color
+                        font-weight: bolder
+                        display: flex
+                        align-items: center
+                        gap: .5rem
+                        padding: .5rem .5rem 
+                        &:hover
+                          background-color: darken($ui-background-secondary, 3%)
+                        img 
+                          filter: invert(1)
+                          height: 1.3rem
+                          width: 1.3rem
+        
+        .content
+            padding: 2rem 0
+            flex-grow: 1
+            max-width: 1000px
+            margin: 0 auto
+              
 
 
 </style>
