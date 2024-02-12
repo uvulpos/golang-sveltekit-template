@@ -72,8 +72,11 @@ require (
 )
 
 require (
-	github.com/go-sqlx/sqlx v1.3.6
+	github.com/go-sqlx/sqlx v1.3.7
 	github.com/go-webauthn/webauthn v0.10.1
+)
+
+require (
 	github.com/gofiber/fiber/v2 v2.52.0
 	github.com/gofiber/swagger v0.1.14
 	github.com/golang-jwt/jwt/v5 v5.2.0
