@@ -1,5 +1,6 @@
 <script lang="ts">
   import { loginUserByWebAuthNBegin } from "$lib/api/login/fido-login-begin";
+  import { loginUserByWebAuthNFinish } from "$lib/api/login/fido-register-finish";
   import { Button } from "$lib/components/button";
 
   function bufferDecode(value: string): Uint8Array {
@@ -39,23 +40,25 @@
     return credential;
   }
 
-  function loginWithWebAuthNFinish(originalCredential: Credential | null | undefined) {
+  async function loginWithWebAuthNFinish(
+    originalCredential: Credential | null | undefined
+  ) {
     if (originalCredential == null) {
-        return;
-      }
+      return;
+    }
 
-      const credentials: PasskeyCredentials =
-        originalCredential as PasskeyCredentials;
+    const credentials: PasskeyCredentials =
+      originalCredential as PasskeyCredentials;
 
-      let attestationObject = credentials.response.attestationObject;
-      let clientDataJSON = credentials.response.clientDataJSON;
-      let rawId = credentials.rawId;
+    let attestationObject = credentials.response.attestationObject;
+    let clientDataJSON = credentials.response.clientDataJSON;
+    let rawId = credentials.rawId;
 
-      await loginUserByWebAuthNFinish()
+    const result = await loginUserByWebAuthNFinish();
   }
 
   async function loginWithWebAuthN() {
-    loginWithWebAuthNBegin().then(loginWithWebAuthNFinish)
+    loginWithWebAuthNBegin().then(loginWithWebAuthNFinish);
   }
 
   interface PasskeyCredentials {
