@@ -17,6 +17,10 @@ func (a *App) createRoutes(router *fiber.App) {
 
 	apiV1 := api.Group("v1")
 
+	// FIDO2
+	apiV1.Get("u2f/login", a.PasskeyHandler.BeginWebAuthNRegistration)
+	apiV1.Post("u2f/login", a.PasskeyHandler.FinishWebAuthNRegistration)
+
 	apiV1.Post("login", a.UserHandler.HandleLogin)
 	apiV1.Post("logout", a.UserHandler.HandleLogout)
 
@@ -26,6 +30,10 @@ func (a *App) createRoutes(router *fiber.App) {
 	apiV1.Post("login/is-available-email", a.UserHandler.HandleCheckEmail)
 	apiV1.Post("login/is-available-username", a.UserHandler.HandleCheckUsername)
 	apiV1.Post("login/change-password", a.UserHandler.HandleChangePassword)
+
+	// FIDO2
+	apiV1.Get("u2f/register", a.PasskeyHandler.BeginWebAuthNRegistration)
+	apiV1.Post("u2f/register", a.PasskeyHandler.FinishWebAuthNRegistration)
 
 	// own user operations
 	apiV1.Get("self/get-user-data", a.UserHandler.HandleGetProfile)

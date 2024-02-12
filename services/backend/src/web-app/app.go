@@ -16,26 +16,43 @@ import (
 	"github.com/uvulpos/go-svelte/src/assets"
 	"github.com/uvulpos/go-svelte/src/helper/config"
 	dbHelper "github.com/uvulpos/go-svelte/src/helper/database"
+	"github.com/uvulpos/go-svelte/src/helper/webauthn"
 
 	userHttp "github.com/uvulpos/go-svelte/src/resources/users/http"
 	userService "github.com/uvulpos/go-svelte/src/resources/users/service"
 	userStorage "github.com/uvulpos/go-svelte/src/resources/users/storage"
+
+	passkeyHttp "github.com/uvulpos/go-svelte/src/resources/passkeys-fido/http"
+	passkeyService "github.com/uvulpos/go-svelte/src/resources/passkeys-fido/service"
+	passkeyStorage "github.com/uvulpos/go-svelte/src/resources/passkeys-fido/storage"
 )
 
 type App struct {
-	UserHandler UserHandler
+	UserHandler    UserHandler
+	PasskeyHandler PasskeyHandler
 }
 
 func NewApp(configuration *config.Configuration) *App {
 
 	dbConn := dbHelper.CreateDatabase(configuration)
 
+	webAuthNHandler := webauthn.CreateNewWebAuthN(
+		"Go Svelte Binary Localhost",
+		"web.localhost",
+		"http://web.localhost/",
+	)
+
 	userStore := userStorage.NewUserStore(dbConn)
 	userSvc := userService.NewUserSvc(userStore)
 	userHandler := userHttp.NewUserHandler(userSvc)
 
+	passkeyStore := passkeyStorage.NewUserStore(dbConn)
+	passkeySvc := passkeyService.NewPasskeySvc(passkeyStore, userSvc, webAuthNHandler)
+	passkeyHandler := passkeyHttp.NewPasskeyHandler(passkeySvc)
+
 	return &App{
-		UserHandler: userHandler,
+		UserHandler:    userHandler,
+		PasskeyHandler: passkeyHandler,
 	}
 }
 

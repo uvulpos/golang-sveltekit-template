@@ -9,6 +9,7 @@
   import Banner from "$lib/components/banner/banner.svelte";
   import GeneralInformation from "./general-information.svelte";
   import ChangePassword from "./change-passwords.svelte";
+  import Passkeys from "./passkeys.svelte";
 
   // requested data
   let selfUserAccount: Promise<SelfUser | null>;
@@ -51,6 +52,10 @@
     {userAccount}
     on:updateSelfUserAccount={updateSelfUserAccount}
   />
+  {#if window.PublicKeyCredential}
+    <br />
+    <Passkeys />
+  {/if}
   <br />
   <ChangePassword {userAccount} />
   <br />

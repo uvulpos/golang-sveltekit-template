@@ -57,6 +57,7 @@ INSERT INTO role_permissions (role_id, permission_id) VALUES
 ((SELECT id FROM roles WHERE name = 'User'), (SELECT id FROM permissions WHERE identifier = 'GREET_USER')),
 ((SELECT id FROM roles WHERE name = 'Admin'), (SELECT id FROM permissions WHERE identifier = 'GREET_ADMIN')),
 ((SELECT id FROM roles WHERE name = 'Admin'), (SELECT id FROM permissions WHERE identifier = 'MANAGE_USERS'));
+dvdkgcridb
 
 -- password is default "123"
 INSERT INTO users (username, email, password, ldap_uuid, auth_source, role_id) VALUES
