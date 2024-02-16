@@ -15,7 +15,7 @@ local-release: .install-deps ## build all app versions locally
 	@(cd ./services/backend ; goreleaser release -f ../../.goreleaser.yaml --skip-publish --snapshot --clean)
 
 test-be: ## run backend tests
-	@docker compose -f compose-dev.yaml up backend-tests
+	@docker compose -f compose-dev.yaml up postgres backend-tests
 
 test-fe: ## run frontend tests
 	@docker compose -f compose-dev.yaml up fontend-tests

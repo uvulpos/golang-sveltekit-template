@@ -9,15 +9,17 @@
   import type { SelfUser } from "$lib/api/self/getUser";
   import { toast } from "$lib/stores/toast";
   import { createEventDispatcher } from "svelte";
+  import type { ManagedUser } from "$lib/api/self/getUserByUUID";
+  import { updateUserByUUID } from "$lib/api/self/updateUserByUUID";
 
-  export let userAccount: SelfUser | null;
+  export let uuid: string | undefined = undefined;
+  export let userAccount: SelfUser | ManagedUser | null;
 
-  let uuid = userAccount?.uuid ?? $_("error.general.unknown");
+  let userUuid = userAccount?.uuid ?? $_("error.general.unknown");
   let email = userAccount?.email ?? "";
   let username = userAccount?.username ?? "";
   let authSource = userAccount?.auth_source ?? $_("error.general.unknown");
   let roleName = userAccount?.role_name ?? $_("error.general.unknown");
-  let permissions = userAccount?.permissions ?? [];
 
   const dispatch = createEventDispatcher();
 
@@ -35,7 +37,12 @@
     updatedUsername = username ?? selfUser?.username ?? "";
     updatedEmail = email ?? selfUser?.email ?? "";
 
-    const selfUserAccount = updateUser(updatedUsername, updatedEmail);
+    let selfUserAccount;
+    if (uuid === undefined) {
+      selfUserAccount = updateUser(updatedUsername, updatedEmail);
+    } else {
+      selfUserAccount = updateUserByUUID(uuid, updatedUsername, updatedEmail);
+    }
     const newSelfUserAccount = await selfUserAccount;
     dispatch("updateSelfUserAccount", { selfUserAccount });
 
@@ -71,7 +78,7 @@
     <div class="flex-gap">
       <div class="grid-2-rows">
         <CopyInput
-          value={uuid}
+          value={userUuid}
           showDefaultMargin={false}
           labelName={$_("page.settings.uuid")}
         />

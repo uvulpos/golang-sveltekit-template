@@ -9,7 +9,7 @@ import (
 
 func (h *UserStore) GetUserByCredentials(username, password string) (*service.UserWithPermission, error) {
 	rows := h.dbstore.DB.QueryRowx(
-		`SELECT * from public.full_user_with_permission 
+		`SELECT * from public.user_with_permission 
 		WHERE auth_source='basic' AND (username=$1 OR email=$2) LIMIT 1;`,
 		username,
 		username,

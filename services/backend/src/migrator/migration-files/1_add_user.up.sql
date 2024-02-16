@@ -50,11 +50,14 @@ INSERT INTO roles (name, inherit_from) VALUES
 
 INSERT INTO permissions (name, description, identifier) VALUES 
 ('Admin Greet', 'A unique greeting that just an admin gets', 'GREET_ADMIN'),
-('User Greet', 'Just a nice everyones greet', 'GREET_USER');
+('User Greet', 'Just a nice everyones greet', 'GREET_USER'),
+('Manage Users', 'Create Update Read Delete Users', 'MANAGE_USERS');
 
 INSERT INTO role_permissions (role_id, permission_id) VALUES
 ((SELECT id FROM roles WHERE name = 'User'), (SELECT id FROM permissions WHERE identifier = 'GREET_USER')),
-((SELECT id FROM roles WHERE name = 'Admin'), (SELECT id FROM permissions WHERE identifier = 'GREET_ADMIN'));
+((SELECT id FROM roles WHERE name = 'Admin'), (SELECT id FROM permissions WHERE identifier = 'GREET_ADMIN')),
+((SELECT id FROM roles WHERE name = 'Admin'), (SELECT id FROM permissions WHERE identifier = 'MANAGE_USERS'));
+dvdkgcridb
 
 -- password is default "123"
 INSERT INTO users (username, email, password, ldap_uuid, auth_source, role_id) VALUES
@@ -82,7 +85,7 @@ CREATE VIEW roles_with_permission_recursive AS
     SELECT * FROM aggregated;
 
 
-CREATE VIEW full_user_with_permission AS 
+CREATE VIEW user_with_permission AS 
     SELECT 
         u.*, 
         r.name AS "role_name", 
@@ -92,4 +95,10 @@ CREATE VIEW full_user_with_permission AS
         LEFT JOIN roles_with_permission_recursive rpr ON r.id = rpr.id
     GROUP BY u.id, r.id, rpr.permissions;
 
-
+CREATE VIEW user_with_rolename AS 
+    SELECT 
+        u.*, 
+        r.name AS "role_name"
+    FROM users u 
+        LEFT JOIN roles r ON u.role_id = r.id 
+    GROUP BY u.id, r.id;

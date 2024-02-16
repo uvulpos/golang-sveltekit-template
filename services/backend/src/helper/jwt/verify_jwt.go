@@ -16,6 +16,10 @@ type AppJWTClaims struct {
 
 func VerifyJWToken(jwtToken string) (bool, *AppJWTClaims, error) {
 
+	if jwtToken == "" {
+		return false, nil, errors.New("no jwt set")
+	}
+
 	token, tokenErr := jwt.ParseWithClaims(jwtToken, &AppJWTClaims{}, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
