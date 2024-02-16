@@ -1,0 +1,30 @@
+FROM node:latest as frontendbuilder
+WORKDIR /app
+
+COPY services/frontend .
+
+# install dependencies
+RUN rm -R node_modules
+RUN npm install
+
+# ---------------------------------------------------
+FROM golang:latest as backendbuilder
+WORKDIR /app
+
+COPY services/backend .
+
+# install dependencies
+RUN go mod download
+
+# install frontend
+COPY --from=frontendbuilder /app/dist src/assets/frontend/
+
+RUN go build -o myapplication src/main.go
+
+# ---------------------------------------------------
+FROM scratch
+WORKDIR /app
+
+COPY --from=backendbuilder /app/myapplication /app/myapplication
+
+CMD [ "./myapplication" ]

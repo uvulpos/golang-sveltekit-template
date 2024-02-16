@@ -1,0 +1,17 @@
+FROM node:latest as frontendbuilder
+WORKDIR /app
+
+COPY services/frontend .
+
+# install dependencies
+RUN rm -R node_modules
+RUN npm install
+
+RUN npm run build
+
+# ---------------------------------------------------
+FROM nginx:latest 
+WORKDIR /usr/share/nginx/html
+
+RUN rm -rf ./*
+COPY --from=frontendbuilder /app/dist .
