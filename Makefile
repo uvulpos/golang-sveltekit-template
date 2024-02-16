@@ -7,9 +7,7 @@ dev: .install-deps ## start debugging in docker compose microservices (auto relo
 	@docker compose -f compose-dev.yaml up backend frontend reverse-proxy postgres gotify mailhog
 
 build-full: .install-deps ## build current plattform
-	@(cd ./services/frontend ; npm run build)
-	@(cd ./services/frontend ; cp -R dist/ ../backend/src/assets/frontend/)
-	@(cd ./services/backend ; go build -o ../../bin/app-for-this-system/ src/main.go) 
+	@bash ./devops/scripts/build-service/binary.sh
 
 local-release: .install-deps ## build all app versions locally
 	@(cd ./services/backend ; goreleaser release -f ../../.goreleaser.yaml --skip-publish --snapshot --clean)
@@ -19,6 +17,9 @@ test-be: ## run backend tests
 
 test-fe: ## run frontend tests
 	@docker compose -f compose-dev.yaml up fontend-tests
+
+build-dockerfile-binary:
+	@bash ./devops/scripts/build-container/binary.sh
 
 help: ## print our all commands to commandline
 	@echo "\033[34m"
