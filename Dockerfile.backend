@@ -1,0 +1,17 @@
+FROM golang:latest as backendbuilder
+WORKDIR /app
+
+COPY services/backend .
+
+# install dependencies
+RUN go mod download
+
+RUN go build -o myapplication src/main.go
+
+# ---------------------------------------------------
+FROM scratch
+WORKDIR /app
+
+COPY --from=backendbuilder /app/myapplication /app/myapplication
+
+CMD [ "./myapplication" ]
