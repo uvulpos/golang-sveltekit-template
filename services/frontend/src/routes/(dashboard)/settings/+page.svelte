@@ -52,10 +52,10 @@
     {userAccount}
     on:updateSelfUserAccount={updateSelfUserAccount}
   />
-  {#if window.PublicKeyCredential}
+  <!-- {#if window.PublicKeyCredential}
     <br />
     <Passkeys />
-  {/if}
+  {/if} -->
   <br />
   <ChangePassword {userAccount} />
   <br />

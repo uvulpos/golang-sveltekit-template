@@ -1,3 +1,3 @@
-export async function loginUserByWebAuthNFinish() {
+export async function loginUserByWebAuthNFinish(something: any) {
 
 }

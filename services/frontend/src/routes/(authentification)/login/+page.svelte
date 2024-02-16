@@ -59,12 +59,12 @@
         <a href="/password-forgotten">{$_("page.login.password-forgotten")}?</a>
       </div>
     </div>
-    {#if window.PublicKeyCredential}
+    <!-- {#if window.PublicKeyCredential}
       <hr style="width: 100%" />
       <div class="passkeys">
         <Button>Passkeys (experimental)</Button>
       </div>
-    {/if}
+    {/if} -->
   </div>
 </div>
 

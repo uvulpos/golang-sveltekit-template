@@ -13,11 +13,12 @@ func (webN *WebAuthN) BeginRegistration(user *WebAuthNUser) (*protocol.Credentia
 	return options, session, nil
 }
 
-// func (webN *WebAuthN) FinishRegistration() {
-// 	credential, err := webAuthn.FinishRegistration(user, session, r)
-// 	if err != nil {
-// 		// Handle Error and return.
+func (webN *WebAuthN) FinishRegistration() {
+	// _, err := webN.webAuthn.FinishRegistration(user, session, r)
+	// if err != nil {
+	// 	// Handle Error and return.
 
-// 		return
-// 	}
-// }
+	// 	return
+	// }
+
+}
