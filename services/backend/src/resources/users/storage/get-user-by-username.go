@@ -11,9 +11,9 @@ func (h *UserStore) GetUserByUsername(tx *sqlx.Tx, username string) (*service.Us
 	var rows *sqlx.Rows
 	var rowErr error
 	if tx == nil {
-		rows, rowErr = h.dbstore.DB.Queryx("SELECT * from public.full_user_with_permission WHERE username=$1 LIMIT 1", username)
+		rows, rowErr = h.dbstore.DB.Queryx("SELECT * from public.user_with_permission WHERE username=$1 LIMIT 1", username)
 	} else {
-		rows, rowErr = tx.Queryx("SELECT * from public.full_user_with_permission WHERE username=$1 LIMIT 1", username)
+		rows, rowErr = tx.Queryx("SELECT * from public.user_with_permission WHERE username=$1 LIMIT 1", username)
 	}
 	if rowErr != nil {
 		return nil, errors.New("no user found")

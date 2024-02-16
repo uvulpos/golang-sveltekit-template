@@ -4,7 +4,6 @@
   import { _ } from "svelte-i18n";
   import { loginUserFromCookie } from "$lib/stores/jwt/jwt";
   import { addMessages, getLocaleFromNavigator, init } from "svelte-i18n";
-  import { Toast } from "$lib/components/toast/index";
   import "@fontsource/inter";
 
   // import components
@@ -29,6 +28,7 @@
   });
 
   let preMount: boolean = true;
+
   onMount(() => {
     loginUserFromCookie();
     preMount = false;
@@ -41,9 +41,9 @@
       <Navbar />
     </header>
     <div class="content">
-      <div class="toasts">
+      <!-- <div class="toasts">
         <Toast />
-      </div>
+      </div> -->
       <slot />
     </div>
     <footer>
@@ -69,12 +69,19 @@
     min-height: 100vh
 
     .content
+      flex-grow: 1
+      z-index: 8500
+      display: flex
+      justify-content: center
       .toasts
         position: fixed 
         z-index: 1000 
         right: 0
         margin-right: 3vw
 
+    header
+      box-shadow: 3px 3px 8px rgba(0,0,0,.2)
+      z-index: 9000
     footer 
       margin-top: auto
 </style>

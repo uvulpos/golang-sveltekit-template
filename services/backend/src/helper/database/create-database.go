@@ -4,16 +4,30 @@ import (
 	"fmt"
 
 	"github.com/go-sqlx/sqlx"
+	"github.com/uvulpos/go-svelte/src/helper/config"
 )
 
-func CreateDatabase() Sql {
+func CreateDatabase(configuration *config.Configuration) Sql {
+	dbHost := configuration.DB.Host
+	dbPort := configuration.DB.Port
+	dbUsername := configuration.DB.Username
+	dbPassword := configuration.DB.Password
+	dbDatabase := configuration.DB.Database
+
+	addr := fmt.Sprintf("%s:%d", dbHost, dbPort)
+
+	var sslMode string = "disable"
+	if configuration.DB.SslMode {
+		sslMode = "require"
+	}
+
 	connStr := fmt.Sprintf(
 		"postgres://%s:%s@%s/%s?sslmode=%s",
-		"postgres",
-		"postgres",
-		"postgres:5432",
-		"postgres",
-		"disable",
+		dbUsername,
+		dbPassword,
+		addr,
+		dbDatabase,
+		sslMode,
 	)
 
 	fmt.Println("DB CONN: ", connStr)

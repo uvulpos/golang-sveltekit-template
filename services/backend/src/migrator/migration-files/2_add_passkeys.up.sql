@@ -1,0 +1,4 @@
+-- CREATE TABLE IF NOT EXISTS passkeys (
+--     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+--     userid UUID
+-- );

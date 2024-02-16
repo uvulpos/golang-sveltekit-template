@@ -4,6 +4,21 @@ import (
 	"github.com/google/uuid"
 )
 
+type User struct {
+	Id                  uuid.UUID
+	Username            string
+	Email               string
+	LdapUUID            *string
+	AuthSource          string
+	AdminReviewRequired bool
+	Role                *UserRole
+}
+
+type UserRole struct {
+	Id   string
+	Name string
+}
+
 type UserWithPermission struct {
 	Id                  uuid.UUID
 	Username            string
@@ -11,8 +26,7 @@ type UserWithPermission struct {
 	LdapUUID            *string
 	AuthSource          string
 	AdminReviewRequired bool
-	RoleID              string
-	RoleName            string
+	Role                *UserRole
 	Permissions         UserPermissions
 }
 
@@ -33,4 +47,13 @@ func (u *UserWithPermission) IsSameUserOrUndefined(uuid string) bool {
 		return true
 	}
 	return u.Id.String() == uuid
+}
+
+func (up UserPermissions) IncludePermission(permissionIdentifier string) bool {
+	for _, permission := range up {
+		if permission.Identifier == permissionIdentifier {
+			return true
+		}
+	}
+	return false
 }

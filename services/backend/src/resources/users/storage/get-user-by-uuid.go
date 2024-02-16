@@ -10,7 +10,7 @@ import (
 func (h *UserStore) GetUserByUUID(tx *sqlx.Tx, uuid string) (*service.UserWithPermission, error) {
 
 	var rows *sqlx.Row
-	const sql = `SELECT * from public.full_user_with_permission WHERE id=$1 LIMIT 1`
+	const sql = `SELECT * from public.user_with_permission WHERE id=$1 LIMIT 1`
 	if tx == nil {
 		rows = h.dbstore.DB.QueryRowx(sql, uuid)
 	} else {

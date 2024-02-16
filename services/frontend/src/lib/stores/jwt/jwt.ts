@@ -25,8 +25,6 @@ jwtStore.subscribe((jwt) => {
 
     // process answer
     const parsedJWT = parseJWT(jwt.jwtToken)
-    console.log(parsedJWT);
-
     jwtDataStore.set({
         uuid: parsedJWT?.["user-uuid"],
         username: parsedJWT?.username,

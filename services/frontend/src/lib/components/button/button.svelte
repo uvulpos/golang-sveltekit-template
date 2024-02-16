@@ -1,9 +1,11 @@
 <script lang="ts">
   type ButtonType = "button" | "submit" | "reset" | null | undefined;
+  type ButtonSize = "default" | "small";
   export let type: ButtonType = "button";
+  export let size: ButtonSize = "default";
 </script>
 
-<button on:click {type}><slot /></button>
+<button on:click {type} class={size}><slot /></button>
 
 <style lang="sass">
     @import "../../variables/sass/main"
@@ -19,5 +21,10 @@
         &:hover
           color: darken($ui-font-color, 10%)
           background-color: darken($ui-color-primary, 10%)
+
+        &.small
+          padding: .35rem .65rem
+          font-size: .7rem
+
 
 </style>

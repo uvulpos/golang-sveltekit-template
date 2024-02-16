@@ -1,6 +1,7 @@
 <script lang="ts">
   import { jwtDataStore } from "$lib/stores/jwt/jwt";
   import { _ } from "svelte-i18n";
+  import { DeployedEnvironment } from "../../../config";
 </script>
 
 <header>
@@ -16,6 +17,11 @@
       Go Svelte!
     </span>
   </a>
+  {#if DeployedEnvironment != undefined && DeployedEnvironment != "PROD"}
+    <div style="color: red; font-weight: bold;">
+      <p>🚨 {DeployedEnvironment} {$_("page.navigation.environment")}</p>
+    </div>
+  {/if}
   <nav>
     <ul>
       {#if $jwtDataStore !== undefined}
@@ -54,7 +60,7 @@
                   </li>
                   {#if $jwtDataStore?.permissions.includes("GREET_ADMIN")}
                     <li>
-                      <a href="/admin-settings">
+                      <a href="/settings/admin-settings">
                         <img
                           src="/assets/vector/user-tie.svg"
                           alt="Admin User"
@@ -95,7 +101,7 @@
 
   header
     display: flex
-    justify-content: space-between
+    gap: 2rem
     padding: .2rem 1rem
     background-color: #272b2f
 
@@ -112,6 +118,7 @@
         object-fit: contain
     
     nav
+      margin-left: auto
       &>ul
         display: flex
         gap: .5rem

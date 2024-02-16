@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { loginUserByWebAuthNBegin } from "$lib/api/login/fido-login-begin";
   import Banner from "$lib/components/banner/banner.svelte";
   import Button from "$lib/components/button/button.svelte";
   import Textinput from "$lib/components/input/textinput.svelte";
@@ -58,6 +59,12 @@
         <a href="/password-forgotten">{$_("page.login.password-forgotten")}?</a>
       </div>
     </div>
+    <!-- {#if window.PublicKeyCredential}
+      <hr style="width: 100%" />
+      <div class="passkeys">
+        <Button>Passkeys (experimental)</Button>
+      </div>
+    {/if} -->
   </div>
 </div>
 
