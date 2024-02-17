@@ -1,0 +1,3 @@
+**/node_modules
+services/backend/src/assets/frontend/**
+!services/backend/src/assets/frontend/.gitkeep

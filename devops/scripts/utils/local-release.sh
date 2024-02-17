@@ -1,0 +1,1 @@
+(cd ./services/backend ; goreleaser release -f ../../.goreleaser.yaml --skip-publish --snapshot --clean)

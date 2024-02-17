@@ -1,7 +1,6 @@
 bin/
 services/frontend/.svelte-kit
 services/frontend/node_modules
-services/frontend.old/
-services/backend-1/src/assets/frontend
+services/backend/src/assets/frontend
 
 .DS_Store
