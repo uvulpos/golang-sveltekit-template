@@ -3,6 +3,7 @@ package migrator
 import (
 	"database/sql"
 	"embed"
+	"fmt"
 	"net/http"
 
 	"github.com/golang-migrate/migrate/v4"
@@ -21,8 +22,15 @@ type Migrator struct {
 }
 
 func NewMigrator(configuration *config.Configuration) *Migrator {
+	dbConn, dbConnErr := dbHelper.CreateDatabase(configuration)
+	if dbConn == nil || dbConn.DB == nil || dbConnErr != nil {
+		err := fmt.Errorf("could not connect to database")
+		if err != nil {
+			panic(err)
+		}
+	}
 	return &Migrator{
-		db: dbHelper.CreateDatabase(configuration).DB.DB,
+		db: (*dbConn).DB.DB,
 	}
 }
 

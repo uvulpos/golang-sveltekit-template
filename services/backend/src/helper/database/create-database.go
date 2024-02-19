@@ -7,7 +7,7 @@ import (
 	"github.com/uvulpos/go-svelte/src/helper/config"
 )
 
-func CreateDatabase(configuration *config.Configuration) Sql {
+func CreateDatabase(configuration *config.Configuration) (*Sql, error) {
 	dbHost := configuration.DB.Host
 	dbPort := configuration.DB.Port
 	dbUsername := configuration.DB.Username
@@ -32,19 +32,16 @@ func CreateDatabase(configuration *config.Configuration) Sql {
 
 	fmt.Println("DB CONN: ", connStr)
 	db, dbErr := sqlx.Connect("postgres", connStr)
-	// db, dbErr := sql.Open("postgres", connStr)
 	if dbErr != nil {
-		panic(dbErr)
+		return nil, dbErr
 	}
 
-	err := db.Ping()
-	if err != nil {
-		panic(err)
+	pingErr := db.Ping()
+	if pingErr != nil {
+		return nil, pingErr
 	}
 
-	var sqlWrapper Sql = Sql{
+	return &Sql{
 		DB: db,
-	}
-
-	return sqlWrapper
+	}, nil
 }

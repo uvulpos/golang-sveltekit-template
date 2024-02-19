@@ -7,6 +7,8 @@ import (
 )
 
 func LoadData() *Configuration {
+
+	config := createDefaultConfiguration()
 	fmt.Println("---- LOAD CONFIG")
 
 	viperInstance := viper.New()
@@ -20,19 +22,5 @@ func LoadData() *Configuration {
 
 	viperInstance.AutomaticEnv()
 
-	return &Configuration{
-		Webserver: Webserver{
-			Port:        3000,
-			NoFrontend:  false,
-			ShowSwagger: false,
-		},
-		DB: DatabaseCredentials{
-			Host:     "postgres",
-			Port:     5432,
-			Username: "postgres",
-			Password: "postgres",
-			Database: "postgres",
-			SslMode:  false,
-		},
-	}
+	return config
 }
