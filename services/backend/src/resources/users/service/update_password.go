@@ -6,8 +6,8 @@ import (
 	"github.com/go-sqlx/sqlx"
 )
 
-func (h *UserSvc) UpdatePasswordByUsername(tx *sqlx.Tx, userID, newPassword string) error {
-	if newPassword == "" {
+func (h *UserSvc) UpdatePassword(tx *sqlx.Tx, username, newPassword, oldPassword string) error {
+	if newPassword == "" || oldPassword == "" {
 		return errors.New("password cannot be empty")
 	}
 
@@ -21,7 +21,13 @@ func (h *UserSvc) UpdatePasswordByUsername(tx *sqlx.Tx, userID, newPassword stri
 		defer tx.Rollback()
 	}
 
-	user, userErr := h.GetUserByUUID(tx, userID)
+	tx, txErr := h.storage.CreateTransaction()
+	if txErr != nil {
+		return txErr
+	}
+	defer tx.Rollback()
+
+	user, userErr := h.GetAuthenticatedUserByCredentials(tx, username, oldPassword)
 	if userErr != nil {
 		return userErr
 	}

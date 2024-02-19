@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/uvulpos/go-svelte/src/helper/errors"
 	"github.com/uvulpos/go-svelte/src/helper/jwt"
 )
 
@@ -31,7 +30,7 @@ func (h *UserHandler) HandleJWTRefresh(c *fiber.Ctx) error {
 
 	token, tokenErr := jwt.NewJWT(user)
 	if tokenErr != nil {
-		return errors.NewInternalServerErrorApp("could not create jwt").ToHttpError()
+		return c.SendStatus(http.StatusInternalServerError)
 	}
 
 	c.SendString(token)

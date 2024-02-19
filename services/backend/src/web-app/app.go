@@ -34,7 +34,14 @@ type App struct {
 
 func NewApp(configuration *config.Configuration) *App {
 
-	dbConn := dbHelper.CreateDatabase(configuration)
+	dbConn, dbConnErr := dbHelper.CreateDatabase(configuration)
+	if dbConn == nil || dbConn.DB == nil || dbConnErr != nil {
+		err := fmt.Errorf("could not connect to database")
+		if err != nil {
+			panic(err)
+		}
+		return nil
+	}
 
 	webAuthNHandler := webauthn.CreateNewWebAuthN(
 		"Go Svelte Binary Localhost",
@@ -42,11 +49,11 @@ func NewApp(configuration *config.Configuration) *App {
 		"http://web.localhost/",
 	)
 
-	userStore := userStorage.NewUserStore(dbConn)
+	userStore := userStorage.NewUserStore(*dbConn)
 	userSvc := userService.NewUserSvc(userStore)
 	userHandler := userHttp.NewUserHandler(userSvc)
 
-	passkeyStore := passkeyStorage.NewUserStore(dbConn)
+	passkeyStore := passkeyStorage.NewUserStore(*dbConn)
 	passkeySvc := passkeyService.NewPasskeySvc(passkeyStore, userSvc, webAuthNHandler)
 	passkeyHandler := passkeyHttp.NewPasskeyHandler(passkeySvc)
 

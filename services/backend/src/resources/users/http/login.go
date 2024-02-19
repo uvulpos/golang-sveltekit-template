@@ -1,10 +1,10 @@
 package http
 
 import (
+	"errors"
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/uvulpos/go-svelte/src/helper/errors"
 	"github.com/uvulpos/go-svelte/src/helper/jwt"
 )
 
@@ -19,18 +19,15 @@ func (h *UserHandler) HandleLogin(c *fiber.Ctx) error {
 		return err
 	}
 
-	user, authErr := h.service.GetAuthenticatedUserByCredentials(payload.Username, payload.Password)
+	user, authErr := h.service.GetAuthenticatedUserByCredentials(nil, payload.Username, payload.Password)
 	if authErr != nil {
 		return c.Status(http.StatusUnauthorized).SendString(authErr.Error())
 	}
 
 	token, tokenErr := jwt.NewJWT(user)
 	if tokenErr != nil {
-		return errors.NewInternalServerErrorApp("could not create jwt").ToHttpError()
+		return errors.New("internal server error")
 	}
-
-	// authCookie := cookies.CreateAuthenticationFiberCookie(token)
-	// c.Cookie(authCookie)
 
 	c.SendString(token)
 
