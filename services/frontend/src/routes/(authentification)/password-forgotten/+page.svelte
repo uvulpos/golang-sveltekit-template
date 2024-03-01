@@ -24,8 +24,13 @@
       <!-- <Banner text={$_("page.login.wrong-credientials")}></Banner> -->
     {/if}
 
+    <img
+      src="/assets/memes/no-password-reset-implementation.png"
+      alt="no password forgotten implementation meme"
+    />
+
     <!-- svelte-ignore a11y-label-has-associated-control -->
-    <label>
+    <!-- <label>
       <span>{$_("page.password-forgotten.username")}</span>
       <Textinput
         name="username"
@@ -44,7 +49,7 @@
       <div>
         <a href="/login">{$_("page.password-forgotten.rather-login")}?</a>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
 
