@@ -3,7 +3,7 @@
 	@bash  ./devops/scripts/utils/install-dependencies.sh
 
 dev: .install-deps ## start debugging in docker compose microservices (auto reload)
-	@docker compose -f compose-dev.yaml up backend frontend reverse-proxy postgres gotify mailhog
+	@docker compose -f compose-dev.yaml up backend frontend reverse-proxy
 
 build-full: .install-deps ## build current plattform
 	@bash ./devops/scripts/build-service/binary.sh

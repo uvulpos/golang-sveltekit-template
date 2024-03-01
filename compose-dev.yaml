@@ -82,12 +82,13 @@ services:
     networks:
       - intranet
     # environments:
-
     depends_on:
       postgres:
         condition: service_healthy
-      gotify:
+      grafana:
         condition: service_started
+      # gotify:
+      #   condition: service_started
     restart: always
     labels:
       - "traefik.enable=true"
@@ -140,22 +141,22 @@ services:
       timeout: 5s
       retries: 5
 
-  gotify:
-    image: gotify/server-arm64 # may change due to architecture
-    volumes:
-      - "gosvelte-gotify:/app/data gotify/server"
-    ports:
-      - "8087:80"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.gotify.rule=Host(`web.localhost`)&&(PathPrefix(`/gotify`))"
-      - "traefik.http.routers.gotify.priority=3"
-      - "traefik.http.routers.gotify.service=gotify"
-      - "traefik.http.routers.gotify.entrypoints=web"
-      - "traefik.http.services.gotify.loadbalancer.server.port=80"
+  # gotify:
+  #   image: gotify/server-arm64 # may change due to architecture
+  #   volumes:
+  #     - "gosvelte-gotify:/app/data gotify/server"
+  #   ports:
+  #     - "8087:80"
+  #   labels:
+  #     - "traefik.enable=true"
+  #     - "traefik.http.routers.gotify.rule=Host(`web.localhost`)&&(PathPrefix(`/gotify`))"
+  #     - "traefik.http.routers.gotify.priority=3"
+  #     - "traefik.http.routers.gotify.service=gotify"
+  #     - "traefik.http.routers.gotify.entrypoints=web"
+  #     - "traefik.http.services.gotify.loadbalancer.server.port=80"
 
-      # - "traefik.http.routers.gotify.middlewares=gotify-stripprefix"
-      # - "traefik.http.middlewares.gotify-stripprefix.stripprefix.prefixes=/gotify"
+  #     # - "traefik.http.routers.gotify.middlewares=gotify-stripprefix"
+  #     # - "traefik.http.middlewares.gotify-stripprefix.stripprefix.prefixes=/gotify"
 
   mailhog:
     image: mailhog/mailhog
@@ -171,3 +172,17 @@ services:
     ports:
       - "8085:8080"
     command: start-dev
+
+  grafana:
+    image: grafana/grafana
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.grafana.rule=Host(`web.localhost`)&&PathPrefix(`/grafana`)"
+      - "traefik.http.routers.grafana.priority=2"
+      - "traefik.http.routers.grafana.service=grafana"
+      - "traefik.http.routers.grafana.entrypoints=web"
+      - "traefik.http.services.grafana.loadbalancer.server.port=3000"
+      - "traefik.http.middlewares.grafana-stripprefix.stripprefix.prefixes=/grafana"
+      - "traefik.http.routers.grafana.middlewares=gotify-stripprefix"
+    networks:
+      - intranet
