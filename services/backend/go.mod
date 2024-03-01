@@ -6,7 +6,7 @@ require (
 	github.com/charmbracelet/lipgloss v0.9.1
 	github.com/google/uuid v1.6.0
 	github.com/qeesung/image2ascii v1.0.1
-	github.com/swaggo/swag v1.16.3
+	github.com/swaggo/swag v1.16.3 // indirect
 )
 
 require (
@@ -64,8 +64,8 @@ require (
 require (
 	github.com/cortesi/termlog v0.0.0-20210222042314-a1eec763abec
 	github.com/fatih/color v1.16.0 // indirect
-	golang.org/x/crypto v0.19.0
-	golang.org/x/net v0.19.0 // indirect
+	golang.org/x/crypto v0.20.0
+	golang.org/x/net v0.21.0 // indirect
 	golang.org/x/term v0.17.0 // indirect
 )
 
