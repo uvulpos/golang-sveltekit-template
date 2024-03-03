@@ -4,3 +4,4 @@ services/frontend/node_modules
 services/backend/src/assets/frontend
 
 .DS_Store
+*.tgz
