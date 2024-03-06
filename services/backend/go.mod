@@ -3,7 +3,7 @@ module github.com/uvulpos/go-svelte
 go 1.22
 
 require (
-	github.com/charmbracelet/lipgloss v0.9.1
+	github.com/charmbracelet/lipgloss v0.10.0
 	github.com/google/uuid v1.6.0
 	github.com/qeesung/image2ascii v1.0.1
 	github.com/swaggo/swag v1.16.3 // indirect
@@ -37,7 +37,7 @@ require (
 	github.com/muesli/termenv v0.15.2 // indirect
 	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646 // indirect
 	github.com/pelletier/go-toml/v2 v2.1.1 // indirect
-	github.com/rivo/uniseg v0.4.4 // indirect
+	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/rogpeppe/go-internal v1.11.0 // indirect
 	github.com/sagikazarmark/locafero v0.4.0 // indirect
 	github.com/sagikazarmark/slog-shim v0.1.0 // indirect
