@@ -64,8 +64,8 @@ github.com/go-webauthn/webauthn v0.10.1 h1:+RFKj4yHPy282teiiy5sqTYPfRilzBpJyedrz
 github.com/go-webauthn/webauthn v0.10.1/go.mod h1:a7BwAtrSMkeuJXtIKz433Av99nAv01pdfzB0a9xkDnI=
 github.com/go-webauthn/x v0.1.8 h1:f1C6k1AyUlDvnIzWSW+G9rN9nbp1hhLXZagUtyxZ8nc=
 github.com/go-webauthn/x v0.1.8/go.mod h1:i8UNlGVt3oy6oAFcP4SZB1djZLx/4pbekCbWowjTaJg=
-github.com/gofiber/fiber/v2 v2.52.1 h1:1RoU2NS+b98o1L77sdl5mboGPiW+0Ypsi5oLmcYlgHI=
-github.com/gofiber/fiber/v2 v2.52.1/go.mod h1:KEOE+cXMhXG0zHc9d8+E38hoX+ZN7bhOtgeF2oT6jrQ=
+github.com/gofiber/fiber/v2 v2.52.2 h1:b0rYH6b06Df+4NyrbdptQL8ifuxw/Tf2DgfkZkDaxEo=
+github.com/gofiber/fiber/v2 v2.52.2/go.mod h1:KEOE+cXMhXG0zHc9d8+E38hoX+ZN7bhOtgeF2oT6jrQ=
 github.com/gofiber/swagger v1.0.0 h1:BzUzDS9ZT6fDUa692kxmfOjc1DZiloLiPK/W5z1H1tc=
 github.com/gofiber/swagger v1.0.0/go.mod h1:QrYNF1Yrc7ggGK6ATsJ6yfH/8Zi5bu9lA7wB8TmCecg=
 github.com/gogo/protobuf v1.3.2 h1:Ov1cvc58UF3b5XjBnZv7+opcTcQFZebYjWzi34vdm4Q=
