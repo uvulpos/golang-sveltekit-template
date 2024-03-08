@@ -1,0 +1,9 @@
+environments:
+  default: ./values/standalone/values-dev.yaml
+---
+releases:
+  - name: app
+    chart: ./standalone
+    version: ~0.0.1
+    namespace: application
+    installed: true
