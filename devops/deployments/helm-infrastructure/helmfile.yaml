@@ -1,0 +1,35 @@
+repositories:
+  - name: ingress-nginx
+    url: https://kubernetes.github.io/ingress-nginx
+  - name: goauthentik
+    url: https://charts.goauthentik.io/
+  - name: longhorn
+    url: https://charts.longhorn.io
+
+releases:
+  - name: ingress
+    chart: ingress-nginx/ingress-nginx
+    namespace: ingress
+    createNamespace: true
+    values:
+      - "./values/ingress-nginx.yaml"
+  
+  - name: longhorn
+    chart: longhorn/longhorn
+    version: 1.6.0
+    namespace: longhorn
+    createNamespace: true
+    values:
+      - "./values/storage-longhorn.yaml"
+  
+  # - name: authentik
+  #   chart: goauthentik/authentik
+  #   version: 2024.2.2
+  #   namespace: identityprovider
+  #   createNamespace: true
+  #   needs:
+  #     - ingress
+  #     - longhorn
+  #   values:
+  #     - "./values/authentik-identity-provider.yaml"
+  

@@ -1,0 +1,7 @@
+# civo settings
+civo_token  = ""
+civo_region = "FRA1"
+
+# civo cluster
+civo_kubernetes_size  = "g4s.kube.medium"
+civo_kubernetes_count = 3
