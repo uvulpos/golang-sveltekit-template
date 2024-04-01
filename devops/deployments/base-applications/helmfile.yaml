@@ -5,6 +5,8 @@ repositories:
     url: https://charts.goauthentik.io/
   - name: longhorn
     url: https://charts.longhorn.io
+  - name: bitnami
+    url: https://charts.bitnami.com/bitnami
 
 releases:
   - name: ingress
@@ -22,6 +24,22 @@ releases:
     values:
       - "./values/storage-longhorn.yaml"
   
+  - name: postgres
+    chart: bitnami/postgresql
+    namespace: postgres
+    createNamespace: true
+    needs:
+      - longhorn/longhorn
+    set:
+      - name: global.storageClass
+        value: longhorn
+      - name: global.postgresql.auth.postgresPassword
+        value: adminpw
+      - name: global.postgresql.auth.username
+        value: user
+      - name: global.postgresql.auth.password
+        value: userpassword
+  
   # - name: authentik
   #   chart: goauthentik/authentik
   #   version: 2024.2.2
@@ -30,6 +48,7 @@ releases:
   #   needs:
   #     - ingress
   #     - longhorn
+  #     - postgres
   #   values:
   #     - "./values/authentik-identity-provider.yaml"
   
