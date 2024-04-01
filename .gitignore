@@ -5,3 +5,6 @@ services/backend/src/assets/frontend
 
 .DS_Store
 *.tgz
+
+.input
+.secrets
