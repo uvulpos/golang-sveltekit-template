@@ -33,4 +33,4 @@ jobs:
       - name: delete kubeconfig secret
         run: gh secret delete KUBECONFIG_${{ inputs.cloud_provider }} --repo ${{ github.repository }}
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}

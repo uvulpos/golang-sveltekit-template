@@ -43,4 +43,4 @@ jobs:
       - name: store kubeconfig as secret
         run: gh secret set KUBECONFIG_${{ inputs.cloud_provider }} --body devops/deployments/.ci-pipeline/k8s.${{ inputs.cloud_provider }}.config --repo ${{ github.repository }}
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
