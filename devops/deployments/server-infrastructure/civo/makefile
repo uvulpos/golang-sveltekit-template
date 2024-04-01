@@ -5,4 +5,5 @@ apply:
 	@chmod 600 ../../.ci-pipeline/k8s.civo.config
 	
 destroy:
+	@terraform init
 	@terraform destroy -auto-approve

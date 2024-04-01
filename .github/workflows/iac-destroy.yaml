@@ -28,7 +28,7 @@ jobs:
       - name: deploy terraform
         run: (cd ./devops/deployments ; make destroy-infrastructure-${{ inputs.cloud_provider }})
 
-      - name: store kubeconfig as secret
+      - name: delete kubeconfig secret
         run: gh secret delete KUBECONFIG_${{ inputs.cloud_provider }} --repo ${{ github.repository }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
