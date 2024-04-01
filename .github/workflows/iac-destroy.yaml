@@ -27,6 +27,8 @@ jobs:
 
       - name: deploy terraform
         run: (cd ./devops/deployments ; make destroy-infrastructure-${{ inputs.cloud_provider }})
+        env:
+          TF_VAR_civo_token: ${{ secrets.civo_token }}
 
       - name: delete kubeconfig secret
         run: gh secret delete KUBECONFIG_${{ inputs.cloud_provider }} --repo ${{ github.repository }}
