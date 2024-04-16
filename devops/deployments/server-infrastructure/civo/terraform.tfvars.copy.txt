@@ -1,3 +1,10 @@
+# terraform backend
+tfbackend_objectstorage_bucketurl  = ""
+tfbackend_objectstorage_bucketkey  = "terraform.tfstate"
+tfbackend_objectstorage_bucketname = "iac-storage"
+tfbackend_objectstorage_accesskey  = ""
+tfbackend_objectstorage_secretkey  = ""
+
 # civo settings
 # civo_token  = ""
 civo_region = "FRA1"

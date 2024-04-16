@@ -1,3 +1,9 @@
+environments: 
+  civo-k3s: 
+
+  hetzner-microk8s: {}
+  azure-aks: {}
+
 repositories:
   - name: ingress-nginx
     url: https://kubernetes.github.io/ingress-nginx
