@@ -11,6 +11,9 @@ build-full: .install-deps ## build current plattform
 local-release: .install-deps ## build all app versions locally (via goreleaser)
 	@bash  ./devops/scripts/utils/local-release.sh
 
+storybook:
+	@(cd services/frontend ; npm run storybook)
+
 test-be: ## run golang tests
 	@docker compose -f compose-dev.yaml up postgres backend-tests
 
