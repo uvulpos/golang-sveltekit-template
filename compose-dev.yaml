@@ -115,6 +115,16 @@ services:
       - TERM=xterm-256color`
     command: ["sh", "-c", "cd /app && bash scripts/test-local-docker.sh"]
 
+  backend-tests-ci:
+    image: golang:latest
+    container_name: web-api-test
+    volumes:
+      - ./services/backend:/app
+    tty: true
+    environment:
+      - TERM=xterm-256color`
+    command: ["sh", "-c", "cd /app && bash scripts/test-local-docker.sh"]
+
   # -----------------------------------------------------------------------------------------------------
   #
   #       DATABASE
