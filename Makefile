@@ -18,7 +18,7 @@ test-fe: ## run sveltekit tests
 	@docker compose -f compose-dev.yaml up fontend-tests
 
 test-be-ci: ## run golang tests in ci pipeline
-	@docker compose -f compose-dev.yaml up backend-tests
+	@docker compose -f compose-dev.yaml up backend-tests-ci
 
 test-fe-ci: ## run sveltekit tests in ci pipeline
 	@docker compose -f compose-dev.yaml up fontend-tests
