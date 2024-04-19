@@ -12,10 +12,10 @@ local-release: .install-deps ## build all app versions locally (via goreleaser)
 	@bash  ./devops/scripts/utils/local-release.sh
 
 test-be: ## run golang tests
-	@docker compose -f compose-dev.yaml up postgres backend-tests
+	@docker compose -f compose-dev.yaml up --abort-on-container-exit postgres backend-tests
 
 test-fe: ## run sveltekit tests
-	@docker compose -f compose-dev.yaml up fontend-tests
+	@docker compose -f compose-dev.yaml up --abort-on-container-exit fontend-tests
 
 test-be-ci: ## run golang tests in ci pipeline
 	@mkdir -p ./service/backend/src/assets/frontend
