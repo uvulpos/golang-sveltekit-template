@@ -68,6 +68,21 @@ services:
       - intranet
     command: ["sh", "-c", "cd /app && npm install && npm run test"]
 
+  frontend-tests-ci:
+    image: node:latest
+    container_name: web-ui-test
+    restart: always
+    volumes:
+      - ./services/frontend/package.json:/app/package.json
+      - ./services/frontend/svelte.config.js:/app/svelte.config.js
+      - ./services/frontend/tsconfig.json:/app/tsconfig.json
+      - ./services/frontend/vite.config.ts:/app/vite.config.ts
+      - ./services/frontend/static:/app/static
+      - ./services/frontend/src:/app/src
+    networks:
+      - intranet
+    command: ["sh", "-c", "cd /app && npm install && npm run test"]
+
   # -----------------------------------------------------------------------------------------------------
   #
   #       BACKEND
