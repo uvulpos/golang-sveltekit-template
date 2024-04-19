@@ -1,0 +1,60 @@
+name: "CI: Test Software"
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test-backend:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+
+    services:
+      postgres:
+        image: postgis/postgis
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - "5432:5432"
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: run backend tests
+        if: ${{ always() }}
+        run: make test-be-ci
+
+  test-frontend:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: run frontend tests
+        if: ${{ always() }}
+        run: make test-fe-ci
+
+  test-result:
+    runs-on: ubuntu-latest
+    needs: [test-backend, test-frontend]
+    if: ${{ always() }}
+
+    steps:
+      - name: Check if any tests failed
+        run: |
+          if [ "${{ needs.test-backend.result }}" == "failure" ] || [ "${{ needs.test-frontend.result }}" == "failure" ]; then
+            echo "One or more tests failed."
+            exit 1
+          else
+            echo "All tests passed."
+          fi
