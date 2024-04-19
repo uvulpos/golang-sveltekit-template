@@ -29,17 +29,17 @@ jobs:
         with:
           fetch-depth: 0
 
-          - name: Wait for Postgres to become available (max 20 seconds)
-          run: |
-            timeout 20 bash -c 'until pg_isready -h localhost -p 5432 -U postgres; do
-              echo "Waiting for PostgreSQL to become available..."
-              sleep 2
-            done'
-            if ! pg_isready -h localhost -p 5432 -U postgres; then
-              echo "PostgreSQL is not available after 20 seconds."
-              exit 1
-            fi
-            echo "PostgreSQL is available now."
+      - name: Wait for Postgres to become available (max 20 seconds)
+        run: |
+          timeout 20 bash -c 'until pg_isready -h localhost -p 5432 -U postgres; do
+            echo "Waiting for PostgreSQL to become available..."
+            sleep 2
+          done'
+          if ! pg_isready -h localhost -p 5432 -U postgres; then
+            echo "PostgreSQL is not available after 20 seconds."
+            exit 1
+          fi
+          echo "PostgreSQL is available now."
 
       - name: run backend tests
         if: ${{ always() }}
