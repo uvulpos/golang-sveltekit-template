@@ -18,6 +18,7 @@ test-fe: ## run sveltekit tests
 	@docker compose -f compose-dev.yaml up fontend-tests
 
 test-be-ci: ## run golang tests in ci pipeline
+	@echo "Hello World" > ./service/backend/src/assets/frontend/test.txt
 	@docker compose -f compose-dev.yaml up --abort-on-container-exit backend-tests-ci
 
 test-fe-ci: ## run sveltekit tests in ci pipeline
