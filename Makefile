@@ -18,10 +18,10 @@ test-fe: ## run sveltekit tests
 	@docker compose -f compose-dev.yaml up fontend-tests
 
 test-be-ci: ## run golang tests in ci pipeline
-	@docker compose -f compose-dev.yaml up backend-tests-ci
+	@docker compose -f compose-dev.yaml up --abort-on-container-exit backend-tests-ci
 
 test-fe-ci: ## run sveltekit tests in ci pipeline
-	@docker compose -f compose-dev.yaml up fontend-tests
+	@docker compose -f compose-dev.yaml up --abort-on-container-exit fontend-tests
 
 build-dockerfile-binary: ## build one dockerimage that contains everything
 	@bash ./devops/scripts/build-container/binary.sh
