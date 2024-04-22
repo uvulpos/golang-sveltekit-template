@@ -21,7 +21,7 @@
         "svelte-check": "^3.6.3",
         "svelte-loading-spinners": "^0.3.4",
         "tslib": "^2.4.1",
-        "typescript": "^5.4.2",
+        "typescript": "^5.4.5",
         "vite": "^5.1.5"
     },
     "type": "module",
