@@ -61,7 +61,7 @@ require (
 	github.com/cortesi/termlog v0.0.0-20210222042314-a1eec763abec
 	github.com/fatih/color v1.16.0 // indirect
 	golang.org/x/crypto v0.21.0
-	golang.org/x/net v0.21.0 // indirect
+	golang.org/x/net v0.23.0 // indirect
 	golang.org/x/term v0.18.0 // indirect
 )
 
