@@ -1,0 +1,25 @@
+environments: 
+  develop: {}
+  prod: {}
+
+---
+
+releases:
+  - name: frontend
+    chart: ./frontend
+    namespace: application-{{ .Environment.Name }}
+    createNamespace: true
+    installed: true
+    values:
+      - "./values/frontend-{{ .Environment.Name }}.yaml"
+
+  - name: backend
+    chart: ./backend
+    namespace: application-{{ .Environment.Name }}
+    createNamespace: true
+    installed: true
+    values:
+      - "./values/backend-{{ .Environment.Name }}.yaml"
+    # set:
+    #   - name: database.password
+    #     value: {{ requiredEnv "SOMETHING" }}
