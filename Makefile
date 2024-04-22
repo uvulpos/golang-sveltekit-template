@@ -26,9 +26,6 @@ build-dockerfile-frontend: ## build the frontend microservice
 build-dockerfile-backend: ## build the backend microservice
 	@bash ./devops/scripts/build-container/backend.sh
 
-act-create:
-	@act -W .github/workflows/infrastructure-as-code-create.yaml --container-architecture linux/amd64 --secret-file .secrets --input-file .input
-
 help: ## print our all commands to commandline
 	@echo "\033[34m"
 	@echo "		SvelteKit + Golang Example"

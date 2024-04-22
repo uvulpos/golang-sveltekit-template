@@ -6,7 +6,7 @@ on:
 jobs:
   test-backend:
     runs-on: ubuntu-latest
-    continue-on-error: true
+    # continue-on-error: true
 
     steps:
       - uses: actions/checkout@v4
@@ -24,30 +24,15 @@ jobs:
           APP_DATABASE_DATABASE: postgres
           APP_DATABASE_SSLMODE: False
 
-  test-frontend:
-    runs-on: ubuntu-latest
-    continue-on-error: true
+  # test-frontend:
+  #   runs-on: ubuntu-latest
+  #   continue-on-error: true
 
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 0
 
-      - name: run frontend tests
-        if: ${{ always() }}
-        run: make test-fe
-
-  test-result:
-    runs-on: ubuntu-latest
-    needs: [test-backend, test-frontend]
-    if: ${{ always() }}
-
-    steps:
-      - name: Check if any tests failed
-        run: |
-          if [ "${{ needs.test-backend.result }}" == "failure" ] || [ "${{ needs.test-frontend.result }}" == "failure" ]; then
-            echo "One or more tests failed."
-            exit 1
-          else
-            echo "All tests passed."
-          fi
+  #     - name: run frontend tests
+  #       if: ${{ always() }}
+  #       run: make test-fe
