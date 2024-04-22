@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/uvulpos/go-svelte/src/helper/branding/models"
+	"github.com/uvulpos/go-svelte/src/helper/config"
 )
 
 func PrintBranding() {
@@ -28,8 +29,10 @@ func PrintBrandingWithConfig() {
 	startupInformation, defaultConfConfiguraton := getAsciiStartupInformation()
 
 	startupPresetTable := getAsciiConfigurationTable(models.ConfigurationTable{
-		Host: "127.0.0.1",
-		Port: "8080",
+		Host:         config.GetWebserver().Host,
+		Port:         fmt.Sprint(config.GetWebserver().Port),
+		ShowFrontend: config.GetWebserver().ShowFrontend,
+		ShowSwagger:  config.GetWebserver().ShowSwagger,
 	}, defaultConfConfiguraton)
 
 	fmt.Println(logo)

@@ -16,25 +16,19 @@ import (
 	"github.com/uvulpos/go-svelte/src/assets"
 	"github.com/uvulpos/go-svelte/src/helper/config"
 	dbHelper "github.com/uvulpos/go-svelte/src/helper/database"
-	"github.com/uvulpos/go-svelte/src/helper/webauthn"
 
 	userHttp "github.com/uvulpos/go-svelte/src/resources/users/http"
 	userService "github.com/uvulpos/go-svelte/src/resources/users/service"
 	userStorage "github.com/uvulpos/go-svelte/src/resources/users/storage"
-
-	passkeyHttp "github.com/uvulpos/go-svelte/src/resources/passkeys-fido/http"
-	passkeyService "github.com/uvulpos/go-svelte/src/resources/passkeys-fido/service"
-	passkeyStorage "github.com/uvulpos/go-svelte/src/resources/passkeys-fido/storage"
 )
 
 type App struct {
-	UserHandler    UserHandler
-	PasskeyHandler PasskeyHandler
+	UserHandler UserHandler
 }
 
-func NewApp(configuration *config.Configuration) *App {
+func NewApp() *App {
 
-	dbConn, dbConnErr := dbHelper.CreateDatabase(configuration)
+	dbConn, dbConnErr := dbHelper.CreateDatabase()
 	if dbConn == nil || dbConn.DB == nil || dbConnErr != nil {
 		err := fmt.Errorf("could not connect to database")
 		if err != nil {
@@ -43,28 +37,16 @@ func NewApp(configuration *config.Configuration) *App {
 		return nil
 	}
 
-	webAuthNHandler := webauthn.CreateNewWebAuthN(
-		"Go Svelte Binary Localhost",
-		"web.localhost",
-		"http://web.localhost/",
-	)
-
 	userStore := userStorage.NewUserStore(*dbConn)
 	userSvc := userService.NewUserSvc(userStore)
 	userHandler := userHttp.NewUserHandler(userSvc)
 
-	passkeyStore := passkeyStorage.NewUserStore(*dbConn)
-	passkeySvc := passkeyService.NewPasskeySvc(passkeyStore, userSvc, webAuthNHandler)
-	passkeyHandler := passkeyHttp.NewPasskeyHandler(passkeySvc)
-
 	return &App{
-		UserHandler:    userHandler,
-		PasskeyHandler: passkeyHandler,
+		UserHandler: userHandler,
 	}
 }
 
-func (a *App) RunApp(configuration *config.Configuration) {
-
+func (a *App) RunApp() {
 	publicFS, err := fs.Sub(assets.SvelteFS, "frontend")
 	if err != nil {
 		log.Fatal(err)
@@ -85,7 +67,7 @@ func (a *App) RunApp(configuration *config.Configuration) {
 		router.Get("/swagger/*", swagger.HandlerDefault)
 	}
 
-	if !configuration.Webserver.NoFrontend {
+	if config.ShowFrontend() {
 		router.Use("/", filesystem.New(filesystem.Config{
 			Root:         http.FS(publicFS),
 			NotFoundFile: "index.html",
@@ -94,8 +76,8 @@ func (a *App) RunApp(configuration *config.Configuration) {
 
 	router.Use(Handle404)
 
-	serverPort := fmt.Sprintf(":%d", configuration.Webserver.Port)
-	log.Printf("server listens on %s\n", serverPort)
+	serverPort := fmt.Sprintf(":%d", config.GetWebserver().Port)
+	fmt.Println("_")
 	router.Listen(serverPort)
 }
 

@@ -104,7 +104,8 @@ services:
         condition: service_started
       # gotify:
       #   condition: service_started
-    restart: always
+    env_file:
+      - "./.env"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.backend.rule=Host(`web.localhost`)&&(PathPrefix(`/api`)||PathPrefix(`/swagger`))"
@@ -150,9 +151,9 @@ services:
     image: postgis/postgis
     restart: always
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${APP_DB_USERNAME}
+      POSTGRES_PASSWORD: ${APP_DB_PASSWORD}
+      POSTGRES_DB: ${APP_DB_DATABASE}
       PGDATA: /var/lib/postgresql/data/pgdata
     ports:
       - "5432:5432"

@@ -8,3 +8,4 @@ services/backend/src/assets/frontend
 
 .input
 .secrets
+node_modules
