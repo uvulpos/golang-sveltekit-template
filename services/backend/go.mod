@@ -65,7 +65,7 @@ require (
 	golang.org/x/term v0.19.0 // indirect
 )
 
-require github.com/go-sqlx/sqlx v1.3.7
+require github.com/go-sqlx/sqlx v1.3.8
 
 require (
 	github.com/gofiber/fiber/v2 v2.52.4
