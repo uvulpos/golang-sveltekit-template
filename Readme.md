@@ -6,6 +6,9 @@
     <h1 align="center">Use Golang + Svelte ❤️</h1>
 </div>
 <div align="center">
+    <a target="_blank" href="https://github.com/uvulpos/golang-sveltekit-binary/actions/workflows/execute-tests.yaml">
+      <img src="https://github.com/uvulpos/golang-sveltekit-binary/actions/workflows/execute-tests.yaml/badge.svg">
+    </a>
     <a target="_blank" href="https://github.com/uvulpos/golang-sveltekit-binary/tree/main/services/backend">
       <img src="https://img.shields.io/github/go-mod/go-version/uvulpos/golang-sveltekit-binary?filename=services/backend%2Fgo.mod">
     </a>
