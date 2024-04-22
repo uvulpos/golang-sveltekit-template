@@ -35,7 +35,7 @@ jobs:
 
       - name: run frontend tests
         if: ${{ always() }}
-        run: make test-fe-ci
+        run: make test-fe
 
   test-result:
     runs-on: ubuntu-latest
