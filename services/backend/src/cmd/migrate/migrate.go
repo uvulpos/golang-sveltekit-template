@@ -21,9 +21,9 @@ var MigrateCmd = &cobra.Command{
 	Long:  `🚀 Migrate your database to a newer version`,
 	Run: func(cmd *cobra.Command, args []string) {
 
-		configuration := config.LoadData()
+		config.LoadData()
 		branding.PrintBranding()
-		err := migrator.NewMigrator(configuration).MigrateUp()
+		err := migrator.NewMigrator().MigrateUp()
 
 		messageStyle := lipgloss.NewStyle().Bold(true)
 		successMessageStyle := messageStyle.Foreground(lipgloss.Color("#1eb523"))
