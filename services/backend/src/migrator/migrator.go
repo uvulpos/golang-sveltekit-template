@@ -10,7 +10,6 @@ import (
 	"github.com/golang-migrate/migrate/v4/database/postgres"
 	"github.com/golang-migrate/migrate/v4/source/httpfs"
 	_ "github.com/lib/pq"
-	"github.com/uvulpos/go-svelte/src/helper/config"
 	dbHelper "github.com/uvulpos/go-svelte/src/helper/database"
 )
 
@@ -21,8 +20,8 @@ type Migrator struct {
 	db *sql.DB
 }
 
-func NewMigrator(configuration *config.Configuration) *Migrator {
-	dbConn, dbConnErr := dbHelper.CreateDatabase(configuration)
+func NewMigrator() *Migrator {
+	dbConn, dbConnErr := dbHelper.CreateDatabase()
 	if dbConn == nil || dbConn.DB == nil || dbConnErr != nil {
 		err := fmt.Errorf("could not connect to database")
 		if err != nil {

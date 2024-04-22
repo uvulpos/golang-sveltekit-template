@@ -14,8 +14,3 @@ type UserHandler interface {
 	HandleUpdateUserData(c *fiber.Ctx) error
 	HandleJWTRefresh(c *fiber.Ctx) error
 }
-
-type PasskeyHandler interface {
-	BeginWebAuthNRegistration(c *fiber.Ctx) error
-	FinishWebAuthNRegistration(c *fiber.Ctx) error
-}
