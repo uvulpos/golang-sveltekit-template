@@ -11,7 +11,7 @@
     },
     "devDependencies": {
         "@macfja/svelte-multi-adapter": "^1.0.2",
-        "@sveltejs/adapter-auto": "^3.1.1",
+        "@sveltejs/adapter-auto": "^3.2.0",
         "@sveltejs/adapter-static": "^3.0.1",
         "@sveltejs/kit": "^2.5.7",
         "@sveltejs/vite-plugin-svelte": "^3.0.2",
