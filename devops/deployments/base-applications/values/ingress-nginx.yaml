@@ -1,0 +1,8 @@
+appName: ingress
+
+container:
+  imagename: nginx:latest
+  pod:
+    webserverPort: 80
+  service:
+    webserverPort: 80

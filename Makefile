@@ -3,7 +3,7 @@
 	@bash  ./devops/scripts/utils/install-dependencies.sh
 
 dev: .install-deps ## start debugging in docker compose microservices (auto reload)
-	@docker compose -f compose-dev.yaml up backend frontend reverse-proxy
+	@docker compose -f compose-dev.yaml up --abort-on-container-exit backend frontend reverse-proxy
 
 build-full: .install-deps ## build current plattform
 	@bash ./devops/scripts/build-service/binary.sh
@@ -15,10 +15,10 @@ storybook:
 	@(cd services/frontend ; npm run storybook)
 
 test-be: ## run golang tests
-	@docker compose -f compose-dev.yaml up postgres backend-tests
+	@docker compose -f compose-dev.yaml up --abort-on-container-exit postgres backend-tests
 
 test-fe: ## run sveltekit tests
-	@docker compose -f compose-dev.yaml up fontend-tests
+	@docker compose -f compose-dev.yaml up --abort-on-container-exit frontend-tests
 
 build-dockerfile-binary: ## build one dockerimage that contains everything
 	@bash ./devops/scripts/build-container/binary.sh
