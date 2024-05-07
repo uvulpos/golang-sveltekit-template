@@ -51,7 +51,7 @@ require (
 	go.uber.org/atomic v1.11.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/exp v0.0.0-20231206192017-f3f8817b8deb // indirect
-	golang.org/x/text v0.14.0 // indirect
+	golang.org/x/text v0.15.0 // indirect
 	golang.org/x/tools v0.16.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
@@ -60,9 +60,9 @@ require (
 require (
 	github.com/cortesi/termlog v0.0.0-20210222042314-a1eec763abec
 	github.com/fatih/color v1.16.0 // indirect
-	golang.org/x/crypto v0.22.0
+	golang.org/x/crypto v0.23.0
 	golang.org/x/net v0.23.0 // indirect
-	golang.org/x/term v0.19.0 // indirect
+	golang.org/x/term v0.20.0 // indirect
 )
 
 require github.com/go-sqlx/sqlx v1.3.8
@@ -77,6 +77,6 @@ require (
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/spf13/cobra v1.8.0
 	github.com/spf13/viper v1.18.2
-	golang.org/x/sys v0.19.0 // indirect
+	golang.org/x/sys v0.20.0 // indirect
 
 )
