@@ -28,16 +28,6 @@ Golang and Svelte are some truely beautiful technologies and very powerful. But 
 
 But don't worry, with this repository, I'm giving you the chance to make your infrastructure grow as your project. You start as a single binary that can be distributed and published like gitea and later on you can deploy it as independent microservices.
 
-## Why you should use this Template?
-
-- Dynamic Infrastructure
-  - deploy this app as binary
-  - or microservice via Docker / K8s
-- Database Migration Tool integrated
-- Swagger API Documentation integrated
-- File structure for Domain-Driven-Development is already there
-- Basic Login or login via LDAP already implemented (soon)
-
 ## Screenshots
 
 <div>
