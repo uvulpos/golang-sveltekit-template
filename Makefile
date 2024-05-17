@@ -5,6 +5,9 @@
 dev: .install-deps ## start debugging in docker compose microservices (auto reload)
 	@docker compose -f compose-dev.yaml up --abort-on-container-exit backend frontend reverse-proxy
 
+uilib:
+	@(cd services/ui-lib ; npm run storybook)
+
 build-full: .install-deps ## build current plattform
 	@bash ./devops/scripts/build-service/binary.sh
 

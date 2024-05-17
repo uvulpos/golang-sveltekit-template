@@ -38,6 +38,11 @@ export const Primary: Story = {
                 value: "success",
                 iconName: "check-green",
             },
+            {
+                "header": "Publish status",
+                "value": "Unpublished",
+                "iconName": "cross-red"
+            }
         ]
     },
 };

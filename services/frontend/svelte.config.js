@@ -7,6 +7,10 @@ import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
 const config = {
 	preprocess: [vitePreprocess()],
 	kit: {
+		alias: {
+			"$uilib": "../ui-lib/src/lib/components",
+			"$uilib/*": "../ui-lib/src/lib/components/*"
+		},
 		adapter: multiAdapter([
 			staticAdapter({
 				pages: "./dist",

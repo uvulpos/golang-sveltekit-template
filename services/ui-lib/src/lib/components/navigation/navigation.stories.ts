@@ -10,18 +10,45 @@ const meta = {
         roundCorner: {
             type: 'boolean',
             description: 'storybook cosmetics'
+        },
+        enableSearch: {
+            type: 'boolean',
+            description: 'enables the search input field',
+            defaultValue: false
+        },
+        mobileVersion: {
+            type: 'boolean',
+            description: 'toggles hamburger menu or desktop navigation',
+            defaultValue: false
+        },
+        environment: {
+            type: 'string',
+            description: 'displays the current environment',
+            defaultValue: ""
         }
     },
     args: {
         roundCorner: true,
+        enableSearch: true,
+        mobileVersion: false,
     }
 } satisfies Meta<Navigation>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
-export const Primary: Story = {
+export const Production: Story = {
     args: {
+    },
+};
+export const StagingEnvironment: Story = {
+    args: {
+        environment: "Staging"
+    },
+};
+
+export const Mobile: Story = {
+    args: {
+        mobileVersion: true
     },
 };

@@ -15,6 +15,15 @@ const meta = {
             description: "if icon cannoit be loaded, use fallback"
         }
     },
+    parameters: {
+        backgrounds: {
+            default: 'navigation-background',
+            values: [
+                { name: 'navigation-background', value: '#222425' },
+                { name: 'navigation-background2', value: '#f00' },
+            ],
+        },
+    }
 } satisfies Meta<Icon>;
 
 export default meta;

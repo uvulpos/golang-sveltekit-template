@@ -1,0 +1,29 @@
+@import '../../styles/colors/_colors';
+
+a{
+    text-decoration: none;
+
+    .btn{
+        $extra-space: 25px;
+        border: none;
+        border-radius: 10px;
+        overflow: hidden;
+        cursor: pointer;
+
+        color: var(--btn-color, $ui-btn-text);
+        background-color: var(--btn-bg-color, $ui-btn-bg);
+        box-shadow: 2px 2px 3px rgba(#000, .1);
+        font-size: 1em;
+        height: 2.4em;
+        padding: 0 10px;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        transition: background-color 100ms ease-in-out;
+
+        &:hover,&:active,&:focus{
+            background-color: var(--btn-bg-color-hover, darken($ui-btn-bg, 25%));
+        }
+    }
+}

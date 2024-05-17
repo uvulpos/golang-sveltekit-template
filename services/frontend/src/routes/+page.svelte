@@ -1,5 +1,6 @@
 <script>
   import { _ } from "svelte-i18n";
+  // import { Author } from "";
 </script>
 
 <svelte:head>
@@ -9,6 +10,7 @@
 <div class="content">
   <div class="center">
     <p>{$_("page.home.welcome-human")}</p>
+    <!-- <Author></Author> -->
   </div>
 </div>
 
