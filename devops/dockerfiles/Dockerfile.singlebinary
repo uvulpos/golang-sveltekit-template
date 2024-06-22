@@ -17,18 +17,25 @@ WORKDIR /app
 
 COPY services/backend .
 
+RUN go env -w GOCACHE=/go-cache
+RUN go env -w GOMODCACHE=/gomod-cache
+
 # install dependencies
-RUN go mod download
+RUN --mount=type=cache,target=/gomod-cache \ 
+    go mod download
 
 # install frontend
 COPY --from=frontendbuilder /app/dist src/assets/frontend/
 
-RUN go build -o myapplication src/main.go
+RUN --mount=type=cache,target=/gomod-cache --mount=type=cache,target=/go-cache \
+    CGO_ENABLED=0 \
+    go build -o /app/myapplication src/main.go
 
 # ---------------------------------------------------
 FROM scratch
+
 WORKDIR /app
 
-COPY --from=backendbuilder /app/myapplication /app/myapplication
+COPY --from=backendbuilder --chmod=0755 /app/myapplication /app/myapplication
 
-CMD [ "./myapplication" ]
+CMD [ "/app/myapplication", "run" ]

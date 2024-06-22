@@ -11,8 +11,9 @@ COPY services/frontend .
 RUN npm run build
 
 # ---------------------------------------------------
-FROM nginx:latest 
-WORKDIR /usr/share/nginx/html
+FROM node:latest
+WORKDIR /app
 
-RUN rm -rf ./*
-COPY --from=frontendbuilder /app/dist .
+COPY --from=frontendbuilder /app .
+
+CMD ["node","./build/index.js"]
