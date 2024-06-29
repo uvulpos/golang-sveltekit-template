@@ -2,7 +2,8 @@ package jwt
 
 import (
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/uvulpos/go-svelte/src/helper/config"
+
+	"github.com/uvulpos/go-svelte/src/configuration"
 	userService "github.com/uvulpos/go-svelte/src/resources/users/service"
 )
 
@@ -16,7 +17,7 @@ func NewJWT(user *userService.UserWithPermission) (string, error) {
 		roleIndicators = append(roleIndicators, r.Identifier)
 	}
 
-	key = []byte(config.GetJwtSecret())
+	key = []byte(configuration.Configuration.Session.JwtSecret)
 	t = jwt.NewWithClaims(jwt.SigningMethodHS512, jwt.MapClaims{
 		"user-uuid":   user.Id.String(),
 		"username":    user.Username,
