@@ -1,13 +1,18 @@
 FROM node:latest as frontendbuilder
 WORKDIR /app
 
+# copy package manager stuff
 COPY services/frontend/package.json services/frontend/package-lock.json ./
 
+# install dependencies
 RUN --mount=type=cache,target=/usr/src/app/.npm \
     npm set cache /usr/src/app/.npm && \
     npm ci
 
+# copy frontend code
 COPY services/frontend .
+
+# build frontend
 RUN npm run build
 
 # ---------------------------------------------------
@@ -16,4 +21,4 @@ WORKDIR /app
 
 COPY --from=frontendbuilder /app .
 
-CMD ["node","./build/index.js"]
+CMD ["node","/app/build/index.js"]  

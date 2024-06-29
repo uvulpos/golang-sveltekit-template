@@ -2,9 +2,11 @@ bin/
 services/frontend/.svelte-kit
 services/frontend/node_modules
 services/backend/src/assets/frontend
+!services/backend/src/assets/frontend/.gitkeep
 
 .DS_Store
 *.tgz
+results.html
 
 .input
 .secrets
