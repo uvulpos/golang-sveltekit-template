@@ -3,7 +3,7 @@ module github.com/uvulpos/go-svelte
 go 1.22
 
 require (
-	github.com/charmbracelet/lipgloss v0.10.0
+	github.com/charmbracelet/lipgloss v0.11.0
 	github.com/google/uuid v1.6.0
 	github.com/qeesung/image2ascii v1.0.1
 	github.com/swaggo/swag v1.16.3 // indirect
@@ -14,6 +14,7 @@ require (
 	github.com/andybalholm/brotli v1.0.6 // indirect
 	github.com/aybabtme/rgbterm v0.0.0-20170906152045-cc83f3b3ce59 // indirect
 	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
+	github.com/charmbracelet/x/ansi v0.1.1 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/go-openapi/jsonpointer v0.20.0 // indirect
 	github.com/go-openapi/jsonreference v0.20.2 // indirect
@@ -28,7 +29,6 @@ require (
 	github.com/lucasb-eyer/go-colorful v1.2.0 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-runewidth v0.0.15 // indirect
-	github.com/muesli/reflow v0.3.0 // indirect
 	github.com/muesli/termenv v0.15.2 // indirect
 	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
