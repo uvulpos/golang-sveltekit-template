@@ -6,7 +6,6 @@ package cmd
 import (
 	"github.com/spf13/cobra"
 	"github.com/uvulpos/go-svelte/src/helper/branding"
-	"github.com/uvulpos/go-svelte/src/helper/config"
 	webApp "github.com/uvulpos/go-svelte/src/web-app"
 )
 
@@ -22,7 +21,6 @@ var RunAppCmd = &cobra.Command{
 	Long:  `starts the webserver to provide the application`,
 
 	Run: func(cmd *cobra.Command, args []string) {
-		config.LoadData()
 		branding.PrintBrandingWithConfig()
 
 		webApp.NewApp().RunApp()

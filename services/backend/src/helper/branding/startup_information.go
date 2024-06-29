@@ -2,6 +2,7 @@ package branding
 
 import (
 	"github.com/charmbracelet/lipgloss"
+	"github.com/uvulpos/go-svelte/src/configuration"
 )
 
 func getAsciiStartupInformation() (string, lipgloss.Style) {
@@ -13,5 +14,5 @@ func getAsciiStartupInformation() (string, lipgloss.Style) {
 		MarginLeft(5).
 		MarginRight(5)
 
-	return styleInformation.Render("Example Application by @uvulpos"), styleInformation
+	return styleInformation.Render(configuration.CONST_APPLICATION_BRANDING_HEADER), styleInformation
 }
