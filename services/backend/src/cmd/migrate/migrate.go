@@ -11,7 +11,6 @@ import (
 	gomigrator "github.com/golang-migrate/migrate/v4"
 	"github.com/spf13/cobra"
 	"github.com/uvulpos/go-svelte/src/helper/branding"
-	"github.com/uvulpos/go-svelte/src/helper/config"
 	"github.com/uvulpos/go-svelte/src/migrator"
 )
 
@@ -21,7 +20,6 @@ var MigrateCmd = &cobra.Command{
 	Long:  `🚀 Migrate your database to a newer version`,
 	Run: func(cmd *cobra.Command, args []string) {
 
-		config.LoadData()
 		branding.PrintBranding()
 		err := migrator.NewMigrator().MigrateUp()
 
