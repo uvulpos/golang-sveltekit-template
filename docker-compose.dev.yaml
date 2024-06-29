@@ -37,12 +37,12 @@ services:
     networks:
       - intranet
     labels:
-      traefik.enable: true
-      traefik.http.routers.frontend.rule: Host(`web.localhost`) && PathPrefix(`/`)
-      traefik.http.routers.frontend.priority: 1
-      traefik.http.routers.frontend.service: frontend
-      traefik.http.services.frontend.loadbalancer.server.port: 5173
-      traefik.http.routers.frontend.entrypoints: web
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend.rule=Host(`web.localhost`)&&PathPrefix(`/`)"
+      - "traefik.http.routers.frontend.priority=1"
+      - "traefik.http.routers.frontend.service=frontend"
+      - "traefik.http.services.frontend.loadbalancer.server.port=5173"
+      - "traefik.http.routers.frontend.entrypoints=web"
     command: ["sh", "-c", "cd /app && npm install && npm run dev"]
 
   frontend-tests:
@@ -85,12 +85,12 @@ services:
     env_file:
       - "./.env"
     labels:
-      traefik.enable: true
-      traefik.http.routers.backend.rule: Host(`web.localhost`) && (PathPrefix(`/api`) || PathPrefix(`/swagger`))
-      traefik.http.routers.backend.priority: 2
-      traefik.http.routers.backend.service: backend
-      traefik.http.services.backend.loadbalancer.server.port: 3000
-      traefik.http.routers.backend.entrypoints: web
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=Host(`web.localhost`)&&(PathPrefix(`/api`)||PathPrefix(`/swagger`))"
+      - "traefik.http.routers.backend.priority=2"
+      - "traefik.http.routers.backend.service=backend"
+      - "traefik.http.services.backend.loadbalancer.server.port=3000"
+      - "traefik.http.routers.backend.entrypoints=web"
     command: ["sh", "-c", "cd /app && bash scripts/run-local-docker.sh"]
 
   backend-tests:
