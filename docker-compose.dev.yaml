@@ -1,5 +1,3 @@
-version: "3"
-
 networks:
   intranet:
     internal: false
@@ -7,7 +5,6 @@ networks:
 
 volumes:
   gosvelte-postgres:
-  gosvelte-gotify:
 
 services:
   reverse-proxy:
@@ -36,12 +33,7 @@ services:
     container_name: web-ui
     restart: always
     volumes:
-      - ./services/frontend/package.json:/app/package.json
-      - ./services/frontend/svelte.config.js:/app/svelte.config.js
-      - ./services/frontend/tsconfig.json:/app/tsconfig.json
-      - ./services/frontend/vite.config.ts:/app/vite.config.ts
-      - ./services/frontend/static:/app/static
-      - ./services/frontend/src:/app/src
+      - ./services/frontend:/app
     networks:
       - intranet
     labels:
@@ -58,27 +50,17 @@ services:
     container_name: web-ui-test
     restart: always
     volumes:
-      - ./services/frontend/package.json:/app/package.json
-      - ./services/frontend/svelte.config.js:/app/svelte.config.js
-      - ./services/frontend/tsconfig.json:/app/tsconfig.json
-      - ./services/frontend/vite.config.ts:/app/vite.config.ts
-      - ./services/frontend/static:/app/static
-      - ./services/frontend/src:/app/src
+       - ./services/frontend:/app
     networks:
       - intranet
     command: ["sh", "-c", "cd /app && npm install && npm run test"]
 
   frontend-tests-ci:
     image: node:latest
-    container_name: web-ui-test
+    container_name: web-ui-test-ci
     restart: always
     volumes:
-      - ./services/frontend/package.json:/app/package.json
-      - ./services/frontend/svelte.config.js:/app/svelte.config.js
-      - ./services/frontend/tsconfig.json:/app/tsconfig.json
-      - ./services/frontend/vite.config.ts:/app/vite.config.ts
-      - ./services/frontend/static:/app/static
-      - ./services/frontend/src:/app/src
+       - ./services/frontend:/app
     networks:
       - intranet
     command: ["sh", "-c", "cd /app && npm install && npm run test"]
@@ -100,10 +82,6 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-      grafana:
-        condition: service_started
-      # gotify:
-      #   condition: service_started
     env_file:
       - "./.env"
     labels:
@@ -133,7 +111,7 @@ services:
 
   backend-tests-ci:
     image: golang:latest
-    container_name: web-api-test
+    container_name: web-api-test-ci
     volumes:
       - ./services/backend:/app
     tty: true
@@ -167,48 +145,4 @@ services:
       timeout: 5s
       retries: 5
 
-  # gotify:
-  #   image: gotify/server-arm64 # may change due to architecture
-  #   volumes:
-  #     - "gosvelte-gotify:/app/data gotify/server"
-  #   ports:
-  #     - "8087:80"
-  #   labels:
-  #     - "traefik.enable=true"
-  #     - "traefik.http.routers.gotify.rule=Host(`web.localhost`)&&(PathPrefix(`/gotify`))"
-  #     - "traefik.http.routers.gotify.priority=3"
-  #     - "traefik.http.routers.gotify.service=gotify"
-  #     - "traefik.http.routers.gotify.entrypoints=web"
-  #     - "traefik.http.services.gotify.loadbalancer.server.port=80"
 
-  #     # - "traefik.http.routers.gotify.middlewares=gotify-stripprefix"
-  #     # - "traefik.http.middlewares.gotify-stripprefix.stripprefix.prefixes=/gotify"
-
-  mailhog:
-    image: mailhog/mailhog
-    ports:
-      - "1025:1025"
-      - "8025:8025"
-
-  keycloak:
-    image: quay.io/keycloak/keycloak:23.0.6
-    environment:
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
-    ports:
-      - "8085:8080"
-    command: start-dev
-
-  grafana:
-    image: grafana/grafana
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.grafana.rule=Host(`web.localhost`)&&PathPrefix(`/grafana`)"
-      - "traefik.http.routers.grafana.priority=2"
-      - "traefik.http.routers.grafana.service=grafana"
-      - "traefik.http.routers.grafana.entrypoints=web"
-      - "traefik.http.services.grafana.loadbalancer.server.port=3000"
-      - "traefik.http.middlewares.grafana-stripprefix.stripprefix.prefixes=/grafana"
-      - "traefik.http.routers.grafana.middlewares=gotify-stripprefix"
-    networks:
-      - intranet

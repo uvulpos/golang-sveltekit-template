@@ -1,6 +1,7 @@
 FROM node:latest as frontendbuilder
 WORKDIR /app
 
+# copy package manager stuff
 COPY services/frontend/package.json services/frontend/package-lock.json ./
 
 RUN --mount=type=cache,target=/usr/src/app/.npm \
@@ -15,20 +16,33 @@ RUN npm run build
 FROM golang:latest as backendbuilder
 WORKDIR /app
 
-COPY services/backend .
+
+RUN go env -w GOCACHE=/go-cache
+RUN go env -w GOMODCACHE=/gomod-cache
+
+# copy package manager stuff
+COPY services/backend/go.mod services/backend/go.sum ./
 
 # install dependencies
-RUN go mod download
+RUN --mount=type=cache,target=/gomod-cache \ 
+    go mod download
+
+# copy backend code
+COPY services/backend .
 
 # install frontend
 COPY --from=frontendbuilder /app/dist src/assets/frontend/
 
-RUN go build -o myapplication src/main.go
+# build software
+RUN --mount=type=cache,target=/gomod-cache --mount=type=cache,target=/go-cache \
+    CGO_ENABLED=0 \
+    go build -o /app/myapplication src/main.go
 
 # ---------------------------------------------------
 FROM scratch
+
 WORKDIR /app
 
-COPY --from=backendbuilder /app/myapplication /app/myapplication
+COPY --from=backendbuilder --chmod=0755 /app/myapplication /app/myapplication
 
-CMD [ "./myapplication" ]
+CMD [ "/app/myapplication", "run" ]
