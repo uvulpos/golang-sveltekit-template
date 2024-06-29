@@ -17,22 +17,22 @@ jobs:
         if: ${{ always() }}
         run: make test-be
         env:
-          APP_DATABASE_HOST: postgres
-          APP_DATABASE_PORT: 5432
-          APP_DATABASE_USERNAME: postgres
-          APP_DATABASE_PASSWORD: postgres
-          APP_DATABASE_DATABASE: postgres
-          APP_DATABASE_SSLMODE: False
+          APP_DB_ADDR: postgres
+          APP_DB_PORT: 5432
+          APP_DB_USERNAME: postgres
+          APP_DB_PASSWORD: postgres
+          APP_DB_DATABASENAME: postgres
+          APP_DB_SSL_MODE: False
 
-  # test-frontend:
-  #   runs-on: ubuntu-latest
-  #   continue-on-error: true
+      - name: create gosec tmp dir
+        run: mkdir -p /tmp/gosec
 
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 0
+      - name: run security checks
+        uses: securego/gosec@master
+        with:
+          args: "-no-fail -fmt html -out ./results.html ./services/backend/..."
 
-  #     - name: run frontend tests
-  #       if: ${{ always() }}
-  #       run: make test-fe
+      - uses: actions/upload-artifact@v4
+        with:
+          name: go-security-report.html
+          path: ./results.html
