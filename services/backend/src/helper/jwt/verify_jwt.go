@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/uvulpos/go-svelte/src/helper/config"
+	"github.com/uvulpos/go-svelte/src/configuration"
 )
 
 type AppJWTClaims struct {
@@ -26,7 +26,7 @@ func VerifyJWToken(jwtToken string) (bool, *AppJWTClaims, error) {
 			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
 		}
 
-		return []byte(config.GetJwtSecret()), nil
+		return []byte(configuration.Configuration.Session.JwtSecret), nil
 	})
 	if tokenErr != nil {
 		fmt.Println("Verify JWT", tokenErr)
