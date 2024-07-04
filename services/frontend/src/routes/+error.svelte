@@ -1,5 +1,1 @@
-<script>
-  import Errorpage from "$lib/components/errorpage/errorpage.svelte";
-</script>
-
-<Errorpage errorcode={404} />
+<h1>Error 404</h1>

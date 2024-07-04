@@ -29,10 +29,11 @@ func PrintBrandingWithConfig() {
 	startupInformation, defaultConfConfiguraton := getAsciiStartupInformation()
 
 	startupPresetTable := getAsciiConfigurationTable(models.ConfigurationTable{
-		Host:         configuration.Configuration.Webserver.Host,
-		Port:         fmt.Sprint(configuration.Configuration.Webserver.Port),
-		ShowFrontend: configuration.Configuration.Webserver.ShowFrontend,
-		ShowSwagger:  configuration.Configuration.Webserver.ShowSwagger,
+		DisplayHost:  configuration.WEBSERVER_DISPLAYNAME,
+		Host:         configuration.WEBSERVER_HOST,
+		Port:         fmt.Sprint(configuration.WEBSERVER_PORT),
+		ShowFrontend: configuration.WEBSERVER_SHOW_FRONTEND,
+		ShowSwagger:  configuration.WEBSERVER_SHOW_SWAGGER,
 	}, defaultConfConfiguraton)
 
 	fmt.Println(logo)

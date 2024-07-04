@@ -1,0 +1,103 @@
+---
+networks:
+  intranet:
+    internal: false
+    driver: bridge
+
+volumes:
+  database:
+    driver: local
+  redis:
+    driver: local
+
+services:
+  authentik-postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    healthcheck:
+      test:
+        ["CMD-SHELL", "sh -c 'pg_isready -U postgres -d postgres-authentik'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: ${APP_DATABASE_PASSWORD}
+      POSTGRES_USER: ${APP_DATABASE_USERNAME}
+      POSTGRES_DB: ${APP_DATABASE_DATABASE}-authentik
+    networks:
+      - intranet
+
+  authentik-redis:
+    image: docker.io/library/redis:alpine
+    command: --save 60 1 --loglevel warning
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 3s
+    volumes:
+      - redis:/data
+    networks:
+      - intranet
+
+  authentik-server:
+    image: ghcr.io/goauthentik/server:latest
+    restart: unless-stopped
+    command: server
+    environment:
+      AUTHENTIK_REDIS__HOST: authentik-redis
+      AUTHENTIK_POSTGRESQL__HOST: authentik-postgres
+      AUTHENTIK_POSTGRESQL__USER: ${APP_DATABASE_USERNAME}
+      AUTHENTIK_POSTGRESQL__NAME: ${APP_DATABASE_DATABASE}-authentik
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${APP_DATABASE_PASSWORD}
+      AUTHENTIK_SECRET_KEY: RHRNhMc30ePTXymUm7RXlcs6J7gnK6qXM2+sK+QSLUTpFhbMmMgpNEJgIRRUFPuS/E2sIROIq+5X4ahJ
+
+    # volumes:
+    # - ./media:/media
+    # - ./custom-templates:/templates
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.authentik-server.rule=Host(`auth.localhost`)&&PathPrefix(`/`)"
+      - "traefik.http.routers.authentik-server.priority=1"
+      - "traefik.http.routers.authentik-server.service=authentik-server"
+      - "traefik.http.services.authentik-server.loadbalancer.server.port=9000"
+      - "traefik.http.routers.authentik-server.entrypoints=web"
+    ports:
+      - "${COMPOSE_PORT_HTTP:-9000}:9000"
+      - "${COMPOSE_PORT_HTTPS:-9443}:9443"
+    depends_on:
+      authentik-postgres:
+        condition: service_healthy
+      authentik-redis:
+        condition: service_healthy
+    networks:
+      - intranet
+
+  authentik-worker:
+    image: ghcr.io/goauthentik/server:latest
+    restart: unless-stopped
+    command: worker
+    environment:
+      AUTHENTIK_REDIS__HOST: authentik-redis
+      AUTHENTIK_POSTGRESQL__HOST: authentik-postgres
+      AUTHENTIK_POSTGRESQL__USER: ${APP_DATABASE_USERNAME}
+      AUTHENTIK_POSTGRESQL__NAME: ${APP_DATABASE_DATABASE}-authentik
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${APP_DATABASE_PASSWORD}
+      AUTHENTIK_SECRET_KEY: RHRNhMc30ePTXymUm7RXlcs6J7gnK6qXM2+sK+QSLUTpFhbMmMgpNEJgIRRUFPuS/E2sIROIq+5X4ahJ
+    user: root
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      # - ./media:/media
+      # - ./certs:/certs
+      # - ./custom-templates:/templates
+    depends_on:
+      authentik-postgres:
+        condition: service_healthy
+      authentik-redis:
+        condition: service_healthy
+    networks:
+      - intranet

@@ -1,3 +1,7 @@
+# include:
+#   - path: devops/docker-compose/dev-dependencies/docker-compose.authentik.yaml
+#     env_file: .env
+
 networks:
   intranet:
     internal: false
@@ -50,7 +54,7 @@ services:
     container_name: web-ui-test
     restart: always
     volumes:
-       - ./services/frontend:/app
+      - ./services/frontend:/app
     networks:
       - intranet
     command: ["sh", "-c", "cd /app && npm install && npm run test"]
@@ -60,7 +64,7 @@ services:
     container_name: web-ui-test-ci
     restart: always
     volumes:
-       - ./services/frontend:/app
+      - ./services/frontend:/app
     networks:
       - intranet
     command: ["sh", "-c", "cd /app && npm install && npm run test"]
@@ -127,11 +131,10 @@ services:
 
   postgres:
     image: postgis/postgis
-    restart: always
     environment:
-      POSTGRES_USER: ${APP_DB_USERNAME}
-      POSTGRES_PASSWORD: ${APP_DB_PASSWORD}
-      POSTGRES_DB: ${APP_DB_DATABASE}
+      POSTGRES_USER: ${APP_DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${APP_DATABASE_PASSWORD}
+      POSTGRES_DB: ${APP_DATABASE_DATABASE}
       PGDATA: /var/lib/postgresql/data/pgdata
     ports:
       - "5432:5432"
@@ -144,5 +147,3 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-
-

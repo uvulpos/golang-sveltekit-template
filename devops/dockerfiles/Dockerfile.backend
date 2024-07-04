@@ -22,4 +22,4 @@ WORKDIR /app
 
 COPY --from=backendbuilder /app/myapplication /app/myapplication
 
-CMD [ "./myapplication" ]
+CMD [ "./myapplication run" ]
