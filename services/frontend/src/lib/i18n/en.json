@@ -2,108 +2,27 @@
     "page": {
         "titles": {
             "home": "Home",
-            "dashboard": "Dashboard",
             "settings": "Settings"
         },
         "navigation": {
             "home": "Home",
-            "dashbord": "Dashboard",
-            "settings": "Settings",
-            "admin-settings": "Admin Settings",
-            "login": "Login",
-            "logout": "Logout",
-            "goto-landingpage": "Go to landingpage",
-            "environment": "Environment"
+            "branding-name": "Template by uVulpos",
+            "imprint": "Imprint",
+            "gdpr-notice": "GDPR-Notice"
         },
         "home": {
-            "welcome-human": "Welcome Human"
-        },
-        "footer": {
-            "allrightsreserved": "All Rights Reserved."
-        },
-        "login": {
-            "username": "Username / E-Mail",
-            "password": "Password",
-            "login": "Login",
-            "password-forgotten": "Password forgotten",
-            "wrong-credientials": "Username / Password is incorrect"
-        },
-        "password-forgotten": {
-            "username": "Username / E-Mail",
-            "login": "Login",
-            "rather-login": "rather log in"
-        },
-        "dashboard": {
-            "dashboard": "Dashboard"
-        },
-        "admin-settings": {
-            "admin-settings": "Admin Settings",
-            "user-management-link": "User management",
-            "role-management-link": "Role management",
-            "permission-management-link": "Permission management",
-            "user-management": {
-                "user-management": "User Management"
-            }
+            "header": "Welcome Human"
         },
         "settings": {
-            "settings": "Settings",
-            "general-information": "General Information",
-            "uuid": "UUID",
-            "role-name": "Role name",
-            "permissions": "Permissions",
-            "username": "Username",
-            "email": "Email",
-            "save": "Save",
-            "change-password": "Change Password",
-            "old-password": "Old Password",
-            "password": "Password",
-            "repeat-password": "Repeat Passwort",
-            "ldap-user-no-edit-header": "Warning!",
-            "ldap-user-no-edit-text": "You are not using the integrated authentication tool. To update your personal information, please use another tool / ask your administrator. This may take some time when user data must be syncronized with another system."
-        }
-    },
-    "banners": {
-        "warning": "Warning",
-        "information": "Information",
-        "error": "Error",
-        "custom": {
-            "not-update-userdata": {
-                "header": "Could not update user data",
-                "body": "Server did not accept your changes. Check your values and try (later) again"
-            },
-            "not-refresh-session": {
-                "header": "Could not refresh login session",
-                "body": "Please logout and relogin to have all changes applied"
-            },
-            "successful-updated": {
-                "header": "Data got updated successfully",
-                "body": "Your data is successfully saved"
-            }
-        }
-    },
-    "error": {
-        "general": {
-            "unknown": "Unknown"
+            "header": "Settings"
         },
-        "http": {
-            "statuscode": {
-                "401": {
-                    "header": "Error 401",
-                    "text": "You must log in to access the page"
-                },
-                "403": {
-                    "header": "Error 403",
-                    "text": "Unfortunately, you do not have the rights to view the requested page"
-                },
-                "404": {
-                    "header": "Error 404",
-                    "text": "Page could not be found / shown"
-                }
+        "legal": {
+            "imprint": {
+                "header": "Imprint"
+            },
+            "gdpr-notice": {
+                "header": "GDPR Statement"
             }
         }
-    },
-    "mock": {
-        "something": "Something",
-        "something-else": "Something else"
     }
 }

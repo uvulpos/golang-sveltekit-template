@@ -1,1 +1,5 @@
-<h1>Settings</h1>
+<script lang="ts">
+  import { _ } from "svelte-i18n";
+</script>
+
+<h1>{$_("page.settings.header")}</h1>
