@@ -15,7 +15,7 @@ func (a *App) createRoutes(router *fiber.App) {
 	})
 
 	api.Get("/ping", a.GeneralHandler.Ping)
-	api.Get("/ping-db", a.GeneralHandler.PingDatabase)
+	api.Get("/system-healthcheck", a.GeneralHandler.SystemHealthCheck)
 
 	apiV1 := api.Group("v1")
 

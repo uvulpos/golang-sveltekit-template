@@ -1,13 +1,16 @@
 module github.com/uvulpos/go-svelte
 
-go 1.22
+go 1.22.4
 
 require (
 	github.com/charmbracelet/lipgloss v0.11.0
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/qeesung/image2ascii v1.0.1
 	github.com/swaggo/swag v1.16.3
+	github.com/uvulpos/go-svelte/basic-utils v0.0.0
 )
+
+replace github.com/uvulpos/go-svelte/basic-utils => ../go_app_modules/basic-utils
 
 require (
 	github.com/KyleBanks/depth v1.2.1 // indirect
@@ -63,5 +66,4 @@ require (
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/spf13/cobra v1.8.1
 	golang.org/x/sys v0.21.0 // indirect
-
 )

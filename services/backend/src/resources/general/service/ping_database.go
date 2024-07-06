@@ -1,5 +1,5 @@
 package service
 
-func (s *GeneralSvc) Ping() error {
+func (s *GeneralSvc) PingDatabase() error {
 	return s.storage.PingDatabase()
 }

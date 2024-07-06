@@ -7,7 +7,7 @@ import (
 	"github.com/uvulpos/go-svelte/src/configuration"
 )
 
-func CreateDatabase() (*Sql, error) {
+func CreateDatabase() (*sqlx.DB, error) {
 	connStr := GetSqlConnectionString()
 
 	db, dbErr := sqlx.Connect("postgres", connStr)
@@ -20,9 +20,7 @@ func CreateDatabase() (*Sql, error) {
 		return nil, pingErr
 	}
 
-	return &Sql{
-		DB: db,
-	}, nil
+	return db, nil
 }
 
 func GetSqlConnectionString() string {

@@ -37,7 +37,7 @@ func NewApp() *App {
 		return nil
 	}
 
-	generalStore := generalStorage.NewGeneralStore(*dbConn)
+	generalStore := generalStorage.NewGeneralStore(dbConn)
 	generalSvc := generalService.NewGeneralSvc(generalStore)
 	generalHandler := generalHttp.NewGeneralHandler(generalSvc)
 
@@ -46,15 +46,15 @@ func NewApp() *App {
 	}
 }
 
-//	@title			Golang + SvelteKit API
-//	@version		1.0
-//	@description	This is a sample swagger for this template
+// @title			Golang + SvelteKit API
+// @version		1.0
+// @description	This is a sample swagger for this template
 //
-//	@contact.name	GitHub Template
-//	@contact.url	https://www.github.com/uvulpos
+// @contact.name Return to
+// @contact.url	/
 //
-//	@host			web.localhost
-//	@BasePath		/
+// @host			web.localhost
+// @BasePath		/
 func (a *App) RunApp() {
 	publicFS, err := fs.Sub(assets.SvelteFS, "frontend")
 	if err != nil {

@@ -1,14 +1,14 @@
 package storage
 
 import (
-	"github.com/uvulpos/go-svelte/src/helper/database"
+	"github.com/go-sqlx/sqlx"
 )
 
 type GeneralStore struct {
-	dbstore database.Sql
+	dbstore *sqlx.DB
 }
 
-func NewGeneralStore(db database.Sql) *GeneralStore {
+func NewGeneralStore(db *sqlx.DB) *GeneralStore {
 	return &GeneralStore{
 		db,
 	}

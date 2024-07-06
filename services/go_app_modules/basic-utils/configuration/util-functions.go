@@ -5,7 +5,7 @@ import (
 	"strconv"
 )
 
-func getEnvOrDefaultString(name, defaultValue string) string {
+func GetEnvOrDefaultString(name, defaultValue string) string {
 	value := os.Getenv("APP_" + name)
 	if value == "" {
 		return defaultValue
@@ -13,7 +13,7 @@ func getEnvOrDefaultString(name, defaultValue string) string {
 	return value
 }
 
-func getEnvOrDefaultInt(name string, defaultValue int) int {
+func GetEnvOrDefaultInt(name string, defaultValue int) int {
 	valueStr := os.Getenv("APP_" + name)
 	if value, err := strconv.Atoi(valueStr); err == nil {
 		return value
@@ -21,7 +21,7 @@ func getEnvOrDefaultInt(name string, defaultValue int) int {
 	return defaultValue
 }
 
-func getEnvOrDefaultBool(name string, defaultValue bool) bool {
+func GetEnvOrDefaultBool(name string, defaultValue bool) bool {
 	valueStr := os.Getenv("APP_" + name)
 	if value, err := strconv.ParseBool(valueStr); err == nil {
 		return value

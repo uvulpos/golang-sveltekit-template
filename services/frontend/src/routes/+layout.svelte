@@ -1,8 +1,8 @@
 <script lang="ts">
   // svelte config
-  export const prerender = false;
-  export const ssr = false;
-  export const trailingSlash = "always";
+  // export const prerender = true;
+  // export const ssr = true;
+  // export const trailingSlash = "always";
 
   // import code
   import { onMount } from "svelte";
@@ -14,14 +14,19 @@
     Header,
     SvelteUIProvider,
   } from "@svelteuidev/core";
-  import { DarkSidebar, DarkNavbar } from "./style";
+  import { Header as PageHeader } from "$lib/components/Header";
+  import { DarkNavbar } from "./style";
 
   // install fonts
+  import "$lib/theme/import-me.scss";
   import "@fontsource/inter";
 
   // import i18n files
   import en from "$lib/i18n/en.json";
   import de from "$lib/i18n/de.json";
+  import { logo } from "$lib/assets";
+  import { Sidebar } from "$lib/components/Sidebar";
+  import type { PageData } from "./$types";
 
   // configure i18n
   addMessages("en", en);
@@ -31,7 +36,9 @@
     initialLocale: getLocaleFromNavigator(),
   });
 
-  let opened = true;
+  export let data: PageData;
+
+  let collapseSidebar = false;
   let preMount: boolean = true;
 
   onMount(() => {
@@ -44,17 +51,19 @@
     <AppShell>
       <Navbar
         slot="navbar"
-        hidden={!opened}
         fixed
-        width={{ sm: 250, lg: 250 }}
-        override={DarkSidebar}
+        class="sidebar {!collapseSidebar
+          ? 'expandSidebar'
+          : 'collapsedSidebar'}"
       >
-        <span>Header 1</span>
+        <Sidebar />
       </Navbar>
-      <Header slot="header" fixed height={60} override={DarkNavbar}>
-        <span>Header 2</span>
+      <Header slot="header" fixed override={DarkNavbar} height={67}>
+        <PageHeader {logo} bind:collapseSidebar />
       </Header>
-      <slot />
+      <div class="subpage-content" class:expandSidebar={collapseSidebar}>
+        <slot />
+      </div>
     </AppShell>
   {/if}
 </SvelteUIProvider>

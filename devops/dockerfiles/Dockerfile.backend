@@ -1,25 +1,28 @@
 FROM golang:latest as backendbuilder
-WORKDIR /app
+WORKDIR /app/backend
 
 RUN go env -w GOCACHE=/go-cache
 RUN go env -w GOMODCACHE=/gomod-cache
 
-COPY services/backend/go.mod services/backend/go.sum ./
+COPY --chmod=755 services/backend/go.mod /app/backend/
+COPY --chmod=755 services/backend/go.sum /app/backend/
+
+COPY --chmod=755 services/go_app_modules/ /app/go_app_modules/
 
 # install dependencies
 RUN --mount=type=cache,target=/gomod-cache \ 
     go mod download
 
-COPY services/backend .
+COPY --chmod=755 services/backend /app/backend/
 
 RUN --mount=type=cache,target=/gomod-cache --mount=type=cache,target=/go-cache \
     CGO_ENABLED=0 \
-    go build -o /app/myapplication src/main.go
+    go build -o /app/backend/myapplication src/main.go
 
 # ---------------------------------------------------
 FROM scratch
 WORKDIR /app
 
-COPY --from=backendbuilder /app/myapplication /app/myapplication
+COPY --from=backendbuilder /app/backend/myapplication /app/myapplication
 
-CMD [ "./myapplication run" ]
+CMD [ "./myapplication", "run" ]

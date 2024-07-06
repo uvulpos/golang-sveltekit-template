@@ -8,7 +8,7 @@ var DefaultCSS template.CSS = `
 	} 
 	body > #swagger-ui {
 		min-height: 100vh;
-		background-color: #dadada;
+		background-color: #ebebeb;
 		padding-bottom: 30px;
 	}
 	.swagger-ui .topbar .download-url-wrapper input[type=text] {

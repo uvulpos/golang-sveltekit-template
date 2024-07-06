@@ -3,4 +3,5 @@ go 1.22.4
 use (
 	./backend
 	./go_app_modules/authentication-api
+	./go_app_modules/basic-utils
 )
