@@ -1,3 +1,5 @@
+# Use the latest Go version for the template. 
+# Update this to a specific version as needed.
 FROM golang:latest as backendbuilder
 WORKDIR /app/backend
 
