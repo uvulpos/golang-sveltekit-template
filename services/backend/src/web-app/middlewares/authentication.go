@@ -5,16 +5,10 @@ import (
 )
 
 func Authentication(c *fiber.Ctx) error {
-	// jwtToken := c.Cookies("jwt", "")
-	// errormessage := "could not validate authentication"
+	jwtToken := c.Cookies("jwt", "")
 
-	// if jwtToken == "" {
-	// 	_ = c.Status(http.StatusUnauthorized).SendString(errormessage)
-	// }
-
-	// c.Locals("user-uuid", jwtData.Uuid)
-	// c.Locals("username", jwtData.Username)
-	// c.Locals("permissions", jwtData.Permissions)
+	// after jwt got evaluated, add information from jwt to fiber request context
+	c.Locals("jwt-token", jwtToken)
 
 	return c.Next()
 }
