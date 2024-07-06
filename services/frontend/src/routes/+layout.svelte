@@ -1,23 +1,32 @@
 <script lang="ts">
+  // svelte config
+  // export const prerender = true;
+  // export const ssr = true;
+  // export const trailingSlash = "always";
+
   // import code
   import { onMount } from "svelte";
   import { _ } from "svelte-i18n";
-  import { loginUserFromCookie } from "$lib/stores/jwt/jwt";
   import { addMessages, getLocaleFromNavigator, init } from "svelte-i18n";
+  import {
+    AppShell,
+    Navbar,
+    Header,
+    SvelteUIProvider,
+  } from "@svelteuidev/core";
+  import { Header as PageHeader } from "$lib/components/Header";
+  import { DarkNavbar } from "./style";
+
+  // install fonts
+  import "$lib/theme/import-me.scss";
   import "@fontsource/inter";
 
-  // import components
-  import { Navbar } from "$lib/components/navbar";
-  import { Footer } from "$lib/components/footer";
-
-  // import i18n
+  // import i18n files
   import en from "$lib/i18n/en.json";
   import de from "$lib/i18n/de.json";
-
-  // svelte config
-  export const prerender = false;
-  export const ssr = false;
-  export const trailingSlash = "always";
+  import { logo } from "$lib/assets";
+  import { Sidebar } from "$lib/components/Sidebar";
+  import type { PageData } from "./$types";
 
   // configure i18n
   addMessages("en", en);
@@ -27,61 +36,34 @@
     initialLocale: getLocaleFromNavigator(),
   });
 
+  export let data: PageData;
+
+  let collapseSidebar = false;
   let preMount: boolean = true;
 
   onMount(() => {
-    loginUserFromCookie();
     preMount = false;
   });
 </script>
 
-{#if !preMount}
-  <div class="root">
-    <header>
-      <Navbar />
-    </header>
-    <div class="content">
-      <!-- <div class="toasts">
-        <Toast />
-      </div> -->
-      <slot />
-    </div>
-    <footer>
-      <Footer />
-    </footer>
-  </div>
-{/if}
-
-<style lang="sass">
-  @import "../lib/variables/sass/main"
-
-  :global(body) 
-    margin: 0
-    padding: 0
-    font-size: 16px
-    background-color: $ui-background
-    color: $ui-font-color
-    font-family: "Inter"
-  
-  .root 
-    display: flex
-    flex-direction: column
-    min-height: 100vh
-
-    .content
-      flex-grow: 1
-      z-index: 8500
-      display: flex
-      justify-content: center
-      .toasts
-        position: fixed 
-        z-index: 1000 
-        right: 0
-        margin-right: 3vw
-
-    header
-      box-shadow: 3px 3px 8px rgba(0,0,0,.2)
-      z-index: 9000
-    footer 
-      margin-top: auto
-</style>
+<SvelteUIProvider withNormalizeCSS withGlobalStyles>
+  {#if !preMount}
+    <AppShell>
+      <Navbar
+        slot="navbar"
+        fixed
+        class="sidebar {!collapseSidebar
+          ? 'expandSidebar'
+          : 'collapsedSidebar'}"
+      >
+        <Sidebar />
+      </Navbar>
+      <Header slot="header" fixed override={DarkNavbar} height={67}>
+        <PageHeader {logo} bind:collapseSidebar />
+      </Header>
+      <div class="subpage-content" class:expandSidebar={collapseSidebar}>
+        <slot />
+      </div>
+    </AppShell>
+  {/if}
+</SvelteUIProvider>

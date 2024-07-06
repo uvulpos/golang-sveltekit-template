@@ -7,7 +7,7 @@ import (
 	"github.com/uvulpos/go-svelte/src/configuration"
 )
 
-func CreateDatabase() (*Sql, error) {
+func CreateDatabase() (*sqlx.DB, error) {
 	connStr := GetSqlConnectionString()
 
 	db, dbErr := sqlx.Connect("postgres", connStr)
@@ -20,35 +20,25 @@ func CreateDatabase() (*Sql, error) {
 		return nil, pingErr
 	}
 
-	return &Sql{
-		DB: db,
-	}, nil
+	return db, nil
 }
 
 func GetSqlConnectionString() string {
 
-	var databaseConfig = configuration.Configuration.Database
-
 	var sslMode string = "disable"
-	if databaseConfig.SSL {
+	if configuration.DATABASE_SSL {
 		sslMode = "require"
 	}
 
 	connString := fmt.Sprintf(
 		"postgres://%s:%s@%s:%d/%s?sslmode=%s",
-		databaseConfig.Username,
-		databaseConfig.Password,
-		databaseConfig.Addr,
-		databaseConfig.Port,
-		databaseConfig.Database,
+		configuration.DATABASE_USERNAME,
+		configuration.DATABASE_PASSWORD,
+		configuration.DATABASE_ADDR,
+		configuration.DATABASE_PORT,
+		configuration.DATABASE_DATABASE,
 		sslMode,
 	)
-
-	// humanString := fmt.Sprintf(
-	// 	"%s:%d",
-	// 	databaseConfig.Addr,
-	// 	databaseConfig.Port,
-	// )
 
 	return connString
 }

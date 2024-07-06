@@ -9,12 +9,6 @@ import (
 	webApp "github.com/uvulpos/go-svelte/src/web-app"
 )
 
-var (
-	showNoFrontend bool
-	showSwaggger   bool
-	webserverPort  int
-)
-
 var RunAppCmd = &cobra.Command{
 	Use:   "run",
 	Short: "starts the webserver to provide the application",

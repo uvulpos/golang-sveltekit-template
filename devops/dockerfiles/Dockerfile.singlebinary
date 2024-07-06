@@ -1,42 +1,46 @@
+# Use the latest NodeJS version for the template. 
+# Update this to a specific version as needed.
 FROM node:latest as frontendbuilder
 WORKDIR /app
 
 # copy package manager stuff
-COPY services/frontend/package.json services/frontend/package-lock.json ./
+COPY --chmod=755 services/frontend/package.json services/frontend/package-lock.json ./
 
 RUN --mount=type=cache,target=/usr/src/app/.npm \
     npm set cache /usr/src/app/.npm && \
     npm ci
 
-COPY services/frontend .
+COPY --chmod=755 services/frontend .
 
 RUN npm run build
 
 # ---------------------------------------------------
-FROM golang:latest as backendbuilder
-WORKDIR /app
 
+# Use the latest Go version for the template. 
+# Update this to a specific version as needed.
+FROM golang:latest as backendbuilder
+WORKDIR /app/backend
 
 RUN go env -w GOCACHE=/go-cache
 RUN go env -w GOMODCACHE=/gomod-cache
 
-# copy package manager stuff
-COPY services/backend/go.mod services/backend/go.sum ./
+COPY --chmod=755 services/backend/go.mod /app/backend/
+COPY --chmod=755 services/backend/go.sum /app/backend/
+
+COPY --chmod=755 services/go_app_modules/ /app/go_app_modules/
 
 # install dependencies
 RUN --mount=type=cache,target=/gomod-cache \ 
     go mod download
 
-# copy backend code
-COPY services/backend .
+COPY --chmod=755 services/backend /app/backend/
 
 # install frontend
-COPY --from=frontendbuilder /app/dist src/assets/frontend/
+COPY --chmod=755 --from=frontendbuilder /app/dist src/assets/frontend/
 
-# build software
 RUN --mount=type=cache,target=/gomod-cache --mount=type=cache,target=/go-cache \
     CGO_ENABLED=0 \
-    go build -o /app/myapplication src/main.go
+    go build -o /app/backend/myapplication src/main.go
 
 # ---------------------------------------------------
 FROM scratch

@@ -1,0 +1,1 @@
+export { default as SidebarAccount } from "./sidebar-account.svelte"

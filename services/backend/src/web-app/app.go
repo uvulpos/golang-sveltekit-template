@@ -13,16 +13,17 @@ import (
 	_ "github.com/uvulpos/go-svelte/swagger-docs"
 
 	"github.com/uvulpos/go-svelte/src/assets"
+	swaggercss "github.com/uvulpos/go-svelte/src/assets/swagger-css"
 	"github.com/uvulpos/go-svelte/src/configuration"
 	dbHelper "github.com/uvulpos/go-svelte/src/helper/database"
 
-	userHttp "github.com/uvulpos/go-svelte/src/resources/users/http"
-	userService "github.com/uvulpos/go-svelte/src/resources/users/service"
-	userStorage "github.com/uvulpos/go-svelte/src/resources/users/storage"
+	generalHttp "github.com/uvulpos/go-svelte/src/resources/general/http"
+	generalService "github.com/uvulpos/go-svelte/src/resources/general/service"
+	generalStorage "github.com/uvulpos/go-svelte/src/resources/general/storage"
 )
 
 type App struct {
-	UserHandler UserHandler
+	GeneralHandler GeneralHandler
 }
 
 func NewApp() *App {
@@ -36,18 +37,25 @@ func NewApp() *App {
 		return nil
 	}
 
-	userStore := userStorage.NewUserStore(*dbConn)
-	userSvc := userService.NewUserSvc(userStore)
-	userHandler := userHttp.NewUserHandler(userSvc)
+	generalStore := generalStorage.NewGeneralStore(dbConn)
+	generalSvc := generalService.NewGeneralSvc(generalStore)
+	generalHandler := generalHttp.NewGeneralHandler(generalSvc)
 
 	return &App{
-		UserHandler: userHandler,
+		GeneralHandler: generalHandler,
 	}
 }
 
+// @title			Golang + SvelteKit API
+// @version		1.0
+// @description	This is a sample swagger for this template
+//
+// @contact.name Return to
+// @contact.url	/
+//
+// @host			web.localhost
+// @BasePath		/
 func (a *App) RunApp() {
-	var config = configuration.Configuration
-
 	publicFS, err := fs.Sub(assets.SvelteFS, "frontend")
 	if err != nil {
 		log.Fatal(err)
@@ -64,11 +72,13 @@ func (a *App) RunApp() {
 
 	a.createRoutes(router)
 
-	if config.Webserver.ShowSwagger {
-		router.Get("/swagger/*", swagger.HandlerDefault)
+	if configuration.WEBSERVER_SHOW_SWAGGER {
+		router.Get("/swagger/*", swagger.New(swagger.Config{
+			CustomStyle: swaggercss.DefaultCSS,
+		}))
 	}
 
-	if config.Webserver.ShowFrontend {
+	if configuration.WEBSERVER_SHOW_FRONTEND {
 		router.Use("/", filesystem.New(filesystem.Config{
 			Root:         http.FS(publicFS),
 			NotFoundFile: "index.html",
@@ -77,9 +87,11 @@ func (a *App) RunApp() {
 
 	router.Use(Handle404)
 
-	serverPort := fmt.Sprintf(":%d", config.Webserver.Port)
-	fmt.Println("_")
-	router.Listen(serverPort)
+	serverPort := fmt.Sprintf(":%d", configuration.WEBSERVER_PORT)
+	err = router.Listen(serverPort)
+	if err != nil {
+		panic(err)
+	}
 }
 
 func (a *App) ReturnAppInE2EMode() *fiber.App {

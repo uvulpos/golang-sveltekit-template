@@ -10,8 +10,11 @@ import (
 
 func getAsciiConfigurationTable(configuration models.ConfigurationTable, presetStle lipgloss.Style) string {
 	configurationRows := [][]string{
-		{"Host:", configuration.Host},
-		{"Port:", configuration.Port},
+		{"URL:", configuration.DisplayHost},
+		{"", ""},
+		{"Host (Container) :", configuration.Host},
+		{"Port (Container) :", configuration.Port},
+		{"", ""},
 		{"ShowFrontend:", fmt.Sprintf("%t", configuration.ShowFrontend)},
 		{"ShowSwagger:", fmt.Sprintf("%t", configuration.ShowSwagger)},
 	}

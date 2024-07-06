@@ -1,3 +1,5 @@
+# Use the latest NodeJS version for the template. 
+# Update this to a specific version as needed.
 FROM node:latest as frontendbuilder
 WORKDIR /app
 
@@ -16,6 +18,8 @@ COPY services/frontend .
 RUN npm run build
 
 # ---------------------------------------------------
+# Use the latest NodeJS version for the template. 
+# Update this to a specific version as needed.
 FROM node:latest
 WORKDIR /app
 

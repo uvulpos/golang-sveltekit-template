@@ -29,7 +29,7 @@ func NewMigrator() *Migrator {
 		}
 	}
 	return &Migrator{
-		db: (*dbConn).DB.DB,
+		db: (*dbConn).DB,
 	}
 }
 

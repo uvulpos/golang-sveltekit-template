@@ -1,4 +1,5 @@
 <script>
+  import { Button, colorScheme } from "@svelteuidev/core";
   import { _ } from "svelte-i18n";
 </script>
 
@@ -6,18 +7,9 @@
   <title>{$_("page.titles.home")}</title>
 </svelte:head>
 
-<div class="content">
-  <div class="center">
-    <p>{$_("page.home.welcome-human")}</p>
-  </div>
+<div>
+  <p>{$_("page.home.welcome-human")}</p>
+  <a href="/swagger">
+    <Button color="green">Swagger</Button>
+  </a>
 </div>
-
-<style lang="sass">
-  @import "../lib/variables/sass/main"
-
-  .content
-    padding: 30vh 
-    text-align: center
-    font-size: 35px
-    font-weight: bolder
-</style>

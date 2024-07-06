@@ -21,7 +21,7 @@ var runCmd = &cobra.Command{
 	Long:  `awesome application, build with golang + svelte`,
 	Run: func(cmd *cobra.Command, args []string) {
 		branding.PrintBranding()
-		cmd.Help()
+		_ = cmd.Help()
 		os.Exit(0)
 	},
 }

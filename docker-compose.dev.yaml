@@ -1,3 +1,7 @@
+# include:
+#   - path: devops/docker-compose/dev-dependencies/docker-compose.authentik.yaml
+#     env_file: .env
+
 networks:
   intranet:
     internal: false
@@ -32,6 +36,8 @@ services:
     image: node:latest
     container_name: web-ui
     restart: always
+    ports:
+      - 5173:5173
     volumes:
       - ./services/frontend:/app
     networks:
@@ -50,7 +56,7 @@ services:
     container_name: web-ui-test
     restart: always
     volumes:
-       - ./services/frontend:/app
+      - ./services/frontend:/app
     networks:
       - intranet
     command: ["sh", "-c", "cd /app && npm install && npm run test"]
@@ -60,7 +66,7 @@ services:
     container_name: web-ui-test-ci
     restart: always
     volumes:
-       - ./services/frontend:/app
+      - ./services/frontend:/app
     networks:
       - intranet
     command: ["sh", "-c", "cd /app && npm install && npm run test"]
@@ -75,7 +81,10 @@ services:
     image: golang:latest
     container_name: web-api
     volumes:
-      - ./services/backend:/app
+      - ./services/backend:/app/backend
+      - ./services/go_app_modules:/app/go_app_modules
+      - ./services/go.work:/app/go.work
+      - ./services/go.work.sum:/app/go.work.sum
     networks:
       - intranet
     # environments:
@@ -91,13 +100,21 @@ services:
       - "traefik.http.routers.backend.service=backend"
       - "traefik.http.services.backend.loadbalancer.server.port=3000"
       - "traefik.http.routers.backend.entrypoints=web"
-    command: ["sh", "-c", "cd /app && bash scripts/run-local-docker.sh"]
+    command:
+      [
+        "sh",
+        "-c",
+        "cd /app && go work sync && cd /app/backend && bash scripts/run-local-docker.sh",
+      ]
 
   backend-tests:
     image: golang:latest
     container_name: web-api-test
     volumes:
-      - ./services/backend:/app
+      - ./services/backend:/app/backend
+      - ./services/go_app_modules:/app/go_app_modules
+      - ./services/go.work:/app/go.work
+      - ./services/go.work.sum:/app/go.work.sum
     networks:
       - intranet
     depends_on:
@@ -107,17 +124,30 @@ services:
     tty: true
     environment:
       - TERM=xterm-256color`
-    command: ["sh", "-c", "cd /app && bash scripts/test-local-docker.sh"]
+    command:
+      [
+        "sh",
+        "-c",
+        "cd /app && go work sync && cd /app/backend && bash scripts/test-local-docker.sh",
+      ]
 
   backend-tests-ci:
     image: golang:latest
     container_name: web-api-test-ci
     volumes:
-      - ./services/backend:/app
+      - ./services/backend:/app/backend
+      - ./services/go_app_modules:/app/go_app_modules
+      - ./services/go.work:/app/go.work
+      - ./services/go.work.sum:/app/go.work.sum
     tty: true
     environment:
       - TERM=xterm-256color`
-    command: ["sh", "-c", "cd /app && bash scripts/test-local-docker.sh"]
+    command:
+      [
+        "sh",
+        "-c",
+        "cd /app && go work sync && cd /app/backend && bash scripts/test-local-docker.sh",
+      ]
 
   # -----------------------------------------------------------------------------------------------------
   #
@@ -127,11 +157,10 @@ services:
 
   postgres:
     image: postgis/postgis
-    restart: always
     environment:
-      POSTGRES_USER: ${APP_DB_USERNAME}
-      POSTGRES_PASSWORD: ${APP_DB_PASSWORD}
-      POSTGRES_DB: ${APP_DB_DATABASE}
+      POSTGRES_USER: ${APP_DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${APP_DATABASE_PASSWORD}
+      POSTGRES_DB: ${APP_DATABASE_DATABASE}
       PGDATA: /var/lib/postgresql/data/pgdata
     ports:
       - "5432:5432"
@@ -144,5 +173,3 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-
-

@@ -33,13 +33,13 @@ var MigrateCmd = &cobra.Command{
 			case gomigrator.ErrNoChange:
 				fmt.Println(successMessageStyle.Render("Database is on the newest version"))
 			case gomigrator.ErrNilVersion:
-				fmt.Errorf("%s\n", errorMessageStyle.Render("No Migration found."))
+				_ = fmt.Errorf("%s", errorMessageStyle.Render("No Migration found."))
 			case gomigrator.ErrInvalidVersion:
-				fmt.Errorf("%s\n", errorMessageStyle.Render("Database is on a newer version than your software. Please use the newer version."))
+				_ = fmt.Errorf("%s", errorMessageStyle.Render("Database is on a newer version than your software. Please use the newer version"))
 			case gomigrator.ErrLocked:
-				fmt.Errorf("%s\n", errorMessageStyle.Render("Database is currently locked by another application."))
+				_ = fmt.Errorf("%s", errorMessageStyle.Render("Database is currently locked by another application"))
 			case gomigrator.ErrLockTimeout:
-				fmt.Errorf("%s\n", errorMessageStyle.Render("Database Migration timed out."))
+				_ = fmt.Errorf("%s", errorMessageStyle.Render("Database Migration timed out"))
 			default:
 				panic(err)
 			}
