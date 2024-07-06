@@ -27,7 +27,7 @@
     },
     "type": "module",
     "dependencies": {
-        "@fontsource/inter": "^5.0.17",
+        "@fontsource/inter": "^5.0.19",
         "@svelteuidev/composables": "^0.15.6",
         "@svelteuidev/core": "^0.15.6",
         "@types/js-cookie": "^3.0.6",
