@@ -1,109 +1,27 @@
 {
     "page": {
         "titles": {
-            "home": "Startseite",
-            "dashboard": "Dashboard",
-            "settings": "Einstellungen"
+            "home": "Startseite"
         },
         "navigation": {
             "home": "Startseite",
-            "dashbord": "Dashboard",
-            "settings": "Einstellungen",
-            "admin-settings": "Admin Einstellungen",
-            "login": "Login",
-            "logout": "Logout",
-            "goto-landingpage": "Gehe zur Landingpage",
-            "environment": "Umgebung"
+            "branding-name": "Template by uVulpos",
+            "imprint": "Impressum",
+            "gdpr-notice": "Datenschutz"
         },
         "home": {
-            "welcome-human": "Willkommen, Mensch"
-        },
-        "footer": {
-            "allrightsreserved": "Alle Rechte Vorbehalten."
-        },
-        "login": {
-            "username": "Username / E-Mail",
-            "password": "Passwort",
-            "login": "Login",
-            "password-forgotten": "Passwort vergessen",
-            "wrong-credientials": "Username / Password ist inkorrekt"
-        },
-        "password-forgotten": {
-            "username": "Username / E-Mail",
-            "login": "Einloggen",
-            "rather-login": "Doch lieber einloggen"
-        },
-        "dashboard": {
-            "dashboard": "Dashboard"
-        },
-        "admin-settings": {
-            "admin-settings": "Admin Einstellungen",
-            "user-management-link": "Nutzerverwaltung",
-            "role-management-link": "Rollenverwaltung",
-            "permission-management-link": "Berechtigungsverwaltung",
-            "user-management": {
-                "user-management": "Nutzerverwaltung"
-            }
+            "header": "Willkommen, Mensch"
         },
         "settings": {
-            "settings": "Einstellungen",
-            "general-information": "Grundeinstellungen",
-            "uuid": "UUID",
-            "role-name": "Rollenname",
-            "permissions": "Berechtigungen",
-            "username": "Nutzername",
-            "email": "E-Mail",
-            "save": "Speichern",
-            "change-password": "Passwort ändern",
-            "old-password": "Altes Passwort",
-            "password": "Passwort",
-            "repeat-password": "Passwort wiederholen",
-            "ldap-user-no-edit-header": "Warnung!",
-            "ldap-user-no-edit-text": "Du verwendest nicht die integrierte Nutzerverwaltung. Zur Änderung von persöhnlichen Information, benutze bitte ein anderes Tool / oder wende dich bitte an deinen Administrator. Falls Daten mit einem anderen Systemn syncronisiert werden müssen, kann dies eine kleine Weile dauern."
-        }
-    },
-    "banners": {
-        "warning": "Warnung",
-        "information": "Information",
-        "error": "Fehler",
-        "custom": {
-            "not-update-userdata": {
-                "header": "Nutzerdaten konnten nicht geupdatet werden",
-                "body": "Der Server hat die Änderungen abgelehnt. Überprüfe nochmal deine Werte und versuche es (später) erneut."
-            },
-            "not-refresh-session": {
-                "header": "Die Session konnte nicht aktualisiert werden.",
-                "body": "Bitte logge dich einmal aus und wieder ein, damit alle Änderungen korrekt übernommen werden können."
-            },
-            "successful-updated": {
-                "header": "Daten wurden erfolgreich geupdatet",
-                "body": "Die Daten wurden erfolgreich gespeichert"
-            }
-        }
-    },
-    "error": {
-        "general": {
-            "unknown": "Unbekannt"
+            "header": "Einstellungen"
         },
-        "http": {
-            "statuscode": {
-                "401": {
-                    "header": "Fehler 401",
-                    "text": "Sie müssen sich einloggen, um auf die Seite zugreifen zu können"
-                },
-                "403": {
-                    "header": "Fehler 403",
-                    "text": "Ihnen fehlen leider die Rechte die angefragte Seite sehen zu können"
-                },
-                "404": {
-                    "header": "Fehler 404",
-                    "text": "Seite konnte nicht gefunden / angezeigt werden"
-                }
+        "legal": {
+            "imprint": {
+                "header": "Impressum"
+            },
+            "gdpr-notice": {
+                "header": "Datenschutzerklärung"
             }
         }
-    },
-    "mock": {
-        "something": "Irgendwas",
-        "something-else": "Irgendwas anderes"
     }
 }

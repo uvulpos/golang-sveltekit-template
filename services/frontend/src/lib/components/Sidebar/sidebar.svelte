@@ -1,4 +1,5 @@
 <script>
+  import { _ } from "svelte-i18n";
   import { Button } from "@svelteuidev/core";
 </script>
 
@@ -24,8 +25,8 @@
   <li>
     <hr />
     <div class="legal">
-      <a href="/legal/imprint">Impressum</a>
-      <a href="/legal/gdpr-notice">Datenschutz</a>
+      <a href="/legal/imprint">{$_("page.navigation.imprint")}</a>
+      <a href="/legal/gdpr-notice">{$_("page.navigation.gdpr-notice")}</a>
     </div>
   </li>
 </ul>

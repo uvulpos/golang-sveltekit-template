@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
   import { Burger } from "@svelteuidev/core";
 
   export let logo: string;
@@ -8,7 +9,7 @@
 <div class="header">
   <a href="/" class="branding">
     <img src={logo} alt="logo" height="45" />
-    <span>Dashboard</span>
+    <span>{$_("page.navigation.branding-name")}</span>
   </a>
 
   <div class="header-right" />
