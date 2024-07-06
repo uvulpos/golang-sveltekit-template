@@ -16,7 +16,7 @@
     <Burger
       opened={!collapseSidebar}
       color="white"
-      on:click!stopPropagation={() => (collapseSidebar = !collapseSidebar)}
+      on:click={() => (collapseSidebar = !collapseSidebar)}
     />
   </div>
 </div>
