@@ -14,7 +14,7 @@
     Header,
     SvelteUIProvider,
   } from "@svelteuidev/core";
-  import { getLocale } from "$lib/i18n";
+  import { allowedLanguages, getLocale } from "$lib/i18n";
   import { Header as PageHeader } from "$lib/components/Header";
   import { DarkNavbar } from "./style";
 
@@ -34,7 +34,7 @@
   addMessages("de", de);
   init({
     fallbackLocale: "en",
-    initialLocale: getLocale(["en", "de"]),
+    initialLocale: getLocale(allowedLanguages),
   });
 
   export let data: PageData;
