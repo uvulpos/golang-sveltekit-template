@@ -7,13 +7,14 @@
   // import code
   import { onMount } from "svelte";
   import { _ } from "svelte-i18n";
-  import { addMessages, getLocaleFromNavigator, init } from "svelte-i18n";
+  import { addMessages, init } from "svelte-i18n";
   import {
     AppShell,
     Navbar,
     Header,
     SvelteUIProvider,
   } from "@svelteuidev/core";
+  import { getLocale } from "$lib/i18n";
   import { Header as PageHeader } from "$lib/components/Header";
   import { DarkNavbar } from "./style";
 
@@ -33,7 +34,7 @@
   addMessages("de", de);
   init({
     fallbackLocale: "en",
-    initialLocale: getLocaleFromNavigator(),
+    initialLocale: getLocale(["en", "de"]),
   });
 
   export let data: PageData;
