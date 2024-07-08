@@ -14,7 +14,12 @@
             "header": "Welcome Human"
         },
         "settings": {
-            "header": "Settings"
+            "header": "Settings",
+            "language": {
+                "label": "Language for this application",
+                "placeholder": "Select a language",
+                "description": "Selection enforces a reload immediately"
+            }
         },
         "legal": {
             "imprint": {

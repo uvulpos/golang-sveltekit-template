@@ -13,7 +13,12 @@
             "header": "Willkommen, Mensch"
         },
         "settings": {
-            "header": "Einstellungen"
+            "header": "Einstellungen",
+            "language": {
+                "label": "Sprache der Applikation",
+                "placeholder": "Wähle deine Sprache aus",
+                "description": "Auswahl erzwingt einen sofortigen Reload der Seite"
+            }
         },
         "legal": {
             "imprint": {
