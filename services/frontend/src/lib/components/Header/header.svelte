@@ -30,8 +30,8 @@
         gap: 1rem
         height: 100%
         padding: 0 1rem
-        color: var(--lm-header-font-color)
-        background-color: var(--lm-header-background-color)
+        color: var(--header-font-color)
+        background-color: var(--header-background-color)
 
         a 
             text-decoration: none
@@ -42,7 +42,7 @@
         
         a.branding
             text-decoration: none
-            color: var(--lm-header-font-color)
+            color: var(--header-font-color)
             display: flex
             align-items: center
             gap: 1rem

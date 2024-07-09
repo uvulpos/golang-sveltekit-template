@@ -1,16 +1,42 @@
-:root {
-    --font: Lemon Days, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif,
-        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-
+:root{
     --topbar-height: 67px;
     --sidebar-width: 250px;
 
     --lm-background-color: #ebebeb;
     --lm-font-color: #000;
+    --dm-background-color: #0d1117;
+    --dm-font-color: #ecececc5;
 
     --lm-sidebar-background-color: #c1c1c1;
-    --lm-sidebar-font-color: #000;
-    
+    --lm-sidebar-font-color: #1b1b1b;
+    --dm-sidebar-background-color: #4f4f4f;
+    --dm-sidebar-font-color: #f1f1f1;
+
     --lm-header-background-color: #333333;
     --lm-header-font-color: #fff;
+    --dm-header-background-color: #333333;
+    --dm-header-font-color: #fff;
+}
+
+body{
+
+    --background-color: var(--lm-background-color);
+    --font-color: var(--lm-font-color);
+
+    --sidebar-background-color: var(--lm-sidebar-background-color);
+    --sidebar-font-color: var(--lm-sidebar-font-color);
+
+    --header-font-color: var(--lm-header-font-color);
+    --header-background-color: var(--lm-header-background-color);
+}
+
+body.darkmode {
+    --background-color: var(--dm-background-color);
+    --font-color: var(--dm-font-color);
+
+    --sidebar-background-color: var(--dm-sidebar-background-color);
+    --sidebar-font-color: var(--dm-sidebar-font-color);
+
+    --header-font-color: var(--dm-header-font-color);
+    --header-background-color: var(--dm-header-background-color);
 }

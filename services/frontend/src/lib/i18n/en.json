@@ -6,9 +6,18 @@
         },
         "navigation": {
             "home": "Home",
+            "settings": "Settings",
             "branding-name": "Template by uVulpos",
             "imprint": "Imprint",
-            "gdpr-notice": "GDPR-Notice"
+            "gdpr-notice": "GDPR-Notice",
+            "account": {
+                "edit-account": "Edit Account",
+                "logout": "Logout"
+            },
+            "application": {
+                "header": "App",
+                "settings": "Settings"
+            }
         },
         "home": {
             "header": "Welcome Human"

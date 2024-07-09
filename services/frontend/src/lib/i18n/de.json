@@ -5,9 +5,18 @@
         },
         "navigation": {
             "home": "Startseite",
+            "settings": "Einstellungen",
             "branding-name": "Template by uVulpos",
             "imprint": "Impressum",
-            "gdpr-notice": "Datenschutz"
+            "gdpr-notice": "Datenschutz",
+            "account": {
+                "edit-account": "Account bearbeiten",
+                "logout": "Ausloggen"
+            },
+            "application": {
+                "header": "Applikation",
+                "settings": "Einstellungen"
+            }
         },
         "home": {
             "header": "Willkommen, Mensch"
