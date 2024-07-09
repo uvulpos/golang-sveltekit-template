@@ -19,7 +19,7 @@
   import { DarkNavbar } from "./style";
 
   // install fonts
-  import "$lib/theme/import-me.scss";
+  import "$lib/theme/index.sass";
   import "@fontsource/inter";
 
   // import i18n files
@@ -27,7 +27,6 @@
   import de from "$lib/i18n/de.json";
   import { logo } from "$lib/assets";
   import { Sidebar } from "$lib/components/Sidebar";
-  import type { PageData } from "./$types";
 
   // configure i18n
   addMessages("en", en);
@@ -36,8 +35,6 @@
     fallbackLocale: "en",
     initialLocale: getLocale(allowedLanguages),
   });
-
-  export let data: PageData;
 
   let collapseSidebar = false;
   let preMount: boolean = true;
