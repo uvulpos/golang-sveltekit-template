@@ -3,10 +3,10 @@ module github.com/uvulpos/go-svelte
 go 1.22.4
 
 require (
-	github.com/charmbracelet/lipgloss v0.11.0
+	github.com/charmbracelet/lipgloss v0.11.1
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/qeesung/image2ascii v1.0.1
-	github.com/swaggo/swag v1.16.3
+	github.com/swaggo/swag v1.16.3 // indirect
 	github.com/uvulpos/go-svelte/basic-utils v0.0.0
 )
 
@@ -17,7 +17,7 @@ require (
 	github.com/andybalholm/brotli v1.0.6 // indirect
 	github.com/aybabtme/rgbterm v0.0.0-20170906152045-cc83f3b3ce59 // indirect
 	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
-	github.com/charmbracelet/x/ansi v0.1.1 // indirect
+	github.com/charmbracelet/x/ansi v0.1.3 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/go-openapi/jsonpointer v0.20.0 // indirect
 	github.com/go-openapi/jsonreference v0.20.2 // indirect
