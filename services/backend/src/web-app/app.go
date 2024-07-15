@@ -17,12 +17,15 @@ import (
 	"github.com/uvulpos/go-svelte/src/configuration"
 	dbHelper "github.com/uvulpos/go-svelte/src/helper/database"
 
+	authHttp "github.com/uvulpos/go-svelte/src/resources/auth/http"
+
 	generalHttp "github.com/uvulpos/go-svelte/src/resources/general/http"
 	generalService "github.com/uvulpos/go-svelte/src/resources/general/service"
 	generalStorage "github.com/uvulpos/go-svelte/src/resources/general/storage"
 )
 
 type App struct {
+	AuthHandler    AuthHandler
 	GeneralHandler GeneralHandler
 }
 
@@ -37,11 +40,18 @@ func NewApp() *App {
 		return nil
 	}
 
+	authHandler := authHttp.NewAuthHandler(
+		configuration.AUTHORIZATION_OAUTH_KEY,
+		configuration.AUTHORIZATION_OAUTH_SECRET,
+		configuration.AUTHORIZATION_OAUTH_CALLBACK_URL,
+	)
+
 	generalStore := generalStorage.NewGeneralStore(dbConn)
 	generalSvc := generalService.NewGeneralSvc(generalStore)
 	generalHandler := generalHttp.NewGeneralHandler(generalSvc)
 
 	return &App{
+		AuthHandler:    authHandler,
 		GeneralHandler: generalHandler,
 	}
 }
@@ -87,8 +97,14 @@ func (a *App) RunApp() {
 
 	router.Use(Handle404)
 
+	// tlsCert, err := tls.X509KeyPair(certificatePEM, privateKeyPEM)
+	// if err != nil {
+	// 	panic("Fehler beim Erstellen des tls.Certificate:" + err.Error())
+	// }
+
 	serverPort := fmt.Sprintf(":%d", configuration.WEBSERVER_PORT)
 	err = router.Listen(serverPort)
+	// err = router.ListenTLSWithCertificate(serverPort, tlsCert)
 	if err != nil {
 		panic(err)
 	}

@@ -51,5 +51,3 @@ var MigrateCmd = &cobra.Command{
 		os.Exit(0)
 	},
 }
-
-func init() {}

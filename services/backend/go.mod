@@ -7,8 +7,11 @@ require (
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/qeesung/image2ascii v1.0.1
 	github.com/swaggo/swag v1.16.3
+	github.com/uvulpos/go-svelte/authentication-api v0.0.0
 	github.com/uvulpos/go-svelte/basic-utils v0.0.0
 )
+
+replace github.com/uvulpos/go-svelte/authentication-api => ../go_app_modules/authentication-api
 
 replace github.com/uvulpos/go-svelte/basic-utils => ../go_app_modules/basic-utils
 
@@ -43,6 +46,7 @@ require (
 	github.com/valyala/tcplisten v1.0.0 // indirect
 	github.com/wayneashleyberry/terminal-dimensions v1.1.0 // indirect
 	go.uber.org/atomic v1.11.0 // indirect
+	golang.org/x/oauth2 v0.21.0 // indirect
 	golang.org/x/tools v0.16.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

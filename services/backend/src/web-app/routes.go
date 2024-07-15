@@ -19,6 +19,9 @@ func (a *App) createRoutes(router *fiber.App) {
 
 	apiV1 := api.Group("v1")
 
+	apiV1.Get("/oauth/redirect", a.AuthHandler.CreateRedirect)
+	// apiV1.Get("/oauth/callback")
+
 	apiV1.Use(Handle404)
 	api.Use(Handle404)
 }
