@@ -23,36 +23,38 @@
 </div>
 
 <style lang="sass">
+.header 
+    display: flex
+    align-items: center
+    gap: 1rem
+    height: 100%
+    padding: 0 1rem
+    color: var(--header-font-color)
+    background-color: var(--header-background-color)
 
-    .header 
+    a 
+        text-decoration: none
+
+
+    .header-right 
+        margin-left: auto
         display: flex
         align-items: center
         gap: 1rem
-        height: 100%
-        padding: 0 1rem
+    
+    a.branding
+        text-decoration: none
         color: var(--header-font-color)
-        background-color: var(--header-background-color)
+        display: flex
+        align-items: center
+        gap: 1rem
 
-        a 
-            text-decoration: none
+    .burger-menu 
+        display: block
 
-
-        .header-right 
-            margin-left: auto
-        
-        a.branding
-            text-decoration: none
-            color: var(--header-font-color)
-            display: flex
-            align-items: center
-            gap: 1rem
-
+    @media (min-width: 1024px) 
         .burger-menu 
-            display: block
-
-        @media (min-width: 1024px) 
-            .burger-menu 
-                display: none
+            display: none
   
 
 </style>
