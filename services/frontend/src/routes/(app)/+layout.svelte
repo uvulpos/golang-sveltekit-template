@@ -36,7 +36,7 @@
     initialLocale: getLocale(allowedLanguages),
   });
 
-  let collapseSidebar = false;
+  let collapseSidebar = true;
   let preMount: boolean = true;
 
   onMount(() => {
@@ -51,7 +51,7 @@
         slot="navbar"
         fixed
         class="sidebar {!collapseSidebar
-          ? 'expandSidebar'
+          ? 'sidebar-expandSidebar'
           : 'collapsedSidebar'}"
       >
         <Sidebar />
@@ -65,3 +65,40 @@
     </AppShell>
   {/if}
 </SvelteUIProvider>
+
+<style lang="sass">
+  @import "$lib/theme/variables.scss"
+  
+  body
+      background: var(--background-color)
+      color: var(--font-color)
+
+  :global(.sidebar)
+      overflow-y: scroll
+      padding: 1rem 1rem 2rem
+      z-index: 100
+      position: fixed
+      inset: 0 
+      width: 0px
+      display: none
+      height: calc(100vh - var(--topbar-height)) 
+      margin-top: var(--topbar-height) 
+
+      color: var(--sidebar-font-color)
+      background-color: var(--sidebar-background-color) 
+
+      box-sizing: border-box
+      font-size: 0.9em
+
+  :global(.sidebar-expandSidebar)
+      display: flex 
+      width: var(--sidebar-width)
+
+  @media (min-width: 1024px)
+    :global(.sidebar)
+        display: block
+        width: var(--sidebar-width) 
+    :global(.sidebar-expandSidebar)
+        display: flex
+        width: var(--sidebar-width)
+</style>
