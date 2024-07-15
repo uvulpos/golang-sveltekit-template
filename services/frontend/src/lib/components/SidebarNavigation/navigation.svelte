@@ -6,9 +6,9 @@
   <li>
     <a href="/">{$_("page.navigation.home")}</a>
   </li>
-  <li>
+  <!-- <li>
     <a href="/">{$_("page.navigation.home")}</a>
-  </li>
+  </li> -->
 </ul>
 
 <style lang="sass">

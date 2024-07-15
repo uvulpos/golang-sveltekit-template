@@ -1,6 +1,5 @@
 <script>
   import { _ } from "svelte-i18n";
-  import { Button } from "@svelteuidev/core";
   import { SidebarAccount } from "../SidebarAccount";
   import { SidebarNavigation } from "../SidebarNavigation";
 </script>
