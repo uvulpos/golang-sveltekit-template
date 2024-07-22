@@ -6,9 +6,15 @@
   <li>
     <a href="/">{$_("page.navigation.home")}</a>
   </li>
-  <!-- <li>
-    <a href="/">{$_("page.navigation.home")}</a>
-  </li> -->
+  <li>
+    <a href="/swagger">Swagger</a>
+  </li>
+  <li>
+    <a href="/api/v1/oauth/redirect">Oauth</a>
+  </li>
+  <li>
+    <a href="/api/v1/oauth/logout">Logout</a>
+  </li>
 </ul>
 
 <style lang="sass">

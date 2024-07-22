@@ -1,12 +1,26 @@
 package service
 
 import (
-	"crypto/ecdsa"
-	"crypto/elliptic"
-	"crypto/rand"
+	"fmt"
+	"time"
+
+	"github.com/golang-jwt/jwt"
 )
 
-func (s *JwtService) CreateJWT() {
-	// todo create jwt
-	ecdsa.GenerateKey(elliptic.P224(), rand.Reader)
+func (s *JwtService) CreateJWT(jwtData JwtDataModel) (string, error) {
+	claims := jwt.MapClaims{
+		"user-uuid":  jwtData.UserUuid,
+		"exp":        time.Now().Add(time.Hour * 24).Unix(),
+		"authorized": true,
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+
+	tokenString, err := token.SignedString([]byte(s.JWT_CERTIFICATE))
+	if err != nil {
+		fmt.Println("JWT SIGNING ERROR")
+		return "", err
+	}
+
+	return tokenString, nil
 }

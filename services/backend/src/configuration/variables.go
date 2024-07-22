@@ -13,8 +13,8 @@ var (
 	WEBSERVER_SHOW_SWAGGER  = configurationHelper.GetEnvOrDefaultBool("WEBSERVER_SHOW_SWAGGER", true)
 
 	// Database
-	DATABASE_ADDR = configurationHelper.GetEnvOrDefaultString("DATABASE_ADDR", "127.0.0.1")
-	// DATABASE_ADDR     = configurationHelper.GetEnvOrDefaultString("DATABASE_ADDR", "postgres")
+	// DATABASE_ADDR = configurationHelper.GetEnvOrDefaultString("DATABASE_ADDR", "127.0.0.1")
+	DATABASE_ADDR     = configurationHelper.GetEnvOrDefaultString("DATABASE_ADDR", "postgres")
 	DATABASE_PORT     = configurationHelper.GetEnvOrDefaultInt("DATABASE_PORT", 5432)
 	DATABASE_SSL      = configurationHelper.GetEnvOrDefaultBool("DATABASE_SSL", false)
 	DATABASE_USERNAME = configurationHelper.GetEnvOrDefaultString("DATABASE_USERNAME", "postgres")
@@ -22,9 +22,14 @@ var (
 	DATABASE_DATABASE = configurationHelper.GetEnvOrDefaultString("DATABASE_DATABASE", "postgres")
 
 	// Oauth
-	AUTHORIZATION_OAUTH_KEY          = configurationHelper.GetEnvOrDefaultString("AUTHORIZATION_OAUTH_KEY", "key123")
-	AUTHORIZATION_OAUTH_SECRET       = configurationHelper.GetEnvOrDefaultString("AUTHORIZATION_OAUTH_SECRET", "oh-oh-ganz-geheim")
-	AUTHORIZATION_OAUTH_CALLBACK_URL = configurationHelper.GetEnvOrDefaultString("AUTHORIZATION_OAUTH_CALLBACK_URL", "http://web.localhost/api/v1/callback")
+	AUTHORIZATION_OAUTH_KEY               = configurationHelper.GetEnvOrDefaultString("AUTHORIZATION_OAUTH_CLIENT_KEY", "")
+	AUTHORIZATION_OAUTH_SECRET            = configurationHelper.GetEnvOrDefaultString("AUTHORIZATION_OAUTH_CLIENT_SECRET", "")
+	AUTHORIZATION_OAUTH_CALLBACK_URL      = configurationHelper.GetEnvOrDefaultString("AUTHORIZATION_OAUTH_REDIRECT_URL", "http://web.localhost/api/v1/callback")
+	AUTHORIZATION_OAUTH_AUTHORIZATION_URL = configurationHelper.GetEnvOrDefaultString("AUTHORIZATION_OAUTH_AUTHORIZATION_URL", "http://localhost:9000/application/o/authorize/")
+	AUTHORIZATION_OAUTH_TOKEN_URL         = configurationHelper.GetEnvOrDefaultString("AUTHORIZATION_OAUTH_TOKEN_URL", "")
+	AUTHORIZATION_OAUTH_USERINFO_URL      = configurationHelper.GetEnvOrDefaultString("AUTHORIZATION_OAUTH_USERINFO_URL", "")
+	AUTHORIZATION_OAUTH_SCOPES            = configurationHelper.GetEnvOrDefaultStringArray("AUTHORIZATION_OAUTH_SCOPES", []string{})
+	AUTHORIZATION_OAUTH_LOGOUT_URL        = configurationHelper.GetEnvOrDefaultString("AUTHORIZATION_OAUTH_LOGOUT_URL", "")
 
 	// Certificates
 	CERTIFICATE_IDENTITY_NAME                        = configurationHelper.GetEnvOrDefaultString("CERTIFICATE_IDENTITY_NAME", "uVulpos - My Application")

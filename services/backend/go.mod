@@ -9,11 +9,14 @@ require (
 	github.com/swaggo/swag v1.16.3
 	github.com/uvulpos/go-svelte/authentication-api v0.0.0
 	github.com/uvulpos/go-svelte/basic-utils v0.0.0
+	github.com/uvulpos/go-svelte/user-api v0.0.0
 )
 
 replace github.com/uvulpos/go-svelte/authentication-api => ../go_app_modules/authentication-api
 
 replace github.com/uvulpos/go-svelte/basic-utils => ../go_app_modules/basic-utils
+
+replace github.com/uvulpos/go-svelte/user-api => ../go_app_modules/user-api
 
 require (
 	github.com/KyleBanks/depth v1.2.1 // indirect
@@ -26,6 +29,7 @@ require (
 	github.com/go-openapi/jsonreference v0.20.2 // indirect
 	github.com/go-openapi/spec v0.20.11 // indirect
 	github.com/go-openapi/swag v0.22.4 // indirect
+	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect

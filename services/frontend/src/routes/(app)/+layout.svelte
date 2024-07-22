@@ -85,7 +85,7 @@
       margin-top: var(--topbar-height) 
 
       color: var(--sidebar-font-color)
-      background-color: var(--sidebar-background-color) 
+      background-color: var(--sidebar-background-color)
 
       box-sizing: border-box
       font-size: 0.9em

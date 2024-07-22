@@ -1,13 +1,15 @@
 package http
 
-import authService "github.com/uvulpos/go-svelte/authentication-api/ressources/auth/service"
+import (
+	"github.com/uvulpos/go-svelte/src/resources/auth/service"
+)
 
 type AuthHandler struct {
-	auth authService.AuthService
+	service *service.AuthService
 }
 
-func NewAuthHandler(OauthKey, OauthSecret, OauthCallbackURL string) *AuthHandler {
+func NewAuthHandler(service *service.AuthService) *AuthHandler {
 	return &AuthHandler{
-		auth: *authService.NewAuthService(OauthKey, OauthSecret, OauthCallbackURL, "email", "username"),
+		service: service,
 	}
 }

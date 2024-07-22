@@ -1,14 +1,16 @@
 package service
 
 type JwtService struct {
-	// storage JwtStorage
+	JWT_CERTIFICATE string
+	storage         JwtStorage
 }
 
-func NewJwtService() *JwtService {
+func NewJwtService(storage JwtStorage, jwtCertificate string) *JwtService {
 	return &JwtService{
-		// storage,
+		JWT_CERTIFICATE: jwtCertificate,
+		storage:         storage,
 	}
 }
 
-// type JwtStorage interface {
-// }
+type JwtStorage interface {
+}

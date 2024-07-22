@@ -3,6 +3,7 @@ package configuration
 import (
 	"os"
 	"strconv"
+	"strings"
 )
 
 func GetEnvOrDefaultString(name, defaultValue string) string {
@@ -11,6 +12,22 @@ func GetEnvOrDefaultString(name, defaultValue string) string {
 		return defaultValue
 	}
 	return value
+}
+
+func GetEnvOrDefaultStringArray(name string, defaultValue []string) []string {
+	value := os.Getenv("APP_" + name)
+	if value == "" {
+		return defaultValue
+	}
+
+	values := strings.Split(value, ",")
+
+	var result []string
+	for _, v := range values {
+		result = append(result, strings.TrimSpace(v))
+	}
+
+	return result
 }
 
 func GetEnvOrDefaultInt(name string, defaultValue int) int {

@@ -18,10 +18,16 @@ import (
 	dbHelper "github.com/uvulpos/go-svelte/src/helper/database"
 
 	authHttp "github.com/uvulpos/go-svelte/src/resources/auth/http"
+	authSvc "github.com/uvulpos/go-svelte/src/resources/auth/service"
 
 	generalHttp "github.com/uvulpos/go-svelte/src/resources/general/http"
 	generalService "github.com/uvulpos/go-svelte/src/resources/general/service"
 	generalStorage "github.com/uvulpos/go-svelte/src/resources/general/storage"
+
+	authPackageService "github.com/uvulpos/go-svelte/authentication-api/ressources/auth/service"
+
+	jwtPackageService "github.com/uvulpos/go-svelte/authentication-api/ressources/jwt/service"
+	jwtPackageStorage "github.com/uvulpos/go-svelte/authentication-api/ressources/jwt/storage"
 )
 
 type App struct {
@@ -40,11 +46,22 @@ func NewApp() *App {
 		return nil
 	}
 
-	authHandler := authHttp.NewAuthHandler(
+	jwtPackageStorage := jwtPackageStorage.NewJwtStorage(dbConn)
+	jwtPackageService := jwtPackageService.NewJwtService(jwtPackageStorage, "somethingNice")
+
+	authPackageSvc := authPackageService.NewAuthService(
 		configuration.AUTHORIZATION_OAUTH_KEY,
 		configuration.AUTHORIZATION_OAUTH_SECRET,
 		configuration.AUTHORIZATION_OAUTH_CALLBACK_URL,
+		configuration.AUTHORIZATION_OAUTH_AUTHORIZATION_URL,
+		configuration.AUTHORIZATION_OAUTH_TOKEN_URL,
+		configuration.AUTHORIZATION_OAUTH_USERINFO_URL,
+		configuration.AUTHORIZATION_OAUTH_LOGOUT_URL,
+		configuration.AUTHORIZATION_OAUTH_SCOPES...,
 	)
+
+	authService := authSvc.NewAuthService(authPackageSvc, jwtPackageService)
+	authHandler := authHttp.NewAuthHandler(authService)
 
 	generalStore := generalStorage.NewGeneralStore(dbConn)
 	generalSvc := generalService.NewGeneralSvc(generalStore)
@@ -56,15 +73,17 @@ func NewApp() *App {
 	}
 }
 
-// @title			Golang + SvelteKit API
-// @version		1.0
-// @description	This is a sample swagger for this template
+//	@title		Golang + SvelteKit API
+//	@version	1.0
+//	@description
+//	@description	<img alt="coffee drinking gopher" src="/api/asset/gopher-coffee" height="200px">
+//	@description
+//	@description	This is a sample swagger for this template
+//	@description
+//	@description	[Return back to application](/) // [View on GitHub](https://github.com/uvulpos/golang-sveltekit-binary)
 //
-// @contact.name Return to
-// @contact.url	/
-//
-// @host			web.localhost
-// @BasePath		/
+//	@host			web.localhost
+//	@BasePath		/
 func (a *App) RunApp() {
 	publicFS, err := fs.Sub(assets.SvelteFS, "frontend")
 	if err != nil {
