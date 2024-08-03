@@ -1,6 +1,6 @@
-# include:
-#   - path: devops/docker-compose/dev-dependencies/docker-compose.authentik.yaml
-#     env_file: .env
+include:
+  - path: devops/docker-compose/dev-dependencies/docker-compose.authentik.yaml
+    env_file: .env
 
 networks:
   intranet:

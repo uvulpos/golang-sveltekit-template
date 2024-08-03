@@ -4,12 +4,12 @@
   import { _ } from "svelte-i18n";
 </script>
 
-<div class="content-element">
+<div class="content-element sidebar-account-content-element">
   <div class="account">
     <img src="" alt="" class="profilepicture" />
     <span>uVulpos</span>
     <div class="margin-left">
-      <Menu>
+      <Menu class="menu">
         <Menu.Label>{$_("page.navigation.application.header")}</Menu.Label>
         <a href="/settings">
           <Menu.Item icon={Pencil1} href="/settings"
@@ -17,11 +17,11 @@
           >
         </a>
         <Menu.Label>Account</Menu.Label>
-        <a href="/logout">
+        <a href="/api/v1/oauth/logout">
           <!-- <Menu.Item icon={Pencil1} href="/to/identity provider"
             >{$_("page.navigation.account.edit-account")}</Menu.Item
           > -->
-          <Menu.Item icon={Exit} href="/logout" color="red"
+          <Menu.Item icon={Exit} color="red"
             >{$_("page.navigation.account.logout")}</Menu.Item
           >
         </a>
@@ -50,5 +50,10 @@
 
       .margin-left
         margin-left: auto
+
+      :global(.menu button:hover)
+        background-color: var(--sidebar-background-color-hover)
+      :global(.menu button svg)
+        color: var(--sidebar-svg-color)
 
 </style>
