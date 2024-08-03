@@ -1,7 +1,6 @@
 <script lang="ts">
   import { _ } from "svelte-i18n";
   import { Burger } from "@svelteuidev/core";
-
   export let logo: string;
   export let collapseSidebar: boolean;
 </script>
@@ -13,6 +12,11 @@
   </a>
 
   <div class="header-right" />
+  <div>
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <!-- svelte-ignore a11y-missing-attribute -->
+  </div>
   <div class="burger-menu">
     <Burger
       opened={!collapseSidebar}

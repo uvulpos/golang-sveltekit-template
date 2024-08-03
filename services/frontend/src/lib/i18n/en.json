@@ -24,10 +24,16 @@
         },
         "settings": {
             "header": "Settings",
+            "device_header": "Device Settings",
             "language": {
                 "label": "Language for this application",
                 "placeholder": "Select a language",
                 "description": "Selection enforces a reload immediately"
+            },
+            "theme": {
+                "label": "Color theme for this device",
+                "placeholder": "Select a color schema",
+                "description": "Selects if the application is light or dark mode"
             }
         },
         "legal": {
