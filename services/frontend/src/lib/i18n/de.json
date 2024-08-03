@@ -23,10 +23,16 @@
         },
         "settings": {
             "header": "Einstellungen",
+            "device_header": "Geräte Einstellungen",
             "language": {
                 "label": "Sprache der Applikation",
                 "placeholder": "Wähle deine Sprache aus",
                 "description": "Auswahl erzwingt einen sofortigen Reload der Seite"
+            },
+            "theme": {
+                "label": "Farbschema für dieses Gerät",
+                "placeholder": "Wähle dein Farbschema aus",
+                "description": "Auswahl macht die Applikation dunkel oder hell"
             }
         },
         "legal": {

@@ -1,42 +1,39 @@
 :root{
     --topbar-height: 67px;
     --sidebar-width: 250px;
-
-    --lm-background-color: #ebebeb;
-    --lm-font-color: #000;
-    --dm-background-color: #0d1117;
-    --dm-font-color: #ecececc5;
-
-    --lm-sidebar-background-color: #c1c1c1;
-    --lm-sidebar-font-color: #1b1b1b;
-    --dm-sidebar-background-color: #4f4f4f;
-    --dm-sidebar-font-color: #f1f1f1;
-
-    --lm-header-background-color: #333333;
-    --lm-header-font-color: #fff;
-    --dm-header-background-color: #333333;
-    --dm-header-font-color: #fff;
 }
 
 body{
 
-    --background-color: var(--lm-background-color);
-    --font-color: var(--lm-font-color);
-
-    --sidebar-background-color: var(--lm-sidebar-background-color);
-    --sidebar-font-color: var(--lm-sidebar-font-color);
-
-    --header-font-color: var(--lm-header-font-color);
-    --header-background-color: var(--lm-header-background-color);
+    --background-color: #ebebeb;
+    --background-color-secondary: #ffffff;
+    --background-color-tertiary: #cacaca;
+    --font-color: #000000;
+    --font-color-secondary: #00000089;
+    --anchor-font-color: #0099ff;
+    
+    --sidebar-font-color: #1b1b1b;
+    --sidebar-svg-color: #1b1b1b;
+    --sidebar-background-color: #c1c1c1;
+    --sidebar-background-color-hover: #b4b4b4;
+    
+    --header-font-color: #ffffff;
+    --header-background-color: #333333;
 }
 
 body.darkmode {
-    --background-color: var(--dm-background-color);
-    --font-color: var(--dm-font-color);
+    --background-color: #33373a;
+    --background-color-secondary: #242729;
+    --background-color-tertiary: #50565b;
+    --font-color: #dadada;
+    --font-color-secondary: #dadada73; 
+    --anchor-font-color: #66b7ed;
 
-    --sidebar-background-color: var(--dm-sidebar-background-color);
-    --sidebar-font-color: var(--dm-sidebar-font-color);
+    --sidebar-font-color: #f1f1f1;
+    --sidebar-svg-color: #f1f1f1;
+    --sidebar-background-color: #262a2b;
+    --sidebar-background-color-hover: #323739;
 
-    --header-font-color: var(--dm-header-font-color);
-    --header-background-color: var(--dm-header-background-color);
+    --header-font-color: #fff;
+    --header-background-color: #212526;
 }
