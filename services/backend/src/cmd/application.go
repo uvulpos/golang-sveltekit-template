@@ -9,6 +9,7 @@ import (
 	"github.com/spf13/cobra"
 
 	// "github.com/spf13/cobra/doc"
+	generatecertificates "github.com/uvulpos/go-svelte/src/cmd/generate-certificates"
 	migrate "github.com/uvulpos/go-svelte/src/cmd/migrate"
 	runApp "github.com/uvulpos/go-svelte/src/cmd/run"
 	"github.com/uvulpos/go-svelte/src/helper/branding"
@@ -29,6 +30,7 @@ var runCmd = &cobra.Command{
 func init() {
 	runCmd.AddCommand(runApp.RunAppCmd)
 	runCmd.AddCommand(migrate.MigrateCmd)
+	runCmd.AddCommand(generatecertificates.GenerateCertificateCmd)
 	// runCmd.AddCommand(version.VersionCmd)
 }
 
