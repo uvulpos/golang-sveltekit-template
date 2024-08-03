@@ -6,7 +6,7 @@ require (
 	github.com/charmbracelet/lipgloss v0.12.1
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/qeesung/image2ascii v1.0.1
-	github.com/swaggo/swag v1.16.3 // indirect
+	github.com/swaggo/swag v1.16.3
 	github.com/uvulpos/go-svelte/basic-utils v0.0.0
 )
 
