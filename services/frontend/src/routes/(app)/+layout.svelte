@@ -27,6 +27,8 @@
   import de from "$lib/i18n/de.json";
   import { logo } from "$lib/assets";
   import { Sidebar } from "$lib/components/Sidebar";
+  import { themeStore } from "$lib/stores";
+  import { changePageTheme } from "$lib/functions/theme/theme";
 
   // configure i18n
   addMessages("en", en);
@@ -38,10 +40,27 @@
 
   let collapseSidebar = true;
   let preMount: boolean = true;
+  let bodyElement: HTMLElement | undefined;
 
   onMount(() => {
     preMount = false;
+
+    bodyElement = document.body;
+
+    // autoChangeTheme();
   });
+
+  $: {
+    changePageTheme(bodyElement, $themeStore);
+  }
+
+  $: {
+    printThemeChange($themeStore);
+  }
+
+  function printThemeChange(theme: any) {
+    console.log("THEME CHANGE!", theme);
+  }
 </script>
 
 <SvelteUIProvider withNormalizeCSS withGlobalStyles>
@@ -69,7 +88,7 @@
 <style lang="sass">
   @import "$lib/theme/variables.scss"
   
-  body
+  :global(body)
       background: var(--background-color)
       color: var(--font-color)
 
@@ -86,6 +105,7 @@
 
       color: var(--sidebar-font-color)
       background-color: var(--sidebar-background-color)
+      border: none
 
       box-sizing: border-box
       font-size: 0.9em

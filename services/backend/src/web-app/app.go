@@ -73,17 +73,17 @@ func NewApp() *App {
 	}
 }
 
-//	@title		Golang + SvelteKit API
-//	@version	1.0
-//	@description
-//	@description	<img alt="coffee drinking gopher" src="/api/asset/gopher-coffee" height="200px">
-//	@description
-//	@description	This is a sample swagger for this template
-//	@description
-//	@description	[Return back to application](/) // [View on GitHub](https://github.com/uvulpos/golang-sveltekit-binary)
+// @title		Golang + SvelteKit API
+// @version	1.0
+// @description
+// @description	<img alt="coffee drinking gopher" src="/api/asset/gopher-coffee" height="200px">
+// @description
+// @description	This is a sample swagger for this template
+// @description
+// @description	[Return back to application](/) // [View on GitHub](https://github.com/uvulpos/golang-sveltekit-binary)
 //
-//	@host			web.localhost
-//	@BasePath		/
+// @host			web.localhost
+// @BasePath		/
 func (a *App) RunApp() {
 	publicFS, err := fs.Sub(assets.SvelteFS, "frontend")
 	if err != nil {

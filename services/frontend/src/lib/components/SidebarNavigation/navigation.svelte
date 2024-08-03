@@ -32,7 +32,8 @@
                 text-decoration: none
                 color: var(--sidebar-font-color)
                 padding: .5rem .75rem
-                background-color: #ccc
+                // background-color: #ccc
+                background-color: var(--sidebar-background-color-hover)
                 display: block
                 border-radius: 10px
 </style>
