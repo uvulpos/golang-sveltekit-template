@@ -18,12 +18,11 @@
         </a>
         <Menu.Label>Account</Menu.Label>
         <a href="/api/v1/oauth/logout">
-          <!-- <Menu.Item icon={Pencil1} href="/to/identity provider"
-            >{$_("page.navigation.account.edit-account")}</Menu.Item
-          > -->
-          <Menu.Item icon={Exit} color="red"
-            >{$_("page.navigation.account.logout")}</Menu.Item
-          >
+          <div class="red-button">
+            <Menu.Item icon={Exit} color="red"
+              >{$_("page.navigation.account.logout")}</Menu.Item
+            >
+          </div>
         </a>
       </Menu>
     </div>

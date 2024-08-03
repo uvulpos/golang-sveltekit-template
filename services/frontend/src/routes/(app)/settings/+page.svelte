@@ -29,6 +29,7 @@
 </script>
 
 <h1>{$_("page.settings.device_header")}</h1>
+<span>{$_("page.settings.device_description")}:</span>
 
 <div class="menu">
   <NativeSelect
@@ -50,7 +51,6 @@
     ]}
     placeholder={$_("page.settings.theme.placeholder")}
     label={$_("page.settings.theme.label")}
-    description={$_("page.settings.theme.description")}
     required
     bind:value={currentTheme}
     on:change={setTheme}
@@ -58,8 +58,11 @@
 </div>
 
 <style lang="sass">
+  span
+    margin-top: .5rem
+    display: block
   .menu
-    margin-top: 2rem
+    margin-top: 1rem
     display: flex
     flex-direction: column
     gap: 1.5rem

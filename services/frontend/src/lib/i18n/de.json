@@ -24,6 +24,7 @@
         "settings": {
             "header": "Einstellungen",
             "device_header": "Geräte Einstellungen",
+            "device_description": "Folgende Einstellungen werden als Cookies nur für dieses Gerät gespeichert",
             "language": {
                 "label": "Sprache der Applikation",
                 "placeholder": "Wähle deine Sprache aus",
@@ -31,8 +32,7 @@
             },
             "theme": {
                 "label": "Farbschema für dieses Gerät",
-                "placeholder": "Wähle dein Farbschema aus",
-                "description": "Auswahl macht die Applikation dunkel oder hell"
+                "placeholder": "Wähle dein Farbschema aus"
             }
         },
         "legal": {

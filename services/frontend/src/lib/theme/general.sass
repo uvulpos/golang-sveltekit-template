@@ -8,8 +8,19 @@
     color: var(--font-color) !important
 .svelteui-InputWrapper-description
     color: var(--font-color-secondary) !important
-
 .svelteui-Input-input
     color: var(--font-color) !important
     background-color: var(--background-color-secondary) !important
     border-color: var(--background-color-tertiary) !important
+.svelteui-Menu-body
+    background-color: var(--sidebar-background-color-secondary) !important
+    border-color: var(--sidebar-border-color-secondary) !important
+.svelteui-MenuItem-root
+    color: var(--sidebar-font-color) !important
+    &:hover
+        background-color: var(--sidebar-background-color-secondary-hover) !important
+div.red-button > button.svelteui-MenuItem-root
+    color: var(--color-red) !important
+    font-weight: bold !important
+    &:hover
+        background-color: var(--color-red-10) !important

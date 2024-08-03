@@ -13,6 +13,7 @@
     Navbar,
     Header,
     SvelteUIProvider,
+    theme,
   } from "@svelteuidev/core";
   import { allowedLanguages, getLocale } from "$lib/i18n";
   import { Header as PageHeader } from "$lib/components/Header";
@@ -45,6 +46,7 @@
   onMount(() => {
     preMount = false;
     bodyElement = document.body;
+    themeStore.isThemeSetOrAutoDetect(window);
   });
 
   $: {

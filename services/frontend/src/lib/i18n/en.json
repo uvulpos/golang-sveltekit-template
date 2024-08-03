@@ -25,6 +25,7 @@
         "settings": {
             "header": "Settings",
             "device_header": "Device Settings",
+            "device_description": "The following settings are stored on your local device via cookie",
             "language": {
                 "label": "Language for this application",
                 "placeholder": "Select a language",
@@ -32,8 +33,7 @@
             },
             "theme": {
                 "label": "Color theme for this device",
-                "placeholder": "Select a color schema",
-                "description": "Selects if the application is light or dark mode"
+                "placeholder": "Select a color schema"
             }
         },
         "legal": {
