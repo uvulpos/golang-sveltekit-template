@@ -25,6 +25,7 @@ import (
 	generalStorage "github.com/uvulpos/go-svelte/src/resources/general/storage"
 
 	authPackageService "github.com/uvulpos/go-svelte/authentication-api/ressources/auth/service"
+	authPackageStorage "github.com/uvulpos/go-svelte/authentication-api/ressources/auth/storage"
 
 	jwtPackageService "github.com/uvulpos/go-svelte/authentication-api/ressources/jwt/service"
 	jwtPackageStorage "github.com/uvulpos/go-svelte/authentication-api/ressources/jwt/storage"
@@ -49,7 +50,9 @@ func NewApp() *App {
 	jwtPackageStorage := jwtPackageStorage.NewJwtStorage(dbConn)
 	jwtPackageSvc := jwtPackageService.NewJwtService(jwtPackageStorage, "somethingNice")
 
+	authPackageStore := authPackageStorage.NewAuthStorage(dbConn)
 	authPackageSvc := authPackageService.NewAuthService(
+		authPackageStore,
 		configuration.AUTHORIZATION_OAUTH_KEY,
 		configuration.AUTHORIZATION_OAUTH_SECRET,
 		configuration.AUTHORIZATION_OAUTH_CALLBACK_URL,

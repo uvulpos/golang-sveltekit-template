@@ -7,6 +7,9 @@
     <a href="/">{$_("page.navigation.home")}</a>
   </li>
   <li>
+    <a href="/secret">Secret!</a>
+  </li>
+  <li>
     <a href="/swagger">Swagger</a>
   </li>
   <li>

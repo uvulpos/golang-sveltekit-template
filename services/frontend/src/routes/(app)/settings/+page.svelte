@@ -59,10 +59,10 @@
 
 <style lang="sass">
   span
-    margin-top: .5rem
+    margin-top: .75rem
     display: block
   .menu
-    margin-top: 1rem
+    margin-top: 2rem
     display: flex
     flex-direction: column
     gap: 1.5rem

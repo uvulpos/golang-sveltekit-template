@@ -1,17 +1,21 @@
 package service
 
 import (
+	"github.com/go-sqlx/sqlx"
+	"github.com/uvulpos/go-svelte/basic-utils/customerrors"
 	"golang.org/x/oauth2"
 )
 
 type AuthService struct {
-	config          *oauth2.Config
-	oauthUserInfoEP string
-	oauthLogoutEP   string
+	authentikConfig          *oauth2.Config
+	authentikOauthUserInfoEP string
+	authentikOauthLogoutEP   string
+
+	storage AuthStorageInterface
 }
 
-func NewAuthService(OAuthKey, OAuthSecret, CallbackURL, AuthURL, AuthTokenURL, UserInfoURL, LogoutURL string, scope ...string) *AuthService {
-	config := &oauth2.Config{
+func NewAuthService(storage AuthStorageInterface, OAuthKey, OAuthSecret, CallbackURL, AuthURL, AuthTokenURL, UserInfoURL, LogoutURL string, scope ...string) *AuthService {
+	authentikConfig := &oauth2.Config{
 		ClientID:     OAuthKey,
 		ClientSecret: OAuthSecret,
 
@@ -26,8 +30,17 @@ func NewAuthService(OAuthKey, OAuthSecret, CallbackURL, AuthURL, AuthTokenURL, U
 		},
 	}
 	return &AuthService{
-		config:          config,
-		oauthUserInfoEP: UserInfoURL,
-		oauthLogoutEP:   LogoutURL,
+		authentikConfig:          authentikConfig,
+		authentikOauthUserInfoEP: UserInfoURL,
+		authentikOauthLogoutEP:   LogoutURL,
+
+		storage: storage,
 	}
+}
+
+type AuthStorageInterface interface {
+	StartTransaction() (*sqlx.Tx, customerrors.ErrorInterface)
+	GetUserIDByLogin(provider string, providerID string) (string, customerrors.ErrorInterface)
+	CreateUser(tx *sqlx.Tx, displayName string, username string, email string, emailVerified bool) (string, customerrors.ErrorInterface)
+	CreateUserLoginIdentity(tx *sqlx.Tx, createdUserID string, authProvider string, authProviderID string) customerrors.ErrorInterface
 }

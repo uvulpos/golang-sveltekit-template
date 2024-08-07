@@ -38,9 +38,9 @@ func VerifyJWT(jwtString, signingKey string) (*JwtDataModel, error) {
 		return nil, fmt.Errorf("unauthorized")
 	}
 
-	data := &JwtDataModel{
-		UserUuid: claims["user-uuid"].(string),
-	}
+	data := NewJwtDataModel(
+		claims["user-uuid"].(string),
+	)
 
 	return data, nil
 }

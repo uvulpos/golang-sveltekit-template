@@ -7,16 +7,13 @@ import (
 )
 
 func (s *AuthService) CallbackFunction(authCode, state, oauthUserinfoURL string) (string, error) {
-	oauthUser, oauthUserErr := s.auth.CallbackFunction(authCode, state, oauthUserinfoURL)
-	if oauthUserErr != nil {
-		fmt.Println("CALLBACK ERROR")
-		return "", oauthUserErr
+	fmt.Println("service")
+	loggedinUser, loggedinUserErr := s.auth.AuthentikCallbackFunction(authCode, state, oauthUserinfoURL)
+	if loggedinUserErr != nil {
+		return "", loggedinUserErr
 	}
 
-	jwt, jwtErr := s.jwt.CreateJWT(jwtService.JwtDataModel{
-		UserUuid: oauthUser.ID,
-	})
-
+	jwt, jwtErr := s.jwt.CreateJWT(jwtService.NewJwtDataModel(loggedinUser))
 	if jwtErr != nil {
 		fmt.Println("JWT ERROR")
 		return "", jwtErr
