@@ -24,9 +24,9 @@
 </div>
 <br>
 
-Golang and Svelte are some truely beautiful technologies and very powerful. But sometimes it is just overkill to deploy a docker compose stack or kubernetes cluster yet
+Golang and Svelte are truly beautiful technologies and very powerful. However, deploying a Docker Compose stack or Kubernetes cluster can sometimes be overkill.
 
-But don't worry, with this repository, I'm giving you the chance to make your infrastructure grow as your project. You start as a single binary that can be distributed and published like gitea and later on you can deploy it as independent microservices.
+But don't worry, with this repository, this repository allows your infrastructure to grow with your project. You can start with a single binary that can be distributed and published like Gitea, and later deploy it as independent microservices.
 
 ## Screenshots
 
