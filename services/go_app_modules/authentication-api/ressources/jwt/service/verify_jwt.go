@@ -40,6 +40,7 @@ func VerifyJWT(jwtString, signingKey string) (*JwtDataModel, error) {
 
 	data := NewJwtDataModel(
 		claims["user-uuid"].(string),
+		claims["session-uuid"].(string),
 	)
 
 	return data, nil

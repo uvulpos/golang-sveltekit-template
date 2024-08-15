@@ -3,6 +3,7 @@ package http
 import (
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/uvulpos/go-svelte/src/configuration"
@@ -21,6 +22,13 @@ func (h *AuthHandler) CallbackHandler(c *fiber.Ctx) error {
 		authCode,
 		state,
 		"",
+
+		/* ---------------------------------------------
+				GDPR sensible information
+		--------------------------------------------- */
+		"", // c.IP(),              // 	for GDPR reasons disabled be default
+		"", // c.Get("User-Agent"), // 	for GDPR reasons disabled be default
+
 	)
 	if err != nil || jwtToken == "" {
 		fmt.Println("#ERROR JWT / CALLBACK", err)
@@ -29,8 +37,11 @@ func (h *AuthHandler) CallbackHandler(c *fiber.Ctx) error {
 
 	// set jwt
 	c.Cookie(&fiber.Cookie{
-		Name:  "jwt",
-		Value: jwtToken,
+		Name:     "jwt",
+		Path:     "/",
+		Value:    jwtToken,
+		HTTPOnly: true,
+		Expires:  time.Now().Add(time.Hour * 24 * 7),
 	})
 
 	c.Redirect(configuration.WEBSERVER_DISPLAYNAME, http.StatusMovedPermanently)

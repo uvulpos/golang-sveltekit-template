@@ -12,4 +12,6 @@ type GeneralHandler interface {
 	Ping(c *fiber.Ctx) error
 	SystemHealthCheck(c *fiber.Ctx) error
 	AssetGopherCoffee(c *fiber.Ctx) error
+	AssetLogo(c *fiber.Ctx) error
+	AssetLogoBranding(c *fiber.Ctx) error
 }

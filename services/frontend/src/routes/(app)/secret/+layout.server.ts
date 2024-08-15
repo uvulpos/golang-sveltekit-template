@@ -1,20 +1,25 @@
+import { checkUserPermissionMiddleware, NotPermittedError } from "$lib/functions/permissions/check-user-permission-middleware";
 
 /** @type {import('./$types').LayoutServerLoad} */
-export async function load({ cookies }) {
-	const jwt = cookies.get('jwt');
-	console.log('JWT:', jwt);
+export async function load({ cookies, fetch }) {
+	try {
+		const jwt = cookies.get('jwt');
 
-	if (jwt == null || jwt == "") {
-		throw new NotPermittedError();
-	}
-	return {};
-}
+		if (jwt == null || jwt == "") {
+			throw new NotPermittedError();
+		}
 
-class NotPermittedError extends Error {
-	constructor() {
-		const message = "User not Authorized"
-		super(message);
-		this.name = 'NotPermittedError';
-		this.message = "You do not have enough permissions";
+		const value = await checkUserPermissionMiddleware(fetch, jwt, ["admin-super"]);
+		return {
+			status: 200,
+			props: {
+				value,
+			}
+		};
+	} catch (error) {
+		return {
+			status: 401,
+			error: error instanceof NotPermittedError ? 'NotPermittedError' : 'UnknownError'
+		};
 	}
 }

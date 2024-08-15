@@ -18,7 +18,8 @@ import (
 	dbHelper "github.com/uvulpos/go-svelte/src/helper/database"
 
 	authHttp "github.com/uvulpos/go-svelte/src/resources/auth/http"
-	authSvc "github.com/uvulpos/go-svelte/src/resources/auth/service"
+	authService "github.com/uvulpos/go-svelte/src/resources/auth/service"
+	authStorage "github.com/uvulpos/go-svelte/src/resources/auth/storage"
 
 	generalHttp "github.com/uvulpos/go-svelte/src/resources/general/http"
 	generalService "github.com/uvulpos/go-svelte/src/resources/general/service"
@@ -63,7 +64,8 @@ func NewApp() *App {
 		configuration.AUTHORIZATION_OAUTH_SCOPES...,
 	)
 
-	authService := authSvc.NewAuthService(authPackageSvc, jwtPackageSvc)
+	authStore := authStorage.NewAuthStore(dbConn)
+	authService := authService.NewAuthService(authStore, authPackageSvc, jwtPackageSvc)
 	authHandler := authHttp.NewAuthHandler(authService)
 
 	generalStore := generalStorage.NewGeneralStore(dbConn)
@@ -77,7 +79,7 @@ func NewApp() *App {
 }
 
 // @title		Golang + SvelteKit API
-// @version	1.0
+// @version	0.1
 // @description
 // @description	<img alt="coffee drinking gopher" src="/api/asset/gopher-coffee" height="200px">
 // @description

@@ -9,9 +9,10 @@ import (
 
 func (s *JwtService) CreateJWT(jwtData *JwtDataModel) (string, error) {
 	claims := jwt.MapClaims{
-		"user-uuid":  jwtData.UserUuid,
-		"exp":        time.Now().Add(time.Hour * 24).Unix(),
-		"authorized": true,
+		"user-uuid":    jwtData.UserUuid,
+		"session-uuid": jwtData.SessionID,
+		"exp":          time.Now().Add(time.Hour * 24).Unix(),
+		"authorized":   true,
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
