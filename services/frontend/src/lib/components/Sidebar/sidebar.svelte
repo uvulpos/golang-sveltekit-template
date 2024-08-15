@@ -2,6 +2,7 @@
   import { _ } from "svelte-i18n";
   import { SidebarAccount } from "../SidebarAccount";
   import { SidebarNavigation } from "../SidebarNavigation";
+  import { Collapsible } from "svelte-collapsible";
 </script>
 
 <ul class="sidebar-content">
@@ -9,11 +10,30 @@
     <SidebarNavigation />
   </li>
   <li class="margin-top" />
-  <!-- <li class="margin-top no-anchor-underline">
-    <a href="/swagger" target="_blank">
-      <Button size="xs" fullSize>Swagger</Button>
-    </a>
-  </li> -->
+  <li>
+    <Collapsible>
+      <div slot="header" class="collapsible-header">
+        <span>Example Nav Item</span>
+      </div>
+      <ul class="subnavigation">
+        <li>
+          <a href="/subitem1">Subitem 1</a>
+        </li>
+        <li>
+          <a href="/subitem2">Subitem 2</a>
+        </li>
+        <li>
+          <a href="/subitem3">Subitem 3</a>
+        </li>
+        <li>
+          <a href="/subitem4">Subitem 4</a>
+        </li>
+        <li>
+          <a href="/subitem5">Subitem 5</a>
+        </li>
+      </ul>
+    </Collapsible>
+  </li>
   <li>
     <SidebarAccount />
   </li>
@@ -49,4 +69,23 @@
           transition: 200ms opacity ease-in-out
           &:hover
             opacity: .7
+
+  .collapsible-header
+    background-color: var(--sidebar-collapsible-background-color)
+    color: var(--sidebar-collapsible-font-color)
+    padding: .5rem
+    cursor: pointer
+
+  ul.subnavigation
+    list-style-type: none
+    padding: 0
+    margin: 0
+    &>li
+      a
+        text-decoration: none
+        color: var(--sidebar-collapsible-font-color)
+        padding: .5rem
+        display: block
+        &:hover
+          background-color: var(--sidebar-collapsible-background-color-hover)
 </style>

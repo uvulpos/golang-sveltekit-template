@@ -37,3 +37,16 @@ body.darkmode {
     --header-font-color: #fff;
     --header-background-color: #212526;
 }
+
+/* New color variables for the sidebar in both light and dark themes */
+body {
+    --sidebar-collapsible-background-color: #e0e0e0;
+    --sidebar-collapsible-font-color: #1b1b1b;
+    --sidebar-collapsible-icon-color: #1b1b1b;
+}
+
+body.darkmode {
+    --sidebar-collapsible-background-color: #2a2e30;
+    --sidebar-collapsible-font-color: #f1f1f1;
+    --sidebar-collapsible-icon-color: #f1f1f1;
+}

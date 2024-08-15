@@ -35,6 +35,7 @@
         "js-cookie": "^3.0.5",
         "radix-icons-svelte": "^1.2.1",
         "svelte-i18n": "^4.0.0",
-        "throttle-debounce": "^5.0.0"
+        "throttle-debounce": "^5.0.0",
+        "svelte-collapsible": "^1.0.0"
     }
 }

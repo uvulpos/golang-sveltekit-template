@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Menu } from "@svelteuidev/core";
-  import { Exit, Pencil1 } from "radix-icons-svelte";
+  import { Exit, Pencil1, User } from "radix-icons-svelte";
   import { _ } from "svelte-i18n";
 </script>
 
@@ -18,9 +18,6 @@
         </a>
         <Menu.Label>Account</Menu.Label>
         <a href="/logout">
-          <!-- <Menu.Item icon={Pencil1} href="/to/identity provider"
-            >{$_("page.navigation.account.edit-account")}</Menu.Item
-          > -->
           <Menu.Item icon={Exit} href="/logout" color="red"
             >{$_("page.navigation.account.logout")}</Menu.Item
           >
@@ -33,7 +30,6 @@
 <style lang="sass">
   .content-element
     .account
-      // border: 1px solid #000
       border-radius: 5px
       display: flex
       align-items: center
