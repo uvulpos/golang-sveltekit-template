@@ -1,37 +1,35 @@
 <script>
   import { _ } from "svelte-i18n";
-  import { Collapsible } from "svelte-collapsible";
+  import { Accordion, AccordionItem } from "svelte-collapsible";
 </script>
 
-<ul class="navigation">
+<Accordion>
   <li>
     <a href="/">{$_("page.navigation.home")}</a>
   </li>
-  <li>
-    <Collapsible>
-      <div slot="header" class="collapsible-header">
-        <span>Example Nav Item</span>
-      </div>
-      <ul class="subnavigation">
-        <li>
-          <a href="/subitem1">Subitem 1</a>
-        </li>
-        <li>
-          <a href="/subitem2">Subitem 2</a>
-        </li>
-        <li>
-          <a href="/subitem3">Subitem 3</a>
-        </li>
-        <li>
-          <a href="/subitem4">Subitem 4</a>
-        </li>
-        <li>
-          <a href="/subitem5">Subitem 5</a>
-        </li>
-      </ul>
-    </Collapsible>
-  </li>
-</ul>
+  <AccordionItem key={1}>
+    <div slot="header" class="collapsible-header">
+      <span>Example Nav Item</span>
+    </div>
+    <ul class="subnavigation">
+      <li>
+        <a href="/subitem1">Subitem 1</a>
+      </li>
+      <li>
+        <a href="/subitem2">Subitem 2</a>
+      </li>
+      <li>
+        <a href="/subitem3">Subitem 3</a>
+      </li>
+      <li>
+        <a href="/subitem4">Subitem 4</a>
+      </li>
+      <li>
+        <a href="/subitem5">Subitem 5</a>
+      </li>
+    </ul>
+  </AccordionItem>
+</Accordion>
 
 <style lang="sass">
     ul.navigation

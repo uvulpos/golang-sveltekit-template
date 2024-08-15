@@ -2,38 +2,36 @@
   import { _ } from "svelte-i18n";
   import { SidebarAccount } from "../SidebarAccount";
   import { SidebarNavigation } from "../SidebarNavigation";
-  import { Collapsible } from "svelte-collapsible";
+  import { Accordion, AccordionItem } from "svelte-collapsible";
 </script>
 
-<ul class="sidebar-content">
+<Accordion>
   <li>
     <SidebarNavigation />
   </li>
   <li class="margin-top" />
-  <li>
-    <Collapsible>
-      <div slot="header" class="collapsible-header">
-        <span>Example Nav Item</span>
-      </div>
-      <ul class="subnavigation">
-        <li>
-          <a href="/subitem1">Subitem 1</a>
-        </li>
-        <li>
-          <a href="/subitem2">Subitem 2</a>
-        </li>
-        <li>
-          <a href="/subitem3">Subitem 3</a>
-        </li>
-        <li>
-          <a href="/subitem4">Subitem 4</a>
-        </li>
-        <li>
-          <a href="/subitem5">Subitem 5</a>
-        </li>
-      </ul>
-    </Collapsible>
-  </li>
+  <AccordionItem>
+    <div slot="header" class="collapsible-header">
+      <span>Example Nav Item</span>
+    </div>
+    <ul class="subnavigation">
+      <li>
+        <a href="/subitem1">Subitem 1</a>
+      </li>
+      <li>
+        <a href="/subitem2">Subitem 2</a>
+      </li>
+      <li>
+        <a href="/subitem3">Subitem 3</a>
+      </li>
+      <li>
+        <a href="/subitem4">Subitem 4</a>
+      </li>
+      <li>
+        <a href="/subitem5">Subitem 5</a>
+      </li>
+    </ul>
+  </AccordionItem>
   <li>
     <SidebarAccount />
   </li>
@@ -44,7 +42,7 @@
       <a href="/legal/gdpr-notice">{$_("page.navigation.gdpr-notice")}</a>
     </div>
   </li>
-</ul>
+</Accordion>
 
 <style lang="sass">
   ul.sidebar-content
