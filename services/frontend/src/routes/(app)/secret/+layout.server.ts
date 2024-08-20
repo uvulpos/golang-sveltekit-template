@@ -1,4 +1,5 @@
-import { checkUserPermissionMiddleware, NotPermittedError } from "$lib/functions/permissions/check-user-permission-middleware";
+import { checkUserPermissionMiddleware } from "$lib/functions/permissions/check-user-permission-middleware";
+import { error } from "@sveltejs/kit";
 
 /** @type {import('./$types').LayoutServerLoad} */
 export async function load({ cookies, fetch }) {
@@ -6,20 +7,21 @@ export async function load({ cookies, fetch }) {
 		const jwt = cookies.get('jwt');
 
 		if (jwt == null || jwt == "") {
-			throw new NotPermittedError();
+			error(401, {
+				message: "Unauthorized",
+			});
 		}
 
-		const value = await checkUserPermissionMiddleware(fetch, jwt, ["admin-super"]);
+		const value = await checkUserPermissionMiddleware(jwt, ["admin"]);
 		return {
 			status: 200,
 			props: {
 				value,
 			}
 		};
-	} catch (error) {
-		return {
-			status: 401,
-			error: error instanceof NotPermittedError ? 'NotPermittedError' : 'UnknownError'
-		};
+	} catch (x) {
+		error(403, {
+			message: "Forbidden",
+		});
 	}
 }

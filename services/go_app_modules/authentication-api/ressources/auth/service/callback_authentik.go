@@ -25,7 +25,6 @@ func (s *AuthService) AuthentikCallbackFunction(authCode, state, oauthUserinfoUR
 		return "", customerrors.NewInternalServerError(err, "", "Failed to get user info from authentik provider")
 	}
 	defer resp.Body.Close()
-
 	data, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return "", customerrors.NewInternalServerError(err, "", "Failed to read authentik oauth user response body")

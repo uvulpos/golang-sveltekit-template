@@ -11,7 +11,7 @@ func Authentication(c *fiber.Ctx) error {
 	jwtToken := c.Cookies("jwt", "")
 	authorizationHeader := c.GetReqHeaders()["Authorization"]
 
-	if jwtToken == "" && len(authorizationHeader) == 0 {
+	if jwtToken == "" && len(authorizationHeader) > 0 {
 		jwtToken = authorizationHeader[0]
 	}
 

@@ -3,10 +3,6 @@
   export let data;
 </script>
 
-<pre>
-    {JSON.stringify(data, null, 2)}
-</pre>
-
 {#if data.status === 200}
   <slot></slot>
 {:else}
