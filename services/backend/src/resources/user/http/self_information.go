@@ -1,10 +1,7 @@
 package http
 
 import (
-	"net/http"
-
 	"github.com/gofiber/fiber/v2"
-	httpModels "github.com/uvulpos/go-svelte/src/resources/user/http/http-models"
 )
 
 // @Summary		Get own user permissions
@@ -19,21 +16,22 @@ import (
 //
 // @Router			/api/v1/self/permissions [get]
 func (s *UserHandler) GetSelfInformation(c *fiber.Ctx) error {
-	userID := c.Locals("user-uuid").(string)
+	return nil
+	// userID := c.Locals("user-uuid").(string)
 
-	permissions, permissionsErr := s.service.GetUserSelfInformationByID(userID)
-	if permissionsErr != nil {
-		status, _, message := permissionsErr.HttpError()
-		return c.Status(status).SendString(message)
-	}
+	// permissions, permissionsErr := s.service.GetUserSelfInformationByID(userID)
+	// if permissionsErr != nil {
+	// 	status, _, message := permissionsErr.HttpError()
+	// 	return c.Status(status).SendString(message)
+	// }
 
-	permissionModel := httpModels.NewSelfPermissions(permissions)
+	// permissionModel := httpModels.NewSelfPermissions(permissions)
 
-	jsonPermissions, jsonPermissionsErr := permissionModel.ToJson()
-	if jsonPermissionsErr != nil {
-		status, _, message := jsonPermissionsErr.HttpError()
-		return c.Status(status).SendString(message)
-	}
+	// jsonPermissions, jsonPermissionsErr := permissionModel.ToJson()
+	// if jsonPermissionsErr != nil {
+	// 	status, _, message := jsonPermissionsErr.HttpError()
+	// 	return c.Status(status).SendString(message)
+	// }
 
-	return c.Status(http.StatusOK).SendString(jsonPermissions)
+	// return c.Status(http.StatusOK).SendString(jsonPermissions)
 }
