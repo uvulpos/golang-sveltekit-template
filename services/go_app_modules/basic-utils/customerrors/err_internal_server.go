@@ -24,7 +24,7 @@ type InternalServerError struct {
 }
 
 func NewInternalServerError(err error, userID string, errorContextData string) *InternalServerError {
-	return &InternalServerError{
+	model := &InternalServerError{
 		ID: uuid.New().String(),
 
 		errorIdentifier: errorconst.INTERNAL_SERVER_ERROR_MESSAGE,
@@ -37,6 +37,10 @@ func NewInternalServerError(err error, userID string, errorContextData string) *
 
 		error: err,
 	}
+
+	fmt.Println("🚨")
+
+	return model
 }
 
 func (e *InternalServerError) Error() string {

@@ -7,15 +7,20 @@ import (
 	"time"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/uvulpos/go-svelte/basic-utils/customerrors"
 )
 
 func (h *AuthHandler) CreateRedirect(c *fiber.Ctx) error {
 	var expiration = time.Now().Add(10 * time.Second)
 
 	b := make([]byte, 16)
-	rand.Read(b)
-	state := base64.URLEncoding.EncodeToString(b)
+	_, readErr := rand.Read(b)
+	if readErr != nil {
+		httpStatus, _, httpMessage := customerrors.NewInternalServerError(readErr, "", "Could not create login hash").HttpError()
+		return c.Status(httpStatus).SendString(httpMessage)
+	}
 
+	state := base64.URLEncoding.EncodeToString(b)
 	redirectUrl := h.service.CreateRedirect(state)
 
 	cookie := &fiber.Cookie{
@@ -24,6 +29,6 @@ func (h *AuthHandler) CreateRedirect(c *fiber.Ctx) error {
 		Expires: expiration,
 	}
 	c.Cookie(cookie)
-	c.Redirect(redirectUrl, http.StatusFound)
-	return nil
+
+	return c.Redirect(redirectUrl, http.StatusFound)
 }

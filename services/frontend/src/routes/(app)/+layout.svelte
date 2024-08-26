@@ -47,6 +47,14 @@
     preMount = false;
     bodyElement = document.body;
     themeStore.isThemeSetOrAutoDetect(window);
+
+    // remove hash from url
+    const refreshHahName = "refresh-hash";
+    const url = new URL(window.location.href);
+    if (url.searchParams.has(refreshHahName)) {
+      url.searchParams.delete(refreshHahName);
+      history.replaceState(null, "", url.toString());
+    }
   });
 
   $: {

@@ -15,3 +15,7 @@ type GeneralHandler interface {
 	AssetLogo(c *fiber.Ctx) error
 	AssetLogoBranding(c *fiber.Ctx) error
 }
+
+type UserHandler interface {
+	GetSelfPermissions(c *fiber.Ctx) error
+}

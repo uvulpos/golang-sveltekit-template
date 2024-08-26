@@ -25,6 +25,10 @@ import (
 	generalService "github.com/uvulpos/go-svelte/src/resources/general/service"
 	generalStorage "github.com/uvulpos/go-svelte/src/resources/general/storage"
 
+	userHttp "github.com/uvulpos/go-svelte/src/resources/user/http"
+	userService "github.com/uvulpos/go-svelte/src/resources/user/service"
+	userStorage "github.com/uvulpos/go-svelte/src/resources/user/storage"
+
 	authPackageService "github.com/uvulpos/go-svelte/authentication-api/ressources/auth/service"
 	authPackageStorage "github.com/uvulpos/go-svelte/authentication-api/ressources/auth/storage"
 
@@ -35,6 +39,7 @@ import (
 type App struct {
 	AuthHandler    AuthHandler
 	GeneralHandler GeneralHandler
+	UserHandler    UserHandler
 }
 
 func NewApp() *App {
@@ -72,9 +77,14 @@ func NewApp() *App {
 	generalSvc := generalService.NewGeneralSvc(generalStore)
 	generalHandler := generalHttp.NewGeneralHandler(generalSvc)
 
+	userStore := userStorage.NewUserStore(dbConn)
+	userSvc := userService.NewUserService(userStore)
+	userHandler := userHttp.NewUserHandler(userSvc)
+
 	return &App{
 		AuthHandler:    authHandler,
 		GeneralHandler: generalHandler,
+		UserHandler:    userHandler,
 	}
 }
 

@@ -6,7 +6,7 @@ import (
 	errorconst "github.com/uvulpos/go-svelte/basic-utils/customerrors/custom-error-const"
 )
 
-var debugMode bool = false
+var debugMode bool = true
 
 func SetDebugMode(isDebug bool) {
 	debugMode = isDebug

@@ -1,4 +1,5 @@
-CREATE TYPE identity_provider AS ENUM ('Authentik');
+CREATE TYPE identity_provider IF NOT EXISTS AS ENUM ();
+ALTER TYPE enum_type ADD VALUE 'Authentik';
 
 CREATE TABLE users (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -18,9 +19,9 @@ CREATE TABLE user_identities (
 );
 
 CREATE TABLE user_sessions (
-    id UUID DEFAULT gen_random_uuid(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL,
-    useragent_hash VARCHAR CHECK (useragent_hash <> ''), -- to prevent at least a bit session hijacking
+    useragent_hash VARCHAR CHECK (useragent_hash != ''), -- to prevent at least a bit session hijacking
     created TIMESTAMP NOT NULL DEFAULT NOW(),
     created_ip_addr VARCHAR DEFAULT NULL,
     last_jwt_refresh TIMESTAMP NOT NULL DEFAULT NOW(),
@@ -32,9 +33,9 @@ CREATE TABLE user_sessions (
 -- Value can be null, but not empty string
 ALTER TABLE user_sessions
 ADD CONSTRAINT created_ip_addr_not_empty_string
-CHECK (created_ip_addr IS NULL OR (created_ip_addr <> ''));
+CHECK (created_ip_addr IS NULL OR (created_ip_addr != ''));
 
 -- Value can be null, but not empty string
 ALTER TABLE user_sessions
 ADD CONSTRAINT last_jwt_refresh_ip_addr_not_empty_string
-CHECK (last_jwt_refresh_ip_addr IS NULL OR (last_jwt_refresh_ip_addr <> ''));
+CHECK (last_jwt_refresh_ip_addr IS NULL OR (last_jwt_refresh_ip_addr != ''));
