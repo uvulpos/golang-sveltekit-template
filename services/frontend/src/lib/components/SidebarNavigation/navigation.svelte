@@ -17,7 +17,7 @@
       subelements: [
         {
           name: "Logout",
-          href: "/api/v1/oauth/logout",
+          href: "/logout",
         },
       ],
     },

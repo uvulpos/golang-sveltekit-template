@@ -13,6 +13,7 @@ func (h *AuthHandler) Logout(c *fiber.Ctx) error {
 		Path:     "/",
 		Value:    "",
 		HTTPOnly: true,
+		MaxAge:   -1,
 		Expires:  time.Now(),
 	})
 	logoutURL, logoutErr := h.service.Logout()
