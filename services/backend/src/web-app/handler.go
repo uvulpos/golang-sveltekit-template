@@ -18,4 +18,5 @@ type GeneralHandler interface {
 
 type UserHandler interface {
 	GetSelfPermissions(c *fiber.Ctx) error
+	GetSelfInformation(c *fiber.Ctx) error
 }

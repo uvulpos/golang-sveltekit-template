@@ -7,17 +7,17 @@ import (
 	httpModels "github.com/uvulpos/go-svelte/src/resources/user/http/http-models"
 )
 
-// @Summary		Get own user permissions
-// @Description	Returns all set permission for authorized users
+//	@Summary		Get own user permissions
+//	@Description	Returns all set permission for authorized users
 //
-// @Tags			user
-// @Produce		plain
+//	@Tags			user
+//	@Produce		plain
 //
-// @Success		200	{object}	httpModels.SelfPermissions	"{"Permissions":["greetings:read","greetings:write"]}"
-// @Failure		404	{string}	string						"The requested data could not be found."
-// @Failure		500	{string}	string						"An error occurred while processing your request. Please try again later. "
+//	@Success		200	{object}	httpModels.SelfPermissionsModel
+//	@Failure		404	{string}	string	"The requested data could not be found."
+//	@Failure		500	{string}	string	"An error occurred while processing your request. Please try again later. "
 //
-// @Router			/api/v1/self/permissions [get]
+//	@Router			/api/v1/self/permissions [get]
 func (s *UserHandler) GetSelfPermissions(c *fiber.Ctx) error {
 	userID := c.Locals("user-uuid").(string)
 
@@ -27,13 +27,6 @@ func (s *UserHandler) GetSelfPermissions(c *fiber.Ctx) error {
 		return c.Status(status).SendString(message)
 	}
 
-	permissionModel := httpModels.NewSelfPermissions(permissions)
-
-	jsonPermissions, jsonPermissionsErr := permissionModel.ToJson()
-	if jsonPermissionsErr != nil {
-		status, _, message := jsonPermissionsErr.HttpError()
-		return c.Status(status).SendString(message)
-	}
-
-	return c.Status(http.StatusOK).SendString(jsonPermissions)
+	permissionModel := httpModels.NewSelfPermissionsModel(permissions)
+	return c.Status(http.StatusOK).JSON(permissionModel)
 }

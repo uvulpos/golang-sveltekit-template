@@ -4,6 +4,9 @@
   // export const ssr = true;
   // export const trailingSlash = "always";
 
+  /** @type {import('./$types').PageData} */
+  export let data;
+
   // import code
   import { onMount } from "svelte";
   import { _ } from "svelte-i18n";
@@ -13,7 +16,6 @@
     Navbar,
     Header,
     SvelteUIProvider,
-    theme,
   } from "@svelteuidev/core";
   import { allowedLanguages, getLocale } from "$lib/i18n";
   import { Header as PageHeader } from "$lib/components/Header";
@@ -60,6 +62,7 @@
   $: {
     changePageTheme(bodyElement, $themeStore);
   }
+  $: selfInformation = data.props.user;
 </script>
 
 <SvelteUIProvider withNormalizeCSS withGlobalStyles>
@@ -72,7 +75,7 @@
           ? 'sidebar-expandSidebar'
           : 'collapsedSidebar'}"
       >
-        <Sidebar />
+        <Sidebar user={selfInformation} />
       </Navbar>
       <Header slot="header" fixed override={DarkNavbar} height={67}>
         <PageHeader {logo} bind:collapseSidebar />
@@ -93,7 +96,7 @@
 
   :global(.sidebar)
       overflow-y: scroll
-      padding: 1rem 1rem 2rem
+      padding: 1rem 0 2rem
       z-index: 100
       position: fixed
       inset: 0 

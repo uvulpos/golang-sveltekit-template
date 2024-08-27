@@ -35,8 +35,8 @@ func (permission *Permission) Scan(value interface{}) error {
 	return json.Unmarshal(bytes, &permission)
 }
 
-func (s *UserPermissions) ToServiceModel() *serviceModel.UserPermissions {
-	return &serviceModel.UserPermissions{
+func (s *UserPermissions) ToServiceModel() *serviceModel.UserPermissionsModel {
+	return &serviceModel.UserPermissionsModel{
 		Permissions: PermissionsToStringArray(s.Permissions),
 	}
 }

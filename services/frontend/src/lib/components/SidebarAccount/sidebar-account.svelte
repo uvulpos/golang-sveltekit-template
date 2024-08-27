@@ -1,13 +1,21 @@
 <script lang="ts">
+  import type { SelfInformation } from "$lib/api/user/models/SelfInformation";
   import { Menu } from "@svelteuidev/core";
   import { Exit, Pencil1 } from "radix-icons-svelte";
   import { _ } from "svelte-i18n";
+
+  export let user: SelfInformation;
 </script>
 
 <div class="content-element sidebar-account-content-element">
   <div class="account">
-    <img src="" alt="" class="profilepicture" />
-    <span>uVulpos</span>
+    <img src={user.profile_picture} alt="" class="profilepicture" />
+    <div class="account-name" title="{user.display_name} ({user.username})">
+      <span class="displayname">{user.display_name} </span>
+      <span class="username">
+        ({user.username})
+      </span>
+    </div>
     <div class="margin-left">
       <Menu class="menu">
         <Menu.Label>{$_("page.navigation.application.header")}</Menu.Label>
@@ -46,6 +54,17 @@
         height: $size
         width: $size
         background-color: #f60
+
+      .account-name
+        display: flex
+        flex-direction: column
+        gap: .1rem
+
+        .displayname
+          font-size: 1rem
+        .username
+          font-size: .8rem
+          color: var(--sidebar-font-color-secondary)
 
       .margin-left
         margin-left: auto

@@ -30,6 +30,7 @@ func (a *App) createRoutes(router *fiber.App) {
 	apiV1.Use(middlewares.Authentication)
 
 	apiV1.Get("/test", TestEP)
+	apiV1.Get("/self", a.UserHandler.GetSelfInformation)
 	apiV1.Get("/self/permissions", a.UserHandler.GetSelfPermissions)
 
 	apiV1.Use(Handle404)

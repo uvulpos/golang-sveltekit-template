@@ -1,11 +1,13 @@
 package models
 
-type UserSelfInformation struct {
+type UserSelfInformationModel struct {
+	User        *UserModel
 	Permissions []string
 }
 
-func NewUserSelfInformation(permissions []string) *UserSelfInformation {
-	return &UserSelfInformation{
+func NewUserSelfInformationModel(user *UserModel, permissions []string) *UserSelfInformationModel {
+	return &UserSelfInformationModel{
+		User:        user,
 		Permissions: permissions,
 	}
 }
