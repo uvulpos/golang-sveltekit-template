@@ -1,6 +1,5 @@
 import { writable, type Writable } from "svelte/store";
 import Cookies from 'js-cookie'
-import { theme } from "@svelteuidev/core";
 
 const themeCookieName = "theme-style"
 const THEME_COOKIE_DARKMODE = "darkmode"

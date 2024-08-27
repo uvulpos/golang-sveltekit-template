@@ -10,34 +10,16 @@
     {
       name: $_("page.navigation.home"),
       href: "/",
-      subelements: [
-        {
-          name: "Swagger",
-          href: "/swagger",
-        },
-        {
-          name: "Swagger",
-          href: "/swagger",
-        },
-      ],
-    },
-    {
-      name: "Secret",
-      href: "/secret",
-      subelements: [
-        {
-          name: "Swagger",
-          href: "/swagger",
-        },
-        {
-          name: "Swagger",
-          href: "/swagger",
-        },
-      ],
     },
     {
       name: "Settings",
       href: "/settings",
+      subelements: [
+        {
+          name: "Logout",
+          href: "/api/v1/oauth/logout",
+        },
+      ],
     },
   ];
 
@@ -58,24 +40,6 @@
     });
   }
 </script>
-
-<!-- <ul class="navigation">
-  <li>
-    <a href="/">{$_("page.navigation.home")}</a>
-  </li>
-  <li>
-    <a href="/secret">Secret!</a>
-  </li>
-  <li>
-    <a href="/swagger">Swagger</a>
-  </li>
-  <li>
-    <a href="/api/v1/oauth/redirect">Oauth</a>
-  </li>
-  <li>
-    <a href="/api/v1/oauth/logout">Logout</a>
-  </li>
-</ul> -->
 
 <ul class="navigation">
   {#each navigation as nav, counter}
@@ -106,7 +70,7 @@
         // gap: .5rem
         margin: 0
         padding: 0
-        margin-top: 5vh
+        margin-top: 3vh
 
         li
             a 

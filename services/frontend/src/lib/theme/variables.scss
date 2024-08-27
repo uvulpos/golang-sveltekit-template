@@ -7,7 +7,7 @@ body{
     --color-red: rgb(234, 63, 63);
     --color-red-10: rgb(234, 63, 63, .1);
 
-    --background-color: #e1e1e1;
+    --background-color: #efefef;
     --background-color-secondary: #ffffff;
     --background-color-tertiary: #cacaca;
     --font-color: #000000;
@@ -15,16 +15,17 @@ body{
     --anchor-font-color: #0099ff;
 
     --sidebar-font-color: #f1f1f1;
-    --sidebar-font-color-secondary: #f1f1f188;
+    --sidebar-font-color-secondary: #f1f1f189;
+    --sidebar-font-color-menu: #1b1b1b;
     --sidebar-svg-color: #f1f1f1;
     --sidebar-background-color: #262a2b;
     --sidebar-background-color-active: #4d619e;
     --sidebar-background-color-submenu: #3b4043;
     --sidebar-background-color-submenu-hover: #5c6368;
     --sidebar-background-color-hover: #3f4648;
-    --sidebar-background-color-secondary: #323739;
-    --sidebar-border-color-secondary: #4f565a;
-    --sidebar-background-color-secondary-hover: #434a4d;
+    --sidebar-background-color-secondary: #ebebeb;
+    --sidebar-border-color-secondary: #cfcfcf;
+    --sidebar-background-color-secondary-hover: #dadada;
     
     --header-font-color: #ffffff;
     --header-background-color: #333333;
@@ -41,6 +42,25 @@ body.darkmode {
     --font-color-secondary: #dadada73; 
     --anchor-font-color: #66b7ed;
 
+    --sidebar-font-color-menu: #f1f1f1;
+    --sidebar-background-color-secondary: #323739;
+    --sidebar-border-color-secondary: #4f565a;
+    --sidebar-background-color-secondary-hover: #434a4d;
+
     --header-font-color: #fff;
     --header-background-color: #212526;
 }
+
+
+
+
+    // --sidebar-font-color: #1b1b1b;
+    // --sidebar-font-color-secondary: #1b1b1b88;
+    // --sidebar-svg-color: #1b1b1b;
+    // --sidebar-background-color: #c1c1c1;
+    // --sidebar-background-color-active: #7995eb;
+    // --sidebar-background-color-submenu: #dadada;
+    // --sidebar-background-color-hover: #b4b4b4;
+    // --sidebar-background-color-secondary: #ebebeb;
+    // --sidebar-border-color-secondary: #cfcfcf;
+    // --sidebar-background-color-secondary-hover: #dadada;

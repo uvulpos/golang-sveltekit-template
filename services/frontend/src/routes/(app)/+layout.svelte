@@ -62,7 +62,7 @@
   $: {
     changePageTheme(bodyElement, $themeStore);
   }
-  $: selfInformation = data.props.user;
+  $: selfInformation = data?.props?.user;
 </script>
 
 <SvelteUIProvider withNormalizeCSS withGlobalStyles>
