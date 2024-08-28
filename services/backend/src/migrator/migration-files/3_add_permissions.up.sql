@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS roles (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-    name VARCHAR UNIQUE NOT NULL,
+    name VARCHAR(255) UNIQUE NOT NULL,
     inherit_from UUID,
     FOREIGN KEY (inherit_from) REFERENCES roles(id) ON DELETE SET NULL,
     CHECK (inherit_from != id)
@@ -8,9 +8,9 @@ CREATE TABLE IF NOT EXISTS roles (
 
 CREATE TABLE IF NOT EXISTS permissions (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-    name VARCHAR UNIQUE NOT NULL,
-    description VARCHAR NOT NULL,
-    identifier VARCHAR UNIQUE NOT NULL
+    name VARCHAR(255) UNIQUE NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    identifier VARCHAR(255) UNIQUE NOT NULL
     CHECK (identifier != '')
 );
 
