@@ -1,6 +1,6 @@
 package models
 
-import serviceModel "github.com/uvulpos/go-svelte/src/resources/user/service/models"
+import serviceModel "github.com/uvulpos/golang-sveltekit-template/src/resources/user/service/models"
 
 type UserModel struct {
 	ID            string `db:"id"`

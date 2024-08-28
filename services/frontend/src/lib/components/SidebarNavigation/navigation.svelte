@@ -21,6 +21,10 @@
         },
       ],
     },
+    {
+      name: "Swagger",
+      href: "/swagger",
+    },
   ];
 
   $: changeNavigationActiveElement($page);

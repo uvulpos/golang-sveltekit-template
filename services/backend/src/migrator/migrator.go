@@ -10,7 +10,7 @@ import (
 	"github.com/golang-migrate/migrate/v4/database/postgres"
 	"github.com/golang-migrate/migrate/v4/source/httpfs"
 	_ "github.com/lib/pq"
-	dbHelper "github.com/uvulpos/go-svelte/src/helper/database"
+	dbHelper "github.com/uvulpos/golang-sveltekit-template/src/helper/database"
 )
 
 //go:embed migration-files/*.sql

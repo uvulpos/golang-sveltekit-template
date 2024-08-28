@@ -3,7 +3,7 @@ package customerrors
 import (
 	"time"
 
-	errorconst "github.com/uvulpos/go-svelte/basic-utils/customerrors/custom-error-const"
+	errorconst "github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors/custom-error-const"
 )
 
 func GetHttpError(err ErrorInterface) (int, errorconst.ErrorIdentifier, string) {

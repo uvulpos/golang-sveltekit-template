@@ -3,7 +3,7 @@ package storage
 import (
 	"database/sql"
 
-	"github.com/uvulpos/go-svelte/basic-utils/customerrors"
+	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
 )
 
 func (s *AuthStorage) GetUserIDByLogin(provider string, providerID string) (string, customerrors.ErrorInterface) {

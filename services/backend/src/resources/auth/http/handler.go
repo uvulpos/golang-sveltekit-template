@@ -1,7 +1,7 @@
 package http
 
 import (
-	"github.com/uvulpos/go-svelte/src/resources/auth/service"
+	"github.com/uvulpos/golang-sveltekit-template/src/resources/auth/service"
 )
 
 type AuthHandler struct {

@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/uvulpos/go-svelte/src/web-app/middlewares"
+	"github.com/uvulpos/golang-sveltekit-template/src/web-app/middlewares"
 )
 
 func (a *App) createRoutes(router *fiber.App) {

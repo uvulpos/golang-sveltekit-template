@@ -5,8 +5,8 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
-	"github.com/uvulpos/go-svelte/src/helper/branding"
-	webApp "github.com/uvulpos/go-svelte/src/web-app"
+	"github.com/uvulpos/golang-sveltekit-template/src/helper/branding"
+	webApp "github.com/uvulpos/golang-sveltekit-template/src/web-app"
 )
 
 var RunAppCmd = &cobra.Command{

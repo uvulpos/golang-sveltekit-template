@@ -61,16 +61,6 @@ services:
       - intranet
     command: ["sh", "-c", "cd /app && npm install && npm run test"]
 
-  frontend-tests-ci:
-    image: node:latest
-    container_name: web-ui-test-ci
-    restart: always
-    volumes:
-      - ./services/frontend:/app
-    networks:
-      - intranet
-    command: ["sh", "-c", "cd /app && npm install && npm run test"]
-
   # -----------------------------------------------------------------------------------------------------
   #
   #       BACKEND
@@ -82,9 +72,9 @@ services:
     container_name: web-api
     volumes:
       - ./services/backend:/app/backend
-      - ./services/go_app_modules:/app/go_app_modules
-      - ./services/go.work:/app/go.work
-      - ./services/go.work.sum:/app/go.work.sum
+      # - ./services/go_app_modules:/app/go_app_modules
+      # - ./services/go.work:/app/go.work
+      # - ./services/go.work.sum:/app/go.work.sum
     networks:
       - intranet
     # environments:
@@ -100,11 +90,11 @@ services:
       - "traefik.http.routers.backend.service=backend"
       - "traefik.http.services.backend.loadbalancer.server.port=3000"
       - "traefik.http.routers.backend.entrypoints=web"
-    command:
-      [
+    command: [
         "sh",
         "-c",
-        "cd /app && go work sync && cd /app/backend && bash scripts/run-local-docker.sh",
+        # "cd /app && go work sync && cd /app/backend && bash scripts/run-local-docker.sh",
+        "cd /app/backend && bash scripts/run-local-docker.sh",
       ]
 
   backend-tests:
@@ -112,9 +102,9 @@ services:
     container_name: web-api-test
     volumes:
       - ./services/backend:/app/backend
-      - ./services/go_app_modules:/app/go_app_modules
-      - ./services/go.work:/app/go.work
-      - ./services/go.work.sum:/app/go.work.sum
+      # - ./services/go_app_modules:/app/go_app_modules
+      # - ./services/go.work:/app/go.work
+      # - ./services/go.work.sum:/app/go.work.sum
     networks:
       - intranet
     depends_on:
@@ -124,29 +114,11 @@ services:
     tty: true
     environment:
       - TERM=xterm-256color`
-    command:
-      [
+    command: [
         "sh",
         "-c",
-        "cd /app && go work sync && cd /app/backend && bash scripts/test-local-docker.sh",
-      ]
-
-  backend-tests-ci:
-    image: golang:latest
-    container_name: web-api-test-ci
-    volumes:
-      - ./services/backend:/app/backend
-      - ./services/go_app_modules:/app/go_app_modules
-      - ./services/go.work:/app/go.work
-      - ./services/go.work.sum:/app/go.work.sum
-    tty: true
-    environment:
-      - TERM=xterm-256color`
-    command:
-      [
-        "sh",
-        "-c",
-        "cd /app && go work sync && cd /app/backend && bash scripts/test-local-docker.sh",
+        # "cd /app && go work sync && cd /app/backend && bash scripts/test-local-docker.sh",
+        "cd /app/backend && bash scripts/test-local-docker.sh",
       ]
 
   # -----------------------------------------------------------------------------------------------------

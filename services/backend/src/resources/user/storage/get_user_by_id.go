@@ -4,9 +4,9 @@ import (
 	"database/sql"
 
 	"github.com/go-sqlx/sqlx"
-	"github.com/uvulpos/go-svelte/basic-utils/customerrors"
-	serviceModel "github.com/uvulpos/go-svelte/src/resources/user/service/models"
-	storageModel "github.com/uvulpos/go-svelte/src/resources/user/storage/models"
+	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
+	serviceModel "github.com/uvulpos/golang-sveltekit-template/src/resources/user/service/models"
+	storageModel "github.com/uvulpos/golang-sveltekit-template/src/resources/user/storage/models"
 )
 
 func (s *UserStore) GetUserByID(tx *sqlx.Tx, userID string) (*serviceModel.UserModel, customerrors.ErrorInterface) {

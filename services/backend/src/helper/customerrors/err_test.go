@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/google/uuid"
-	"gotest.tools/v3/assert"
+	"gotest.tools/assert"
 )
 
 func TestHttpDatabaseErrorHandling(t *testing.T) {

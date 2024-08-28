@@ -1,5 +1,5 @@
 CREATE TYPE identity_provider IF NOT EXISTS AS ENUM ();
-ALTER TYPE enum_type ADD VALUE 'Authentik';
+ALTER TYPE identity_provider ADD VALUE 'Authentik';
 
 CREATE TABLE users (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -14,7 +14,7 @@ CREATE TABLE user_identities (
     provider_user_id VARCHAR NOT NULL,
     user_id UUID NOT NULL,
     PRIMARY KEY (provider, provider_user_id),
-    FOREIGN KEY (user_id) REFERENCES users (id),
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
     UNIQUE (provider, provider_user_id, user_id)
 );
 
@@ -26,7 +26,7 @@ CREATE TABLE user_sessions (
     created_ip_addr VARCHAR DEFAULT NULL,
     last_jwt_refresh TIMESTAMP NOT NULL DEFAULT NOW(),
     last_jwt_refresh_ip_addr VARCHAR DEFAULT NULL,
-    FOREIGN KEY (user_id) REFERENCES users (id),
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
     UNIQUE (id, user_id)
 );
 
@@ -39,3 +39,20 @@ CHECK (created_ip_addr IS NULL OR (created_ip_addr != ''));
 ALTER TABLE user_sessions
 ADD CONSTRAINT last_jwt_refresh_ip_addr_not_empty_string
 CHECK (last_jwt_refresh_ip_addr IS NULL OR (last_jwt_refresh_ip_addr != ''));
+
+CREATE TYPE app_language IF NOT EXISTS AS ENUM ();
+ALTER TYPE app_language ADD VALUE 'en';
+ALTER TYPE app_language ADD VALUE 'de';
+
+CREATE TYPE app_theme IF NOT EXISTS AS ENUM ();
+ALTER TYPE app_theme ADD VALUE 'lightmode';
+ALTER TYPE app_theme ADD VALUE 'darkmode';
+
+CREATE TABLE user_settings (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL,
+    app_language identity_provider NOT NULL DEFAULT 'en',
+    app_theme app_theme NOT NULL DEFAULT 'lightmode',
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+    UNIQUE (id, user_id)
+);

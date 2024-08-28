@@ -1,7 +1,7 @@
 package service
 
 import (
-	"github.com/uvulpos/go-svelte/basic-utils/customerrors"
+	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
 )
 
 func (s *UserService) GetUserPermissionsByID(userID string) ([]string, customerrors.ErrorInterface) {

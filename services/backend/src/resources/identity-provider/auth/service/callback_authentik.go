@@ -7,8 +7,8 @@ import (
 	"io"
 
 	"github.com/go-sqlx/sqlx"
-	"github.com/uvulpos/go-svelte/basic-utils/customerrors"
-	customerrorconst "github.com/uvulpos/go-svelte/basic-utils/customerrors/custom-error-const"
+	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
+	customerrorconst "github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors/custom-error-const"
 )
 
 func (s *AuthService) AuthentikCallbackFunction(authCode, state, oauthUserinfoURL string) (string, customerrors.ErrorInterface) {

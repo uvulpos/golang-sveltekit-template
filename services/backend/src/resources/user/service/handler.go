@@ -2,9 +2,9 @@ package service
 
 import (
 	"github.com/go-sqlx/sqlx"
-	"github.com/uvulpos/go-svelte/basic-utils/customerrors"
+	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
 
-	serviceModel "github.com/uvulpos/go-svelte/src/resources/user/service/models"
+	serviceModel "github.com/uvulpos/golang-sveltekit-template/src/resources/user/service/models"
 )
 
 type UserService struct {

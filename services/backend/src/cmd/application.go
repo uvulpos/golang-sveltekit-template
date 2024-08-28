@@ -9,9 +9,9 @@ import (
 	"github.com/spf13/cobra"
 
 	// "github.com/spf13/cobra/doc"
-	migrate "github.com/uvulpos/go-svelte/src/cmd/migrate"
-	runApp "github.com/uvulpos/go-svelte/src/cmd/run"
-	"github.com/uvulpos/go-svelte/src/helper/branding"
+	migrate "github.com/uvulpos/golang-sveltekit-template/src/cmd/migrate"
+	runApp "github.com/uvulpos/golang-sveltekit-template/src/cmd/run"
+	"github.com/uvulpos/golang-sveltekit-template/src/helper/branding"
 )
 
 // runCmd represents the run command

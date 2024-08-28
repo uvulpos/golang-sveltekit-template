@@ -9,8 +9,8 @@ import (
 	"time"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/uvulpos/go-svelte/basic-utils/customerrors"
-	"github.com/uvulpos/go-svelte/src/configuration"
+	"github.com/uvulpos/golang-sveltekit-template/src/configuration"
+	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
 )
 
 func (h *AuthHandler) CallbackHandler(c *fiber.Ctx) error {

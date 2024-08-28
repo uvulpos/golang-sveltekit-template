@@ -1,7 +1,7 @@
 package httpModels
 
 import (
-	serviceModel "github.com/uvulpos/go-svelte/src/resources/user/service/models"
+	serviceModel "github.com/uvulpos/golang-sveltekit-template/src/resources/user/service/models"
 )
 
 type SelfInformationModel struct {

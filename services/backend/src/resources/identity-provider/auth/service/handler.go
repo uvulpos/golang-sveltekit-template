@@ -2,7 +2,7 @@ package service
 
 import (
 	"github.com/go-sqlx/sqlx"
-	"github.com/uvulpos/go-svelte/basic-utils/customerrors"
+	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
 	"golang.org/x/oauth2"
 )
 

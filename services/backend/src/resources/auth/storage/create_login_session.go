@@ -4,7 +4,7 @@ import (
 	"database/sql"
 
 	"github.com/go-sqlx/sqlx"
-	"github.com/uvulpos/go-svelte/basic-utils/customerrors"
+	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
 )
 
 func (a *AuthStore) StartLoginSession(tx *sqlx.Tx, loggedinUser string, useragentHash, ipaddr *string) (string, customerrors.ErrorInterface) {

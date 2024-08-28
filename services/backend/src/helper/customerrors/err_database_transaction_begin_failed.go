@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	errorconst "github.com/uvulpos/go-svelte/basic-utils/customerrors/custom-error-const"
+	errorconst "github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors/custom-error-const"
 )
 
 type DatabaseTransactionBeginError struct {

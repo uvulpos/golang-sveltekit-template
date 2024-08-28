@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
-	jwtService "github.com/uvulpos/go-svelte/authentication-api/ressources/jwt/service"
+	jwtService "github.com/uvulpos/golang-sveltekit-template/src/resources/identity-provider/jwt/service"
 )
 
 func Authentication(c *fiber.Ctx) error {

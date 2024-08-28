@@ -10,30 +10,30 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
 
 	"github.com/gofiber/swagger"
-	_ "github.com/uvulpos/go-svelte/swagger-docs"
+	_ "github.com/uvulpos/golang-sveltekit-template/swagger-docs"
 
-	"github.com/uvulpos/go-svelte/src/assets"
-	swaggercss "github.com/uvulpos/go-svelte/src/assets/swagger-css"
-	"github.com/uvulpos/go-svelte/src/configuration"
-	dbHelper "github.com/uvulpos/go-svelte/src/helper/database"
+	"github.com/uvulpos/golang-sveltekit-template/src/assets"
+	swaggercss "github.com/uvulpos/golang-sveltekit-template/src/assets/swagger-css"
+	"github.com/uvulpos/golang-sveltekit-template/src/configuration"
+	dbHelper "github.com/uvulpos/golang-sveltekit-template/src/helper/database"
 
-	authHttp "github.com/uvulpos/go-svelte/src/resources/auth/http"
-	authService "github.com/uvulpos/go-svelte/src/resources/auth/service"
-	authStorage "github.com/uvulpos/go-svelte/src/resources/auth/storage"
+	authHttp "github.com/uvulpos/golang-sveltekit-template/src/resources/auth/http"
+	authService "github.com/uvulpos/golang-sveltekit-template/src/resources/auth/service"
+	authStorage "github.com/uvulpos/golang-sveltekit-template/src/resources/auth/storage"
 
-	generalHttp "github.com/uvulpos/go-svelte/src/resources/general/http"
-	generalService "github.com/uvulpos/go-svelte/src/resources/general/service"
-	generalStorage "github.com/uvulpos/go-svelte/src/resources/general/storage"
+	generalHttp "github.com/uvulpos/golang-sveltekit-template/src/resources/general/http"
+	generalService "github.com/uvulpos/golang-sveltekit-template/src/resources/general/service"
+	generalStorage "github.com/uvulpos/golang-sveltekit-template/src/resources/general/storage"
 
-	userHttp "github.com/uvulpos/go-svelte/src/resources/user/http"
-	userService "github.com/uvulpos/go-svelte/src/resources/user/service"
-	userStorage "github.com/uvulpos/go-svelte/src/resources/user/storage"
+	userHttp "github.com/uvulpos/golang-sveltekit-template/src/resources/user/http"
+	userService "github.com/uvulpos/golang-sveltekit-template/src/resources/user/service"
+	userStorage "github.com/uvulpos/golang-sveltekit-template/src/resources/user/storage"
 
-	authPackageService "github.com/uvulpos/go-svelte/authentication-api/ressources/auth/service"
-	authPackageStorage "github.com/uvulpos/go-svelte/authentication-api/ressources/auth/storage"
+	authPackageService "github.com/uvulpos/golang-sveltekit-template/src/resources/identity-provider/auth/service"
+	authPackageStorage "github.com/uvulpos/golang-sveltekit-template/src/resources/identity-provider/auth/storage"
 
-	jwtPackageService "github.com/uvulpos/go-svelte/authentication-api/ressources/jwt/service"
-	jwtPackageStorage "github.com/uvulpos/go-svelte/authentication-api/ressources/jwt/storage"
+	jwtPackageService "github.com/uvulpos/golang-sveltekit-template/src/resources/identity-provider/jwt/service"
+	jwtPackageStorage "github.com/uvulpos/golang-sveltekit-template/src/resources/identity-provider/jwt/storage"
 )
 
 type App struct {

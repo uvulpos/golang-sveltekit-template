@@ -1,7 +1,7 @@
 package http
 
 import (
-	"github.com/uvulpos/go-svelte/src/resources/user/service"
+	"github.com/uvulpos/golang-sveltekit-template/src/resources/user/service"
 )
 
 type UserHandler struct {

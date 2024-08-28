@@ -1,8 +1,8 @@
 package service
 
 import (
-	"github.com/uvulpos/go-svelte/basic-utils/customerrors"
-	serviceModel "github.com/uvulpos/go-svelte/src/resources/user/service/models"
+	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
+	serviceModel "github.com/uvulpos/golang-sveltekit-template/src/resources/user/service/models"
 )
 
 func (s *UserService) GetUserSelfInformationByID(userID string) (*serviceModel.UserSelfInformationModel, customerrors.ErrorInterface) {

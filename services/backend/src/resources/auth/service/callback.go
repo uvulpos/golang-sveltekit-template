@@ -2,8 +2,8 @@ package service
 
 import (
 	"github.com/go-sqlx/sqlx"
-	jwtService "github.com/uvulpos/go-svelte/authentication-api/ressources/jwt/service"
-	"github.com/uvulpos/go-svelte/basic-utils/customerrors"
+	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
+	jwtService "github.com/uvulpos/golang-sveltekit-template/src/resources/identity-provider/jwt/service"
 )
 
 func (s *AuthService) CallbackFunction(authCode, state, oauthUserinfoURL, ipaddr, userAgent string) (string, customerrors.ErrorInterface) {

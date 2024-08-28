@@ -2,9 +2,9 @@ package service
 
 import (
 	"github.com/go-sqlx/sqlx"
-	authService "github.com/uvulpos/go-svelte/authentication-api/ressources/auth/service"
-	jwtService "github.com/uvulpos/go-svelte/authentication-api/ressources/jwt/service"
-	"github.com/uvulpos/go-svelte/basic-utils/customerrors"
+	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
+	authService "github.com/uvulpos/golang-sveltekit-template/src/resources/identity-provider/auth/service"
+	jwtService "github.com/uvulpos/golang-sveltekit-template/src/resources/identity-provider/jwt/service"
 )
 
 type AuthService struct {

@@ -5,8 +5,8 @@ import (
 	"errors"
 
 	"github.com/go-sqlx/sqlx"
-	"github.com/uvulpos/go-svelte/basic-utils/customerrors"
-	serviceModel "github.com/uvulpos/go-svelte/src/resources/user/service/models"
+	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
+	serviceModel "github.com/uvulpos/golang-sveltekit-template/src/resources/user/service/models"
 )
 
 type UserStore struct {
