@@ -10,7 +10,7 @@ export async function load({ cookies, fetch }) {
         throw redirect(301, "/login");
     }
 
-    let self = await getSelfInformation(fetch, jwt ?? "");
+    let self = await getSelfInformation(jwt ?? "");
 
     if (self === undefined || self == null) {
         throw redirect(301, "/login");

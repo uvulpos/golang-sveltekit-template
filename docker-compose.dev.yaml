@@ -42,6 +42,8 @@ services:
       - ./services/frontend:/app
     networks:
       - intranet
+    environment:
+      - BACKEND_URL=http://backend:3000/
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.frontend.rule=Host(`web.localhost`)&&PathPrefix(`/`)"
