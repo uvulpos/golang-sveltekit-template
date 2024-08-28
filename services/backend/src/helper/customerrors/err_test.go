@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/google/uuid"
+	customerrorconst "github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors/custom-error-const"
 	"gotest.tools/assert"
 )
 
@@ -21,8 +22,8 @@ func TestHttpDatabaseErrorHandling(t *testing.T) {
 	httpStatus, errorIdentifier, httpUserMessage := GetHttpError(myDatabaseError)
 
 	assert.Equal(t, httpStatus, http.StatusInternalServerError)
-	assert.Equal(t, errorIdentifier, "DatabaseError")
-	assert.Equal(t, httpUserMessage, "An error occurred while processing your request. Please try again later.")
+	assert.Equal(t, errorIdentifier, customerrorconst.ERROR_IDENTIFIER_DATABASE)
+	assert.Equal(t, httpUserMessage, customerrorconst.INTERNAL_SERVER_ERROR_MESSAGE)
 }
 
 func TestHttpInternalServerErrorHandling(t *testing.T) {
@@ -35,6 +36,6 @@ func TestHttpInternalServerErrorHandling(t *testing.T) {
 	httpStatus, errorIdentifier, httpUserMessage := GetHttpError(myDatabaseError)
 
 	assert.Equal(t, httpStatus, http.StatusInternalServerError)
-	assert.Equal(t, errorIdentifier, "InternalServerError")
-	assert.Equal(t, httpUserMessage, "An error occurred while processing your request. Please try again later.")
+	assert.Equal(t, errorIdentifier, customerrorconst.ERROR_IDENTIFIER_INTERNAL_SERVER_ERROR)
+	assert.Equal(t, httpUserMessage, customerrorconst.INTERNAL_SERVER_ERROR_MESSAGE)
 }

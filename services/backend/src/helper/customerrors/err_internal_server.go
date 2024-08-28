@@ -27,7 +27,7 @@ func NewInternalServerError(err error, userID string, errorContextData string) *
 	model := &InternalServerError{
 		ID: uuid.New().String(),
 
-		errorIdentifier: errorconst.INTERNAL_SERVER_ERROR_MESSAGE,
+		errorIdentifier: errorconst.ERROR_IDENTIFIER_INTERNAL_SERVER_ERROR,
 		httpUserMessage: errorconst.INTERNAL_SERVER_ERROR_MESSAGE,
 		httpStatus:      http.StatusInternalServerError,
 
