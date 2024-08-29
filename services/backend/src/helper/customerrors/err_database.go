@@ -26,7 +26,7 @@ type DatabaseError struct {
 }
 
 func NewDatabaseError(err error, userID string, errorContextData string, sqlQuery string, sqlData SqlData) *DatabaseError {
-	return &DatabaseError{
+	model := &DatabaseError{
 		ID: uuid.New().String(),
 
 		errorIdentifier: errorconst.ERROR_IDENTIFIER_DATABASE,
@@ -41,6 +41,10 @@ func NewDatabaseError(err error, userID string, errorContextData string, sqlQuer
 
 		error: err,
 	}
+
+	fmt.Printf("🚨 %s\n", model.GetDeveloperMessage())
+
+	return model
 }
 
 func (e *DatabaseError) Error() string {
@@ -53,7 +57,7 @@ func (e *DatabaseError) ErrorType() (errorIdentifier errorconst.ErrorIdentifier)
 
 func (e *DatabaseError) HttpError() (int, errorconst.ErrorIdentifier, string) {
 	if debugMode {
-		errormessage := fmt.Sprintf("[%s] #%s <br> %s <br> %s", e.errorIdentifier, e.ID, e.httpUserMessage, e.error.Error())
+		errormessage := e.GetDeveloperMessage()
 		return e.httpStatus, e.errorIdentifier, errormessage
 	}
 	return e.httpStatus, e.errorIdentifier, e.httpUserMessage
@@ -67,4 +71,8 @@ func (e *DatabaseError) LoggerError() (time.Time, int, errorconst.ErrorIdentifie
 		e.sqlData,
 	)
 	return time.Now(), e.httpStatus, e.errorIdentifier, e.requestingUserID, contextData, e.error.Error()
+}
+
+func (e *DatabaseError) GetDeveloperMessage() string {
+	return fmt.Sprintf("[%s] #%s <br> %s <br> %s", e.errorIdentifier, e.ID, e.httpUserMessage, e.error.Error())
 }

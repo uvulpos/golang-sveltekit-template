@@ -22,7 +22,7 @@ type DatabaseTransactionCommitError struct {
 }
 
 func NewDatabaseTransactionCommitError(err error, errorContextData string) *DatabaseTransactionCommitError {
-	return &DatabaseTransactionCommitError{
+	model := &DatabaseTransactionCommitError{
 		ID: uuid.New().String(),
 
 		errorIdentifier: errorconst.ERROR_IDENTIFIER_DATABASE_TRANSACTION_NOT_STARTED,
@@ -33,6 +33,10 @@ func NewDatabaseTransactionCommitError(err error, errorContextData string) *Data
 
 		error: err,
 	}
+
+	fmt.Printf("🚨 %s\n", model.GetDeveloperMessage())
+
+	return model
 }
 
 func (e *DatabaseTransactionCommitError) Error() string {
@@ -45,7 +49,7 @@ func (e *DatabaseTransactionCommitError) ErrorType() (errorIdentifier errorconst
 
 func (e *DatabaseTransactionCommitError) HttpError() (int, errorconst.ErrorIdentifier, string) {
 	if debugMode {
-		errormessage := fmt.Sprintf("[%s] #%s <br> %s <br> %s", e.errorIdentifier, e.ID, e.httpUserMessage, e.error.Error())
+		errormessage := e.GetDeveloperMessage()
 		return e.httpStatus, e.errorIdentifier, errormessage
 	}
 	return e.httpStatus, e.errorIdentifier, e.httpUserMessage
@@ -53,4 +57,8 @@ func (e *DatabaseTransactionCommitError) HttpError() (int, errorconst.ErrorIdent
 
 func (e *DatabaseTransactionCommitError) LoggerError() (time.Time, int, errorconst.ErrorIdentifier, string, string, string) {
 	return time.Now(), e.httpStatus, e.errorIdentifier, "", "", e.error.Error()
+}
+
+func (e *DatabaseTransactionCommitError) GetDeveloperMessage() string {
+	return fmt.Sprintf("[%s] #%s <br> %s <br> %s", e.errorIdentifier, e.ID, e.httpUserMessage, e.error.Error())
 }

@@ -25,7 +25,7 @@ type DatabaseNotFoundError struct {
 }
 
 func NewDatabaseNotFoundError(err error, userID string, sqlQuery string, sqlData SqlData) *DatabaseNotFoundError {
-	return &DatabaseNotFoundError{
+	model := &DatabaseNotFoundError{
 		ID: uuid.New().String(),
 
 		errorIdentifier: errorconst.ERROR_IDENTIFIER_DATABASE_NOT_FOUND,
@@ -39,6 +39,9 @@ func NewDatabaseNotFoundError(err error, userID string, sqlQuery string, sqlData
 
 		error: err,
 	}
+	fmt.Printf("🚨 %s\n", model.GetDeveloperMessage())
+
+	return model
 }
 
 func (e *DatabaseNotFoundError) Error() string {
@@ -51,7 +54,7 @@ func (e *DatabaseNotFoundError) ErrorType() (errorIdentifier errorconst.ErrorIde
 
 func (e *DatabaseNotFoundError) HttpError() (int, errorconst.ErrorIdentifier, string) {
 	if debugMode {
-		errormessage := fmt.Sprintf("[%s] #%s <br> %s <br> %s", e.errorIdentifier, e.ID, e.httpUserMessage, e.error.Error())
+		errormessage := e.GetDeveloperMessage()
 		return e.httpStatus, e.errorIdentifier, errormessage
 	}
 	return e.httpStatus, e.errorIdentifier, e.httpUserMessage
@@ -64,4 +67,8 @@ func (e *DatabaseNotFoundError) LoggerError() (time.Time, int, errorconst.ErrorI
 		e.sqlData,
 	)
 	return time.Now(), e.httpStatus, e.errorIdentifier, e.requestingUserID, contextData, e.error.Error()
+}
+
+func (e *DatabaseNotFoundError) GetDeveloperMessage() string {
+	return fmt.Sprintf("[%s] #%s <br> %s <br> %s", e.errorIdentifier, e.ID, e.httpUserMessage, e.error.Error())
 }

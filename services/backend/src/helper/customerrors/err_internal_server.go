@@ -38,7 +38,7 @@ func NewInternalServerError(err error, userID string, errorContextData string) *
 		error: err,
 	}
 
-	fmt.Println("🚨")
+	fmt.Printf("🚨 %s\n", model.GetDeveloperMessage())
 
 	return model
 }
@@ -53,7 +53,7 @@ func (e *InternalServerError) ErrorType() (errorIdentifier errorconst.ErrorIdent
 
 func (e *InternalServerError) HttpError() (int, errorconst.ErrorIdentifier, string) {
 	if debugMode {
-		errormessage := fmt.Sprintf("[%s] #%s <br> %s <br> %s", e.errorIdentifier, e.ID, e.httpUserMessage, e.error.Error())
+		errormessage := e.GetDeveloperMessage()
 		return e.httpStatus, e.errorIdentifier, errormessage
 	}
 	return e.httpStatus, e.errorIdentifier, e.httpUserMessage
@@ -61,4 +61,8 @@ func (e *InternalServerError) HttpError() (int, errorconst.ErrorIdentifier, stri
 
 func (e *InternalServerError) LoggerError() (time.Time, int, errorconst.ErrorIdentifier, string, string, string) {
 	return time.Now(), e.httpStatus, e.errorIdentifier, e.requestingUserID, e.errorContextData, e.error.Error()
+}
+
+func (e *InternalServerError) GetDeveloperMessage() string {
+	return fmt.Sprintf("[%s] #%s <br> %s <br> %s", e.errorIdentifier, e.ID, e.httpUserMessage, e.error.Error())
 }
