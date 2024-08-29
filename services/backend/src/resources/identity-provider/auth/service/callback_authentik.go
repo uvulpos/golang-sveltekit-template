@@ -16,25 +16,23 @@ func (s *AuthService) AuthentikCallbackFunction(authCode, state, oauthUserinfoUR
 	authToken, err := s.authentikConfig.Exchange(context.Background(), authCode)
 	if err != nil {
 		fmt.Println("Exchange ERROR")
-		return "", customerrors.NewInternalServerError(err, "", "Failed to exchange auth code with authentik provider")
+		return "", customerrors.NewInternalServerError(err, "", "(oauth callback authentik) Failed to exchange auth code with authentik provider")
 	}
 
 	client := s.authentikConfig.Client(context.Background(), authToken)
 	resp, err := client.Get(s.authentikOauthUserInfoEP)
 	if err != nil {
-		return "", customerrors.NewInternalServerError(err, "", "Failed to get user info from authentik provider")
+		return "", customerrors.NewInternalServerError(err, "", "(oauth callback authentik) Failed to get user info from authentik provider")
 	}
 	defer resp.Body.Close()
 	data, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return "", customerrors.NewInternalServerError(err, "", "Failed to read authentik oauth user response body")
+		return "", customerrors.NewInternalServerError(err, "", "(oauth callback authentik) Failed to read authentik oauth user response body")
 	}
-
-	fmt.Println("Data: ", string(data))
 
 	var result *AuthentikUserInfo
 	if err := json.Unmarshal(data, &result); err != nil {
-		return "", customerrors.NewInternalServerError(err, "", "Failed to unmarshal authentik oauth user response body")
+		return "", customerrors.NewInternalServerError(err, "", "(oauth callback authentik) Failed to unmarshal authentik oauth user response body")
 	}
 
 	loginUserID, loginUserError := s.storage.GetUserIDByLogin("Authentik", result.ID)
@@ -81,7 +79,7 @@ func (s *AuthService) AuthentikCallbackFunction(authCode, state, oauthUserinfoUR
 
 		commitErr := tx.Commit()
 		if commitErr != nil {
-			return "", customerrors.NewDatabaseError(err, "", "Failed to commit transaction", "", nil)
+			return "", customerrors.NewDatabaseError(err, "", "(oauth callback authentik) Failed to commit transaction (create user)", "", nil)
 		}
 	}
 

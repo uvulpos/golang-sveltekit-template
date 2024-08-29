@@ -19,7 +19,7 @@ func (h *AuthHandler) CallbackHandler(c *fiber.Ctx) error {
 
 	oauthstate := c.Cookies("oauthstate", "")
 	if state != oauthstate {
-		return fmt.Errorf("not the same oauth session")
+		return c.Status(http.StatusBadRequest).SendString("Your oauthstate Cookie is Missing")
 	}
 
 	jwtToken, err := h.service.CallbackFunction(
@@ -35,7 +35,6 @@ func (h *AuthHandler) CallbackHandler(c *fiber.Ctx) error {
 
 	)
 	if err != nil || jwtToken == "" {
-		fmt.Println("#ERROR JWT / CALLBACK", err)
 		return err
 	}
 
@@ -46,6 +45,8 @@ func (h *AuthHandler) CallbackHandler(c *fiber.Ctx) error {
 		Value:    jwtToken,
 		HTTPOnly: true,
 		Expires:  time.Now().Add(time.Hour * 24 * 7),
+		// Secure:   true,
+		// SameSite: "Strict",
 	})
 
 	redirectURL, redirectURLErr := generateRandomHashURL(configuration.WEBSERVER_DISPLAYNAME)
@@ -66,10 +67,8 @@ func generateRandomHashURL(baseURL string) (string, customerrors.ErrorInterface)
 	// URL parsen
 	parsedURL, err := url.Parse(baseURL)
 	if err != nil {
-		return "", customerrors.NewInternalServerError(err, "", "Couldn't parse URL in oauth callback")
+		return "", customerrors.NewInternalServerError(err, "", fmt.Sprintf("Couldn't parse URL in oauth callback (func: generateRandomHashURL ; data: %v)", baseURL))
 	}
-
-	fmt.Println(parsedURL)
 
 	query := parsedURL.Query()
 	query.Set("refresh-hash", hash)

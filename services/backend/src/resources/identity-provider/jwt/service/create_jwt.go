@@ -5,13 +5,14 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt"
+	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
 )
 
-func (s *JwtService) CreateJWT(jwtData *JwtDataModel) (string, error) {
+func (s *JwtService) CreateJWT(jwtData *JwtDataModel) (string, customerrors.ErrorInterface) {
 	claims := jwt.MapClaims{
 		"user-uuid":    jwtData.UserUuid,
 		"session-uuid": jwtData.SessionID,
-		"exp":          time.Now().Add(time.Hour * 24).Unix(),
+		"exp":          time.Now().Add(time.Minute * 10).Unix(),
 		"authorized":   true,
 	}
 
@@ -19,8 +20,7 @@ func (s *JwtService) CreateJWT(jwtData *JwtDataModel) (string, error) {
 
 	tokenString, err := token.SignedString([]byte(s.JWT_CERTIFICATE))
 	if err != nil {
-		fmt.Println("JWT SIGNING ERROR")
-		return "", err
+		return "", customerrors.NewInternalServerError(err, jwtData.UserUuid, fmt.Sprintf("Could not sign jwt on creation %v", claims))
 	}
 
 	return tokenString, nil
