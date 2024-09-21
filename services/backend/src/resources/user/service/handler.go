@@ -21,4 +21,6 @@ type AuthStorageInterface interface {
 	StartTransaction() (tx *sqlx.Tx, err customerrors.ErrorInterface)
 	GetUserPermissionsByID(tx *sqlx.Tx, userID string) ([]string, customerrors.ErrorInterface)
 	GetUserByID(tx *sqlx.Tx, userID string) (*serviceModel.UserModel, customerrors.ErrorInterface)
+	GetUserByUsername(tx *sqlx.Tx, username string) (*serviceModel.UserModel, customerrors.ErrorInterface)
+	GetUserAuthSessionByID(tx *sqlx.Tx, sessionID string) (*serviceModel.SessionModel, customerrors.ErrorInterface)
 }

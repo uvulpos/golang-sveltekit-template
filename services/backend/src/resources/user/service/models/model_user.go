@@ -7,13 +7,3 @@ type UserModel struct {
 	Email         string
 	EmailVerified bool
 }
-
-func NewUserModel(id, username, displayName, email string, emailVerified bool) *UserModel {
-	return &UserModel{
-		ID:            id,
-		Username:      username,
-		DisplayName:   displayName,
-		Email:         email,
-		EmailVerified: emailVerified,
-	}
-}

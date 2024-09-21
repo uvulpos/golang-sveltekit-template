@@ -1,5 +1,5 @@
 package models
 
 type UserPermissionsModel struct {
-	Permissions []string `json:"permissions"`
+	Permissions []string
 }

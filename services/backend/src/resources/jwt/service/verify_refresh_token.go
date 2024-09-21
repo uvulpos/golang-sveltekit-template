@@ -4,15 +4,16 @@ import (
 	"fmt"
 
 	"github.com/golang-jwt/jwt"
+	"github.com/uvulpos/golang-sveltekit-template/src/configuration"
 )
 
-func (svc *JwtService) VerifyJWT(jwtString string) (*JwtDataModel, error) {
-	return VerifyJWT(jwtString, svc.JWT_CERTIFICATE)
+func (svc *JwtService) VerifyRefreshToken(refreshTokenString string) (*RefreshDataModel, error) {
+	return VerifyRefreshToken(refreshTokenString)
 }
 
-func VerifyJWT(jwtString, signingKey string) (*JwtDataModel, error) {
+func VerifyRefreshToken(refreshTokenString string) (*RefreshDataModel, error) {
 
-	token, err := jwt.Parse(jwtString, func(token *jwt.Token) (interface{}, error) {
+	token, err := jwt.Parse(refreshTokenString, func(token *jwt.Token) (interface{}, error) {
 		_, okECDSA := token.Method.(*jwt.SigningMethodECDSA)
 		_, okHS256 := token.Method.(*jwt.SigningMethodHMAC)
 
@@ -20,7 +21,7 @@ func VerifyJWT(jwtString, signingKey string) (*JwtDataModel, error) {
 			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
 		}
 
-		return []byte(signingKey), nil
+		return []byte(configuration.REFRESH_TOKEN_SIGNING_KEY), nil
 	})
 
 	if err != nil {
@@ -32,16 +33,11 @@ func VerifyJWT(jwtString, signingKey string) (*JwtDataModel, error) {
 		return nil, fmt.Errorf("invalid token")
 	}
 
-	fmt.Println(claims)
-
 	if claims["authorized"] != true {
 		return nil, fmt.Errorf("unauthorized")
 	}
 
-	data := NewJwtDataModel(
-		claims["user-uuid"].(string),
-		claims["session-uuid"].(string),
-	)
+	data := NewRefreshDataModel(claims["session-uuid"].(string))
 
 	return data, nil
 }

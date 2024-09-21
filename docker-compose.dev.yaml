@@ -17,12 +17,14 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     ports:
       - "80:80"
+      - "443:443"
       - "8080:8080"
     command:
       - "--api.insecure=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
+      - "--entrypoints.web-secure.address=:443"
     networks:
       - intranet
 
@@ -50,7 +52,7 @@ services:
       - "traefik.http.routers.frontend.priority=1"
       - "traefik.http.routers.frontend.service=frontend"
       - "traefik.http.services.frontend.loadbalancer.server.port=5173"
-      - "traefik.http.routers.frontend.entrypoints=web"
+      - "traefik.http.routers.frontend.entrypoints=web,web-secure"
     command: ["sh", "-c", "cd /app && npm install && npm run dev"]
 
   frontend-tests:
@@ -91,7 +93,7 @@ services:
       - "traefik.http.routers.backend.priority=2"
       - "traefik.http.routers.backend.service=backend"
       - "traefik.http.services.backend.loadbalancer.server.port=3000"
-      - "traefik.http.routers.backend.entrypoints=web"
+      - "traefik.http.routers.backend.entrypoints=web,web-secure"
     command: [
         "sh",
         "-c",

@@ -17,16 +17,18 @@ func (h *AuthHandler) CallbackHandler(c *fiber.Ctx) error {
 	authCode := c.Query("code", "")
 	state := c.Query("state", "")
 
-	oauthstate := c.Cookies("oauthstate", "")
-	if state != oauthstate {
-		return c.Status(http.StatusBadRequest).SendString("Your oauthstate Cookie is Missing")
-	}
+	// oauthstate := c.Cookies("oauthstate", "")
+	// fmt.Printf("DATA: %s %s\n", state, oauthstate)
+	// fmt.Printf("DATA: %s %s\n", state, oauthstate)
+	// fmt.Printf("DATA: %s %s\n", state, oauthstate)
+	// fmt.Printf("DATA: %s %s\n", state, oauthstate)
+	// if state != oauthstate {
+	// 	return c.Status(http.StatusBadRequest).SendString("Your oauthstate Cookie is Missing")
+	// }
 
-	jwtToken, err := h.service.CallbackFunction(
+	jwtToken, refreshToken, err := h.service.CallbackFunction(
 		authCode,
 		state,
-		"",
-
 		/* ---------------------------------------------
 				GDPR sensible information
 		--------------------------------------------- */
@@ -40,14 +42,24 @@ func (h *AuthHandler) CallbackHandler(c *fiber.Ctx) error {
 
 	// set jwt
 	c.Cookie(&fiber.Cookie{
-		Name:     "jwt",
-		Path:     "/",
-		Value:    jwtToken,
-		HTTPOnly: true,
-		Expires:  time.Now().Add(time.Hour * 24 * 7),
-		// Secure:   true,
-		// SameSite: "Strict",
+		Name:    "jwt",
+		Path:    "/",
+		Value:   jwtToken,
+		Expires: time.Now().Add(time.Minute * time.Duration(configuration.JWT_TOKEN_VALIDITY_IN_MINUTES)),
 	})
+
+	// set refreshToken
+	c.Cookie(&fiber.Cookie{
+		Name:     "refresh_token",
+		Path:     "/api/v1/auth",
+		Value:    refreshToken,
+		HTTPOnly: true,
+		Expires:  time.Now().Add(time.Hour * time.Duration(configuration.REFRESH_TOKEN_VALIDITY_IN_DAYS)),
+		// Secure:   true,
+		SameSite: "Strict",
+	})
+
+	// return c.Status(http.StatusOK).SendString("OK!")
 
 	redirectURL, redirectURLErr := generateRandomHashURL(configuration.WEBSERVER_DISPLAYNAME)
 	if redirectURLErr != nil {

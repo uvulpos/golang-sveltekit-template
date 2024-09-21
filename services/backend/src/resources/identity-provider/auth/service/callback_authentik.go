@@ -11,7 +11,7 @@ import (
 	customerrorconst "github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors/custom-error-const"
 )
 
-func (s *AuthService) AuthentikCallbackFunction(authCode, state, oauthUserinfoURL string) (string, customerrors.ErrorInterface) {
+func (s *AuthService) AuthentikCallbackFunction(authCode, state string) (string, customerrors.ErrorInterface) {
 
 	authToken, err := s.authentikConfig.Exchange(context.Background(), authCode)
 	if err != nil {

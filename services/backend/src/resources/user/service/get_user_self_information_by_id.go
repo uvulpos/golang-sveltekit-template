@@ -13,7 +13,7 @@ func (s *UserService) GetUserSelfInformationByID(userID string) (*serviceModel.U
 		return nil, userErr
 	}
 
-	permissions, permissionsErr := s.GetUserPermissionsByID(userID)
+	permissions, permissionsErr := s.GetUserPermissionsByID(nil, userID)
 	if permissionsErr != nil {
 		return nil, permissionsErr
 	}

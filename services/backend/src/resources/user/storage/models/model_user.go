@@ -11,11 +11,11 @@ type UserModel struct {
 }
 
 func (m *UserModel) ToServiceModel() *serviceModel.UserModel {
-	return serviceModel.NewUserModel(
-		m.ID,
-		m.Username,
-		m.DisplayName,
-		m.Email,
-		m.EmailVerified,
-	)
+	return &serviceModel.UserModel{
+		ID:            m.ID,
+		Username:      m.Username,
+		DisplayName:   m.DisplayName,
+		Email:         m.Email,
+		EmailVerified: m.EmailVerified,
+	}
 }

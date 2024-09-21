@@ -2,10 +2,15 @@ package webapp
 
 import "github.com/gofiber/fiber/v2"
 
+type MiddlewareHandler interface {
+	Authentication(requiredPermissions []string) func(c *fiber.Ctx) error
+}
+
 type AuthHandler interface {
 	CreateRedirect(c *fiber.Ctx) error
 	CallbackHandler(c *fiber.Ctx) error
 	Logout(c *fiber.Ctx) error
+	Refresh(c *fiber.Ctx) error
 }
 
 type GeneralHandler interface {

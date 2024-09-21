@@ -4,14 +4,16 @@ import (
 	"github.com/go-sqlx/sqlx"
 	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
 	authService "github.com/uvulpos/golang-sveltekit-template/src/resources/identity-provider/auth/service"
-	jwtService "github.com/uvulpos/golang-sveltekit-template/src/resources/identity-provider/jwt/service"
+	jwtService "github.com/uvulpos/golang-sveltekit-template/src/resources/jwt/service"
+	userService "github.com/uvulpos/golang-sveltekit-template/src/resources/user/service"
 )
 
 type AuthService struct {
 	storage AuthStorageInterface
 
-	auth *authService.AuthService
-	jwt  *jwtService.JwtService
+	auth    *authService.AuthService
+	jwt     *jwtService.JwtService
+	userSvc *userService.UserService
 }
 
 func NewAuthService(storage AuthStorageInterface, authService *authService.AuthService, jwtService *jwtService.JwtService) *AuthService {

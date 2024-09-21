@@ -20,6 +20,7 @@
   import { allowedLanguages, getLocale } from "$lib/i18n";
   import { Header as PageHeader } from "$lib/components/Header";
   import { DarkNavbar } from "./style";
+  import Cookies from "js-cookie";
 
   // install fonts
   import "$lib/theme/index.sass";
@@ -32,6 +33,9 @@
   import { Sidebar } from "$lib/components/Sidebar";
   import { themeStore } from "$lib/stores";
   import { changePageTheme } from "$lib/functions/theme/theme";
+  import { goto } from "$app/navigation";
+  import { getSelfInformation } from "$lib/api/user/get-self_information";
+  import { refreshJwtToken } from "$lib/api/authentication/refresh-jwt_token";
 
   // configure i18n
   addMessages("en", en);
@@ -44,8 +48,9 @@
   let collapseSidebar = true;
   let preMount: boolean = true;
   let bodyElement: HTMLElement | undefined;
+  let pageIsLoading: boolean = true;
 
-  onMount(() => {
+  onMount(async () => {
     preMount = false;
     bodyElement = document.body;
     themeStore.isThemeSetOrAutoDetect(window);
@@ -53,11 +58,55 @@
     // remove hash from url
     const refreshHahName = "refresh-hash";
     const url = new URL(window.location.href);
+
     if (url.searchParams.has(refreshHahName)) {
       url.searchParams.delete(refreshHahName);
       history.replaceState(null, "", url.toString());
     }
+
+    // check if jwt exists
+    let jwtToken = Cookies.get("jwt");
+    console.log({ jwtToken });
+
+    if (jwtToken === undefined || jwtToken === "") {
+      // check jwt refresh token
+      const newToken = await refreshJwtToken();
+      console.log({ newToken });
+      if (newToken === undefined || newToken === "") {
+        window.location.href = "/login";
+        return;
+      }
+
+      if (newToken !== undefined && newToken !== "") {
+        window.location.href = "/login";
+        return;
+      }
+
+      jwtToken = newToken;
+      return;
+    }
+
+    let self = await getSelfInformation();
+
+    if (self === undefined || self == null) {
+      goto("/login");
+    }
+
+    // prevent the screen from flickering
+    debouncePageLoad();
   });
+
+  // prevent the screen from flickering
+  const debouncePageLoad = () => {
+    const timeoutSeconds = 1000 * 2;
+    let timeoutId: ReturnType<typeof setTimeout>;
+    return function () {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        pageIsLoading = false;
+      }, timeoutSeconds);
+    };
+  };
 
   $: {
     changePageTheme(bodyElement, $themeStore);
@@ -65,27 +114,33 @@
   $: selfInformation = data?.props?.user;
 </script>
 
-<SvelteUIProvider withNormalizeCSS withGlobalStyles>
-  {#if !preMount}
-    <AppShell>
-      <Navbar
-        slot="navbar"
-        fixed
-        class="sidebar {!collapseSidebar
-          ? 'sidebar-expandSidebar'
-          : 'collapsedSidebar'}"
-      >
-        <Sidebar user={selfInformation} />
-      </Navbar>
-      <Header slot="header" fixed override={DarkNavbar} height={67}>
-        <PageHeader {logo} bind:collapseSidebar />
-      </Header>
-      <div class="subpage-content" class:expandSidebar={collapseSidebar}>
-        <slot />
-      </div>
-    </AppShell>
-  {/if}
-</SvelteUIProvider>
+{#if pageIsLoading}
+  <div>
+    <p>Loading...</p>
+  </div>
+{:else}
+  <SvelteUIProvider withNormalizeCSS withGlobalStyles>
+    {#if !preMount}
+      <AppShell>
+        <Navbar
+          slot="navbar"
+          fixed
+          class="sidebar {!collapseSidebar
+            ? 'sidebar-expandSidebar'
+            : 'collapsedSidebar'}"
+        >
+          <Sidebar user={selfInformation} />
+        </Navbar>
+        <Header slot="header" fixed override={DarkNavbar} height={67}>
+          <PageHeader {logo} bind:collapseSidebar />
+        </Header>
+        <div class="subpage-content" class:expandSidebar={collapseSidebar}>
+          <slot />
+        </div>
+      </AppShell>
+    {/if}
+  </SvelteUIProvider>
+{/if}
 
 <style lang="sass">
   @import "$lib/theme/variables.scss"

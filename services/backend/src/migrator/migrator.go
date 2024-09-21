@@ -13,8 +13,11 @@ import (
 	dbHelper "github.com/uvulpos/golang-sveltekit-template/src/helper/database"
 )
 
-//go:embed migration-files/*.sql
-var migrationDir embed.FS
+//go:embed migration-files-app/*.sql
+var migrationAppDir embed.FS
+
+//go:embed migration-files-test/*.sql
+var migrationTestDir embed.FS
 
 type Migrator struct {
 	db *sql.DB
@@ -33,12 +36,30 @@ func NewMigrator() *Migrator {
 	}
 }
 
-func (m Migrator) MigrateUp() error {
+func (m *Migrator) MigrateUp() error {
+	return m.migrateDatabase("app")
+}
+
+func (m *Migrator) MigrateTestData() error {
+	return m.migrateDatabase("test")
+}
+
+func (m *Migrator) migrateDatabase(migrationPrefix string) error {
 	driver, err := postgres.WithInstance(m.db, new(postgres.Config))
 	if err != nil {
 		return err
 	}
-	sourceInstance, err := httpfs.New(http.FS(migrationDir), "migration-files")
+
+	var migrationDirectory embed.FS
+
+	switch migrationPrefix {
+	case "test":
+		migrationDirectory = migrationAppDir
+	default:
+		migrationDirectory = migrationAppDir
+	}
+
+	sourceInstance, err := httpfs.New(http.FS(migrationDirectory), fmt.Sprintf("%s-migration-files", migrationPrefix))
 	if err != nil {
 		return err
 	}

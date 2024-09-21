@@ -1,6 +1,7 @@
 package webapp
 
 import (
+	"errors"
 	"fmt"
 	"io/fs"
 	"log"
@@ -17,6 +18,10 @@ import (
 	"github.com/uvulpos/golang-sveltekit-template/src/configuration"
 	dbHelper "github.com/uvulpos/golang-sveltekit-template/src/helper/database"
 
+	customhttphandler "github.com/uvulpos/golang-sveltekit-template/src/web-app/custom-http-handler"
+	middlewareHttp "github.com/uvulpos/golang-sveltekit-template/src/web-app/middlewares/http"
+	middlewareService "github.com/uvulpos/golang-sveltekit-template/src/web-app/middlewares/service"
+
 	authHttp "github.com/uvulpos/golang-sveltekit-template/src/resources/auth/http"
 	authService "github.com/uvulpos/golang-sveltekit-template/src/resources/auth/service"
 	authStorage "github.com/uvulpos/golang-sveltekit-template/src/resources/auth/storage"
@@ -32,29 +37,74 @@ import (
 	authPackageService "github.com/uvulpos/golang-sveltekit-template/src/resources/identity-provider/auth/service"
 	authPackageStorage "github.com/uvulpos/golang-sveltekit-template/src/resources/identity-provider/auth/storage"
 
-	jwtPackageService "github.com/uvulpos/golang-sveltekit-template/src/resources/identity-provider/jwt/service"
-	jwtPackageStorage "github.com/uvulpos/golang-sveltekit-template/src/resources/identity-provider/jwt/storage"
+	jwtPackageService "github.com/uvulpos/golang-sveltekit-template/src/resources/jwt/service"
 )
 
 type App struct {
-	AuthHandler    AuthHandler
-	GeneralHandler GeneralHandler
-	UserHandler    UserHandler
+	MiddlewareHandler MiddlewareHandler
+	AuthHandler       AuthHandler
+	GeneralHandler    GeneralHandler
+	UserHandler       UserHandler
 }
 
 func NewApp() *App {
 
+	services, servicesErr := SetupServices()
+	if servicesErr != nil {
+		panic(servicesErr)
+	}
+
+	return &App{
+		MiddlewareHandler: services.MiddlewareHandler,
+
+		AuthHandler:    services.AuthHandler,
+		GeneralHandler: services.GeneralHandler,
+		UserHandler:    services.UserHandler,
+	}
+}
+
+type AppServices struct {
+	AuthHandler *authHttp.AuthHandler
+	AuthService *authService.AuthService
+	AuthStore   *authStorage.AuthStore
+
+	AuthPackageSvc   *authPackageService.AuthService
+	AuthPackageStore *authPackageStorage.AuthStorage
+
+	GeneralHandler *generalHttp.GeneralHandler
+	GeneralSvc     *generalService.GeneralSvc
+	GeneralStore   *generalStorage.GeneralStore
+
+	JwtPackageSvc *jwtPackageService.JwtService
+
+	MiddlewareHandler *middlewareHttp.MiddlewareHandler
+	MiddlewareSvc     *middlewareService.MiddlewareService
+
+	UserHandler *userHttp.UserHandler
+	UserSvc     *userService.UserService
+	UserStore   *userStorage.UserStore
+}
+
+/*
+*
+*	Why is there a setup services function?
+*
+*	Because for the integration tests, they shouldn't access the service functions
+*	but the reality is, some functions are needed, like generating a jwt session for the request
+*	so use this opportunity as a cautious gift, but not as a priviledge
+*
+ */
+func SetupServices() (*AppServices, error) {
 	dbConn, dbConnErr := dbHelper.CreateDatabase()
 	if dbConn == nil || dbConn.DB == nil || dbConnErr != nil {
 		err := fmt.Errorf("could not connect to database")
 		if err != nil {
-			panic(err)
+			return nil, err
 		}
-		return nil
+		return nil, errors.New("Cannot create the database for unknown reasons!")
 	}
 
-	jwtPackageStorage := jwtPackageStorage.NewJwtStorage(dbConn)
-	jwtPackageSvc := jwtPackageService.NewJwtService(jwtPackageStorage, "somethingNice")
+	jwtPackageSvc := jwtPackageService.NewJwtService("somethingNice")
 
 	authPackageStore := authPackageStorage.NewAuthStorage(dbConn)
 	authPackageSvc := authPackageService.NewAuthService(
@@ -71,7 +121,7 @@ func NewApp() *App {
 
 	authStore := authStorage.NewAuthStore(dbConn)
 	authService := authService.NewAuthService(authStore, authPackageSvc, jwtPackageSvc)
-	authHandler := authHttp.NewAuthHandler(authService)
+	authHandler := authHttp.NewAuthHandler(authService, jwtPackageSvc)
 
 	generalStore := generalStorage.NewGeneralStore(dbConn)
 	generalSvc := generalService.NewGeneralSvc(generalStore)
@@ -81,11 +131,30 @@ func NewApp() *App {
 	userSvc := userService.NewUserService(userStore)
 	userHandler := userHttp.NewUserHandler(userSvc)
 
-	return &App{
-		AuthHandler:    authHandler,
+	middlewareSvc := middlewareService.NewMiddlewareService(userSvc)
+	middlewareHandler := middlewareHttp.NewMiddlewareHandler(middlewareSvc, jwtPackageSvc)
+
+	return &AppServices{
+		AuthHandler: authHandler,
+		AuthService: authService,
+		AuthStore:   authStore,
+
+		AuthPackageSvc:   authPackageSvc,
+		AuthPackageStore: authPackageStore,
+
 		GeneralHandler: generalHandler,
-		UserHandler:    userHandler,
-	}
+		GeneralSvc:     generalSvc,
+		GeneralStore:   generalStore,
+
+		JwtPackageSvc: jwtPackageSvc,
+
+		MiddlewareHandler: middlewareHandler,
+		MiddlewareSvc:     middlewareSvc,
+
+		UserHandler: userHandler,
+		UserSvc:     userSvc,
+		UserStore:   userStore,
+	}, nil
 }
 
 // @title		Golang + SvelteKit API
@@ -114,7 +183,7 @@ func (a *App) RunApp() {
 		},
 	})
 
-	a.createRoutes(router)
+	a.CreateRoutes(router)
 
 	if configuration.WEBSERVER_SHOW_SWAGGER {
 		router.Get("/swagger/*", swagger.New(swagger.Config{
@@ -148,15 +217,10 @@ func (a *App) ReturnAppInE2EMode() *fiber.App {
 
 	router := fiber.New(fiber.Config{
 		DisableStartupMessage: true,
-		ErrorHandler: func(c *fiber.Ctx, err error) error {
-
-			// for internal use you can print error to response
-			// "Unexpected Error Occured " + "\n" + err.Error()
-			return c.Status(fiber.StatusInternalServerError).SendString("Unexpected Error Occured")
-		},
+		ErrorHandler:          customhttphandler.UnexpectedErrorHandler,
 	})
 
-	a.createRoutes(router)
+	a.CreateRoutes(router)
 	router.Use(Handle404)
 
 	return router

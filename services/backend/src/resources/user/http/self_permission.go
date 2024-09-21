@@ -21,7 +21,7 @@ import (
 func (s *UserHandler) GetSelfPermissions(c *fiber.Ctx) error {
 	userID := c.Locals("user-uuid").(string)
 
-	permissions, permissionsErr := s.service.GetUserPermissionsByID(userID)
+	permissions, permissionsErr := s.service.GetUserPermissionsByID(nil, userID)
 	if permissionsErr != nil {
 		status, _, message := permissionsErr.HttpError()
 		return c.Status(status).SendString(message)
