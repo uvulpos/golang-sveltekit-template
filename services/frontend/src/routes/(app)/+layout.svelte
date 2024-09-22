@@ -36,6 +36,7 @@
   import { goto } from "$app/navigation";
   import { getSelfInformation } from "$lib/api/user/get-self_information";
   import { refreshJwtToken } from "$lib/api/authentication/refresh-jwt_token";
+  import type { SelfInformation } from "$lib/api/user/models/SelfInformation";
 
   // configure i18n
   addMessages("en", en);
@@ -49,6 +50,7 @@
   let preMount: boolean = true;
   let bodyElement: HTMLElement | undefined;
   let pageIsLoading: boolean = true;
+  let selfInformation: SelfInformation | null = null;
 
   onMount(async () => {
     preMount = false;
@@ -66,12 +68,10 @@
 
     // check if jwt exists
     let jwtToken = Cookies.get("jwt");
-    console.log({ jwtToken });
 
     if (jwtToken === undefined || jwtToken === "") {
       // check jwt refresh token
       const newToken = await refreshJwtToken();
-      console.log({ newToken });
       if (newToken === undefined || newToken === "") {
         window.location.href = "/login";
         return;
@@ -81,37 +81,21 @@
         window.location.href = "/login";
         return;
       }
-
-      jwtToken = newToken;
-      return;
     }
 
-    let self = await getSelfInformation();
+    let selfData = await getSelfInformation();
+    console.log({ self: selfData });
 
-    if (self === undefined || self == null) {
+    if (selfData === undefined || selfData == null) {
       goto("/login");
     }
-
-    // prevent the screen from flickering
-    debouncePageLoad();
+    selfInformation = selfData;
+    pageIsLoading = false;
   });
-
-  // prevent the screen from flickering
-  const debouncePageLoad = () => {
-    const timeoutSeconds = 1000 * 2;
-    let timeoutId: ReturnType<typeof setTimeout>;
-    return function () {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => {
-        pageIsLoading = false;
-      }, timeoutSeconds);
-    };
-  };
 
   $: {
     changePageTheme(bodyElement, $themeStore);
   }
-  $: selfInformation = data?.props?.user;
 </script>
 
 {#if pageIsLoading}

@@ -28,5 +28,9 @@ func (s *UserHandler) GetSelfInformation(c *fiber.Ctx) error {
 	}
 
 	httpModel := httpModels.NewSelfInformationModel(selfInformation)
+
+	// for debugging atm
+	httpModel.ProfilePicture = "https://raw.githubusercontent.com/egonelbre/gophers/master/.thumb/sketch/fairy-tale/king.png"
+
 	return c.Status(http.StatusOK).JSON(httpModel)
 }

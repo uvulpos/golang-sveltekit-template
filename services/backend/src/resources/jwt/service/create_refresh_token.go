@@ -12,7 +12,7 @@ import (
 func (s *JwtService) CreateRefreshToken(sessionID string) (string, customerrors.ErrorInterface) {
 	claims := jwt.MapClaims{
 		"session-uuid": sessionID,
-		"exp":          time.Now().Add(time.Minute * time.Duration(configuration.REFRESH_TOKEN_VALIDITY_IN_DAYS)).Unix(),
+		"exp":          time.Now().Add(time.Hour * 24 * time.Duration(configuration.REFRESH_TOKEN_VALIDITY_IN_DAYS)).Unix(),
 		"authorized":   true,
 	}
 

@@ -37,10 +37,15 @@ func VerifyJWT(jwtString string) (*JwtDataModel, error) {
 		return nil, fmt.Errorf("unauthorized")
 	}
 
+	var permissionScopes []string
+	if value, ok := claims["scopes"].([]string); ok {
+		permissionScopes = value
+	}
+
 	data := NewJwtDataModel(
 		claims["user-uuid"].(string),
 		claims["session-uuid"].(string),
-		claims["scopes"].([]string),
+		permissionScopes,
 	)
 
 	return data, nil

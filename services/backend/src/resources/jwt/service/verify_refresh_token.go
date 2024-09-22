@@ -37,7 +37,11 @@ func VerifyRefreshToken(refreshTokenString string) (*RefreshDataModel, error) {
 		return nil, fmt.Errorf("unauthorized")
 	}
 
-	data := NewRefreshDataModel(claims["session-uuid"].(string))
+	var sessionUuid string
+	if val, ok := claims["session-uuid"]; ok {
+		sessionUuid = val.(string)
+	}
 
+	data := NewRefreshDataModel(sessionUuid)
 	return data, nil
 }

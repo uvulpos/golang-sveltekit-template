@@ -5,11 +5,12 @@ import (
 )
 
 type SelfInformationModel struct {
-	ID          string   `json:"id"`
-	Username    string   `json:"username"`
-	DisplayName string   `json:"display_name"`
-	Email       string   `json:"email"`
-	Permissions []string `json:"permissions"`
+	ID             string   `json:"id"`
+	Username       string   `json:"username"`
+	DisplayName    string   `json:"display_name"`
+	Email          string   `json:"email"`
+	ProfilePicture string   `json:"profile_picture"`
+	Permissions    []string `json:"permissions"`
 }
 
 func NewSelfInformationModel(m *serviceModel.UserSelfInformationModel) *SelfInformationModel {

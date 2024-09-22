@@ -1,6 +1,7 @@
 package middlewares
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -21,11 +22,12 @@ func (h *MiddlewareHandler) AuthenticationRefreshToken() func(c *fiber.Ctx) erro
 		}
 
 		// 🚨 NOT THE RIGHT IMPLEMENTATION, USE INJECTION
-		h.jwtSvc.VerifyRefreshToken(refreshToken)
 		jwtData, jwtDataErr := h.jwtSvc.VerifyRefreshToken(refreshToken)
 		if jwtDataErr != nil {
 			return c.Status(fiber.StatusInternalServerError).SendString(customerrorconst.INTERNAL_SERVER_ERROR_MESSAGE)
 		}
+
+		fmt.Println("jwtData", jwtData)
 
 		// after jwt got evaluated, add information from jwt to fiber request context
 		c.Locals("session-uuid", jwtData.SessionID)

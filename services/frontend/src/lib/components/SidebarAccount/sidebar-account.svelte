@@ -54,6 +54,7 @@
         height: $size
         width: $size
         background-color: #f60
+        object-fit: cover
 
       .account-name
         display: flex

@@ -119,10 +119,6 @@ func SetupServices() (*AppServices, error) {
 		configuration.AUTHORIZATION_OAUTH_SCOPES...,
 	)
 
-	authStore := authStorage.NewAuthStore(dbConn)
-	authService := authService.NewAuthService(authStore, authPackageSvc, jwtPackageSvc)
-	authHandler := authHttp.NewAuthHandler(authService, jwtPackageSvc)
-
 	generalStore := generalStorage.NewGeneralStore(dbConn)
 	generalSvc := generalService.NewGeneralSvc(generalStore)
 	generalHandler := generalHttp.NewGeneralHandler(generalSvc)
@@ -130,6 +126,10 @@ func SetupServices() (*AppServices, error) {
 	userStore := userStorage.NewUserStore(dbConn)
 	userSvc := userService.NewUserService(userStore)
 	userHandler := userHttp.NewUserHandler(userSvc)
+
+	authStore := authStorage.NewAuthStore(dbConn)
+	authService := authService.NewAuthService(authStore, authPackageSvc, jwtPackageSvc, userSvc)
+	authHandler := authHttp.NewAuthHandler(authService, jwtPackageSvc)
 
 	middlewareSvc := middlewareService.NewMiddlewareService(userSvc)
 	middlewareHandler := middlewareHttp.NewMiddlewareHandler(middlewareSvc, jwtPackageSvc)

@@ -25,7 +25,7 @@ func (a *App) CreateRoutes(router *fiber.App) {
 	apiV1.Get("/oauth/redirect", a.AuthHandler.CreateRedirect)
 	apiV1.Get("/oauth/callback", a.AuthHandler.CallbackHandler)
 	apiV1.Get("/oauth/logout", a.AuthHandler.Logout)
-	apiV1.Get("/auth/refresh", a.AuthHandler.Refresh)
+	apiV1.Get("/auth/refresh", a.MiddlewareHandler.AuthenticationRefreshToken(), a.AuthHandler.Refresh)
 
 	// apiV1Admin := apiV1.Group("/admin-shit/", a.MiddlewareHandler.Authentication([]string{"admin:read", "admin:write"}))
 	// apiV1Admin.Get("/", TestEP)

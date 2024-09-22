@@ -79,7 +79,7 @@ func (s *AuthService) AuthentikCallbackFunction(authCode, state string) (string,
 
 		commitErr := tx.Commit()
 		if commitErr != nil {
-			return "", customerrors.NewDatabaseError(err, "", "(oauth callback authentik) Failed to commit transaction (create user)", "", nil)
+			return "", customerrors.NewDatabaseError(commitErr, "", "(oauth callback authentik) Failed to commit transaction (create user)", "", nil)
 		}
 	}
 

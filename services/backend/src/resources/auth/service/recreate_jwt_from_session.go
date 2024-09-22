@@ -3,34 +3,46 @@ package service
 import (
 	"fmt"
 
+	"github.com/go-sqlx/sqlx"
 	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
 	customerrorconst "github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors/custom-error-const"
 	"github.com/uvulpos/golang-sveltekit-template/src/resources/jwt/service"
 )
 
 func (s *AuthService) RecreateJwtFromSession(sessionID string) (string, customerrors.ErrorInterface) {
-	session, sessionErr := s.userSvc.GetUserAuthSessionByID(nil, sessionID)
+
+	tx, txErr := s.storage.StartTransaction()
+	if txErr != nil {
+		return "", txErr
+	}
+	defer func(tx *sqlx.Tx) {
+		tx.Rollback()
+	}(tx)
+
+	session, sessionErr := s.userSvc.GetUserAuthSessionByID(tx, sessionID)
 	if sessionErr != nil {
 		if sessionErr.ErrorType() == customerrorconst.ERROR_IDENTIFIER_DATABASE_NOT_FOUND {
 			return "", customerrors.NewNotAuthorizedError()
 		}
 	}
 
-	user, userErr := s.userSvc.GetUserByID(nil, session.UserID)
+	fmt.Println("PRE KATASTROPHE")
+	fmt.Println("PRE KATASTROPHE")
+	fmt.Println("PRE KATASTROPHE", session)
+	user, userErr := s.userSvc.GetUserByID(tx, session.UserID)
 	if userErr != nil {
 		return "", userErr
 	}
 
-	permissions, permissionsErr := s.userSvc.GetUserPermissionsByID(nil, user.ID)
+	permissions, permissionsErr := s.userSvc.GetUserPermissionsByID(tx, user.ID)
 	if permissionsErr != nil {
 		return "", permissionsErr
 	}
 
-	fmt.Println("CREATE JWT FROM SESSION")
-	fmt.Println("CREATE JWT FROM SESSION")
-	fmt.Println("CREATE JWT FROM SESSION")
-	fmt.Println("CREATE JWT FROM SESSION")
-	fmt.Println("permissions", permissions)
+	commitErr := tx.Commit()
+	if commitErr != nil {
+		return "", customerrors.NewDatabaseError(commitErr, "", "(session jwt refresh) Failed to commit transaction (receive session + user data)", "", nil)
+	}
 
 	refreshToken, refreshTokenErr := s.jwt.CreateJWT(service.NewJwtDataModel(user.ID, sessionID, permissions))
 	if refreshTokenErr != nil {

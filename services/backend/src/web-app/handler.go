@@ -4,6 +4,7 @@ import "github.com/gofiber/fiber/v2"
 
 type MiddlewareHandler interface {
 	Authentication(requiredPermissions []string) func(c *fiber.Ctx) error
+	AuthenticationRefreshToken() func(c *fiber.Ctx) error
 }
 
 type AuthHandler interface {

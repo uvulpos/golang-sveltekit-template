@@ -16,11 +16,12 @@ type AuthService struct {
 	userSvc *userService.UserService
 }
 
-func NewAuthService(storage AuthStorageInterface, authService *authService.AuthService, jwtService *jwtService.JwtService) *AuthService {
+func NewAuthService(storage AuthStorageInterface, authService *authService.AuthService, jwtService *jwtService.JwtService, userService *userService.UserService) *AuthService {
 	return &AuthService{
 		storage: storage,
 		auth:    authService,
 		jwt:     jwtService,
+		userSvc: userService,
 	}
 }
 

@@ -40,18 +40,16 @@ func (s *AuthService) CallbackFunction(authCode, state, ipaddr, userAgent string
 		return "", "", permissionScopesErr
 	}
 
+	fmt.Println("Permissions")
+	fmt.Println("Permissions")
+	fmt.Println("Permissions")
+	fmt.Println("Permissions")
+	fmt.Println(permissionScopes)
+
 	commitErr := tx.Commit()
 	if commitErr != nil {
 		return "", "", customerrors.NewDatabaseTransactionCommitError(commitErr, "Failed to commit transaction")
 	}
-
-	fmt.Println("CREATE JWT")
-	fmt.Println("CREATE JWT")
-	fmt.Println("CREATE JWT")
-	fmt.Println("CREATE JWT")
-	fmt.Println("CREATE JWT")
-	fmt.Println("CREATE JWT")
-	fmt.Println("permissionScopes", permissionScopes)
 
 	jwt, jwtErr := s.jwt.CreateJWT(jwtService.NewJwtDataModel(loggedinUser, sessionID, permissionScopes))
 	if jwtErr != nil {
