@@ -2,8 +2,11 @@ package service
 
 import (
 	"github.com/go-sqlx/sqlx"
+	"github.com/uvulpos/golang-sveltekit-template/src/configuration"
 	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
 	"golang.org/x/oauth2"
+
+	userService "github.com/uvulpos/golang-sveltekit-template/src/resources/user/service"
 )
 
 type AuthService struct {
@@ -11,30 +14,30 @@ type AuthService struct {
 	authentikOauthUserInfoEP string
 	authentikOauthLogoutEP   string
 
-	storage AuthStorageInterface
+	userSvc *userService.UserService
 }
 
-func NewAuthService(storage AuthStorageInterface, OAuthKey, OAuthSecret, CallbackURL, AuthURL, AuthTokenURL, UserInfoURL, LogoutURL string, scope ...string) *AuthService {
+func NewAuthService(userSvc *userService.UserService) *AuthService {
 	authentikConfig := &oauth2.Config{
-		ClientID:     OAuthKey,
-		ClientSecret: OAuthSecret,
+		ClientID:     configuration.AUTHORIZATION_OAUTH_KEY,
+		ClientSecret: configuration.AUTHORIZATION_OAUTH_SECRET,
 
-		RedirectURL: CallbackURL,
-		Scopes:      scope,
+		RedirectURL: configuration.AUTHORIZATION_OAUTH_CALLBACK_URL,
+		Scopes:      configuration.AUTHORIZATION_OAUTH_SCOPES,
 
 		Endpoint: oauth2.Endpoint{
-			AuthURL:  AuthURL,
-			TokenURL: AuthTokenURL,
+			AuthURL:  configuration.AUTHORIZATION_OAUTH_AUTHORIZATION_URL,
+			TokenURL: configuration.AUTHORIZATION_OAUTH_TOKEN_URL,
 
 			AuthStyle: oauth2.AuthStyleInParams,
 		},
 	}
 	return &AuthService{
 		authentikConfig:          authentikConfig,
-		authentikOauthUserInfoEP: UserInfoURL,
-		authentikOauthLogoutEP:   LogoutURL,
+		authentikOauthUserInfoEP: configuration.AUTHORIZATION_OAUTH_USERINFO_URL,
+		authentikOauthLogoutEP:   configuration.AUTHORIZATION_OAUTH_LOGOUT_URL,
 
-		storage: storage,
+		userSvc: userSvc,
 	}
 }
 

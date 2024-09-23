@@ -5,7 +5,7 @@ import (
 	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
 )
 
-func (s *AuthStorage) CreateUserLoginIdentity(tx *sqlx.Tx, createdUserID string, authProvider string, authProviderID string) customerrors.ErrorInterface {
+func (s *UserStore) CreateUserLoginIdentity(tx *sqlx.Tx, createdUserID string, authProvider string, authProviderID string) customerrors.ErrorInterface {
 	sqlquery := "INSERT INTO public.user_identities (provider, provider_user_id, user_id) VALUES ($1, $2, $3)"
 
 	_, err := tx.Exec(sqlquery, authProvider, authProviderID, createdUserID)

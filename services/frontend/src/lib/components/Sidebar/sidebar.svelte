@@ -41,6 +41,7 @@
         display: flex
         align-items: center
         justify-content: space-around
+        user-select: none
 
         a 
           text-decoration: none

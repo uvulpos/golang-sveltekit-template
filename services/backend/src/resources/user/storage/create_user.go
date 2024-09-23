@@ -7,7 +7,7 @@ import (
 	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
 )
 
-func (s *AuthStorage) CreateUser(tx *sqlx.Tx, displayName string, username string, email string, emailVerified bool) (string, customerrors.ErrorInterface) {
+func (s *UserStore) CreateUser(tx *sqlx.Tx, displayName string, username string, email string, emailVerified bool) (string, customerrors.ErrorInterface) {
 	sqlquery := "INSERT INTO public.users (display_name, username, email, email_verified) VALUES ($1, $2, $3, $4) RETURNING id"
 
 	var userID string

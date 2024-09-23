@@ -9,6 +9,7 @@ import (
 	"github.com/go-sqlx/sqlx"
 	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
 	customerrorconst "github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors/custom-error-const"
+	providerConst "github.com/uvulpos/golang-sveltekit-template/src/resources/auth/service/provider-const"
 )
 
 func (s *AuthService) AuthentikCallbackFunction(authCode, state string) (string, customerrors.ErrorInterface) {
@@ -35,7 +36,7 @@ func (s *AuthService) AuthentikCallbackFunction(authCode, state string) (string,
 		return "", customerrors.NewInternalServerError(err, "", "(oauth callback authentik) Failed to unmarshal authentik oauth user response body")
 	}
 
-	loginUserID, loginUserError := s.storage.GetUserIDByLogin("Authentik", result.ID)
+	loginUserID, loginUserError := s.userSvc.GetUserIDByLogin(providerConst.Authentik, result.ID)
 	if loginUserError != nil {
 
 		if loginUserError.ErrorType() != customerrorconst.ERROR_IDENTIFIER_DATABASE_NOT_FOUND {
@@ -43,7 +44,7 @@ func (s *AuthService) AuthentikCallbackFunction(authCode, state string) (string,
 		}
 
 		// Create new user if user does not exist or relationship cannot be established
-		tx, txErr := s.storage.StartTransaction()
+		tx, txErr := s.userSvc.StartTransaction()
 		if txErr != nil {
 			return "", txErr
 		}
@@ -52,7 +53,7 @@ func (s *AuthService) AuthentikCallbackFunction(authCode, state string) (string,
 			tx.Rollback()
 		}(tx)
 
-		createdUserID, createUserErr := s.storage.CreateUser(
+		createdUserID, createUserErr := s.userSvc.CreateUser(
 			tx,
 			result.Name,
 			result.PreferredUsername,
@@ -66,10 +67,10 @@ func (s *AuthService) AuthentikCallbackFunction(authCode, state string) (string,
 
 		loginUserID = createdUserID
 
-		createdUserLoginIdentityErr := s.storage.CreateUserLoginIdentity(
+		createdUserLoginIdentityErr := s.userSvc.CreateUserLoginIdentity(
 			tx,
 			createdUserID,
-			"Authentik",
+			providerConst.Authentik,
 			result.ID,
 		)
 		if createdUserLoginIdentityErr != nil {

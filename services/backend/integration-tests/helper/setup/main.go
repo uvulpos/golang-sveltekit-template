@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/uvulpos/golang-sveltekit-template/src/configuration"
 	jwtService "github.com/uvulpos/golang-sveltekit-template/src/resources/jwt/service"
 	webApp "github.com/uvulpos/golang-sveltekit-template/src/web-app"
 	customhttphandler "github.com/uvulpos/golang-sveltekit-template/src/web-app/custom-http-handler"
@@ -69,7 +70,7 @@ func (s *TestSetupStruct) MakeRequest(t *testing.T, applicationMethod, applicati
 		req.AddCookie(cookie)
 	}
 
-	response, responseErr := s.FiberRouter.Test(req, 1)
+	response, responseErr := s.FiberRouter.Test(req, configuration.INTEGRATION_TEST_TEST_TIMEOUT_IN_MS)
 	assert.Equal(t, responseErr, nil, "")
 
 	return response

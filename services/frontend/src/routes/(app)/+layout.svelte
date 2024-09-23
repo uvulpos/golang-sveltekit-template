@@ -8,7 +8,7 @@
   export let data;
 
   // import code
-  import { onMount } from "svelte";
+  import { onDestroy, onMount } from "svelte";
   import { _ } from "svelte-i18n";
   import { addMessages, init } from "svelte-i18n";
   import {
@@ -51,6 +51,7 @@
   let bodyElement: HTMLElement | undefined;
   let pageIsLoading: boolean = true;
   let selfInformation: SelfInformation | null = null;
+  let refreshIntervalID: number | undefined;
 
   onMount(async () => {
     preMount = false;
@@ -72,25 +73,36 @@
     if (jwtToken === undefined || jwtToken === "") {
       // check jwt refresh token
       const newToken = await refreshJwtToken();
-      if (newToken === undefined || newToken === "") {
-        window.location.href = "/login";
-        return;
-      }
-
-      if (newToken !== undefined && newToken !== "") {
+      if (newToken === null || newToken === "") {
         window.location.href = "/login";
         return;
       }
     }
 
     let selfData = await getSelfInformation();
-    console.log({ self: selfData });
 
     if (selfData === undefined || selfData == null) {
       goto("/login");
     }
+
+    refreshIntervalID = setInterval(
+      async () => {
+        const newToken = await refreshJwtToken();
+        if (newToken === undefined || newToken === "") {
+          clearInterval(refreshIntervalID);
+          window.location.href = "/login";
+          return;
+        }
+      },
+      1000 * 60 * 5 // 5 minutes
+    );
+
     selfInformation = selfData;
     pageIsLoading = false;
+  });
+
+  onDestroy(() => {
+    clearInterval(refreshIntervalID);
   });
 
   $: {
@@ -102,7 +114,7 @@
   <div>
     <p>Loading...</p>
   </div>
-{:else}
+{:else if !pageIsLoading && selfInformation != null}
   <SvelteUIProvider withNormalizeCSS withGlobalStyles>
     {#if !preMount}
       <AppShell>
@@ -124,6 +136,10 @@
       </AppShell>
     {/if}
   </SvelteUIProvider>
+{:else}
+  <div>
+    <p>Unexpexted Error</p>
+  </div>
 {/if}
 
 <style lang="sass">

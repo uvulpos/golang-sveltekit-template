@@ -1,14 +1,12 @@
 package service
 
 import (
-	"fmt"
-
 	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
 	jwtService "github.com/uvulpos/golang-sveltekit-template/src/resources/jwt/service"
 )
 
 func (s *AuthService) CallbackFunction(authCode, state, ipaddr, userAgent string) (string, string, customerrors.ErrorInterface) {
-	loggedinUser, loggedinUserErr := s.auth.AuthentikCallbackFunction(authCode, state)
+	loggedinUser, loggedinUserErr := s.authentikProviderSvc.AuthentikCallbackFunction(authCode, state)
 	if loggedinUserErr != nil {
 		return "", "", loggedinUserErr
 	}
@@ -39,12 +37,6 @@ func (s *AuthService) CallbackFunction(authCode, state, ipaddr, userAgent string
 	if permissionScopesErr != nil {
 		return "", "", permissionScopesErr
 	}
-
-	fmt.Println("Permissions")
-	fmt.Println("Permissions")
-	fmt.Println("Permissions")
-	fmt.Println("Permissions")
-	fmt.Println(permissionScopes)
 
 	commitErr := tx.Commit()
 	if commitErr != nil {

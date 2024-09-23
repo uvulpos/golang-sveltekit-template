@@ -34,9 +34,6 @@ import (
 	userService "github.com/uvulpos/golang-sveltekit-template/src/resources/user/service"
 	userStorage "github.com/uvulpos/golang-sveltekit-template/src/resources/user/storage"
 
-	authPackageService "github.com/uvulpos/golang-sveltekit-template/src/resources/identity-provider/auth/service"
-	authPackageStorage "github.com/uvulpos/golang-sveltekit-template/src/resources/identity-provider/auth/storage"
-
 	jwtPackageService "github.com/uvulpos/golang-sveltekit-template/src/resources/jwt/service"
 )
 
@@ -67,9 +64,6 @@ type AppServices struct {
 	AuthHandler *authHttp.AuthHandler
 	AuthService *authService.AuthService
 	AuthStore   *authStorage.AuthStore
-
-	AuthPackageSvc   *authPackageService.AuthService
-	AuthPackageStore *authPackageStorage.AuthStorage
 
 	GeneralHandler *generalHttp.GeneralHandler
 	GeneralSvc     *generalService.GeneralSvc
@@ -106,19 +100,6 @@ func SetupServices() (*AppServices, error) {
 
 	jwtPackageSvc := jwtPackageService.NewJwtService("somethingNice")
 
-	authPackageStore := authPackageStorage.NewAuthStorage(dbConn)
-	authPackageSvc := authPackageService.NewAuthService(
-		authPackageStore,
-		configuration.AUTHORIZATION_OAUTH_KEY,
-		configuration.AUTHORIZATION_OAUTH_SECRET,
-		configuration.AUTHORIZATION_OAUTH_CALLBACK_URL,
-		configuration.AUTHORIZATION_OAUTH_AUTHORIZATION_URL,
-		configuration.AUTHORIZATION_OAUTH_TOKEN_URL,
-		configuration.AUTHORIZATION_OAUTH_USERINFO_URL,
-		configuration.AUTHORIZATION_OAUTH_LOGOUT_URL,
-		configuration.AUTHORIZATION_OAUTH_SCOPES...,
-	)
-
 	generalStore := generalStorage.NewGeneralStore(dbConn)
 	generalSvc := generalService.NewGeneralSvc(generalStore)
 	generalHandler := generalHttp.NewGeneralHandler(generalSvc)
@@ -128,7 +109,7 @@ func SetupServices() (*AppServices, error) {
 	userHandler := userHttp.NewUserHandler(userSvc)
 
 	authStore := authStorage.NewAuthStore(dbConn)
-	authService := authService.NewAuthService(authStore, authPackageSvc, jwtPackageSvc, userSvc)
+	authService := authService.NewAuthService(authStore, jwtPackageSvc, userSvc)
 	authHandler := authHttp.NewAuthHandler(authService, jwtPackageSvc)
 
 	middlewareSvc := middlewareService.NewMiddlewareService(userSvc)
@@ -138,9 +119,6 @@ func SetupServices() (*AppServices, error) {
 		AuthHandler: authHandler,
 		AuthService: authService,
 		AuthStore:   authStore,
-
-		AuthPackageSvc:   authPackageSvc,
-		AuthPackageStore: authPackageStore,
 
 		GeneralHandler: generalHandler,
 		GeneralSvc:     generalSvc,

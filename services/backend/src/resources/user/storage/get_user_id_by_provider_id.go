@@ -6,7 +6,7 @@ import (
 	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
 )
 
-func (s *AuthStorage) GetUserIDByLogin(provider string, providerID string) (string, customerrors.ErrorInterface) {
+func (s *UserStore) GetUserIDByLogin(provider string, providerID string) (string, customerrors.ErrorInterface) {
 	var userID string
 	const sqlquery = "SELECT user_id FROM public.user_identities WHERE provider=$1 AND provider_user_id=$2"
 
