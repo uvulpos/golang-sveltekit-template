@@ -9,6 +9,13 @@ jobs:
     # continue-on-error: true
 
     steps:
+      - name: 'Cleanup build folder'
+        run: |
+          ls -la ./
+          rm -rf ./* || true
+          rm -rf ./.??* || true
+          ls -la ./
+
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
