@@ -111,10 +111,10 @@ services:
     image: golang:latest
     container_name: web-api-test
     volumes:
-      - ./services/backend:/app/backend:ro
-      - ./services/go_app_modules:/app/go_app_modules:ro
-      - ./services/go.work:/app/go.work:ro
-      - ./services/go.work.sum:/app/go.work.sum:ro
+      - ./services/backend:/app/backend
+      - ./services/go_app_modules:/app/go_app_modules
+      - ./services/go.work:/app/go.work
+      - ./services/go.work.sum:/app/go.work.sum
     networks:
       - intranet
     depends_on:
