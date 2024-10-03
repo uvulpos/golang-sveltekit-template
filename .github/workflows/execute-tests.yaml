@@ -9,13 +9,6 @@ jobs:
     # continue-on-error: true
 
     steps:
-      - name: 'Cleanup build folder'
-        run: |
-          ls -la ./
-          rm -rf ./* || true
-          rm -rf ./.??* || true
-          ls -la ./
-
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -43,3 +36,12 @@ jobs:
         with:
           name: go-security-report.html
           path: ./results.html
+
+      - name: Cleanup Workspace
+        if: always()  
+        run: |
+          # Dateien oder Verzeichnisse löschen
+          ls -la ./
+          rm -rf ./* || true
+          rm -rf ./.??* || true
+          ls -la ./
