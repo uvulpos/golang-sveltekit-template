@@ -5,7 +5,7 @@ on:
 
 jobs:
   test-backend:
-    runs-on: selfhost-hetzner
+    runs-on: ubuntu-latest
     # continue-on-error: true
 
     steps:
