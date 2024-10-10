@@ -5,7 +5,7 @@ import (
 
 	"github.com/charmbracelet/lipgloss"
 	"github.com/qeesung/image2ascii/convert"
-	"github.com/uvulpos/go-svelte/src/assets"
+	"github.com/uvulpos/golang-sveltekit-template/src/assets"
 )
 
 func getAsciiLogo() (string, error) {

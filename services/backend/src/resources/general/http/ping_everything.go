@@ -6,7 +6,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-// @Summary		System Health-Check
+// @Summary		System health-check
 // @Description	Checks all depdent systems, if they are still up and responding
 //
 // @Tags			health

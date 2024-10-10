@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/go-sqlx/sqlx"
-	"github.com/uvulpos/go-svelte/src/configuration"
+	"github.com/uvulpos/golang-sveltekit-template/src/configuration"
 )
 
 func CreateDatabase() (*sqlx.DB, error) {

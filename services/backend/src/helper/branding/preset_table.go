@@ -5,7 +5,7 @@ import (
 
 	"github.com/charmbracelet/lipgloss"
 	"github.com/charmbracelet/lipgloss/table"
-	"github.com/uvulpos/go-svelte/src/helper/branding/models"
+	"github.com/uvulpos/golang-sveltekit-template/src/helper/branding/models"
 )
 
 func getAsciiConfigurationTable(configuration models.ConfigurationTable, presetStle lipgloss.Style) string {

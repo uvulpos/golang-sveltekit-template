@@ -1,15 +1,23 @@
 <script lang="ts">
+  import type { SelfInformation } from "$lib/api/user/models/SelfInformation";
   import { Menu } from "@svelteuidev/core";
   import { Exit, Pencil1 } from "radix-icons-svelte";
   import { _ } from "svelte-i18n";
+
+  export let user: SelfInformation;
 </script>
 
-<div class="content-element">
+<div class="content-element sidebar-account-content-element">
   <div class="account">
-    <img src="" alt="" class="profilepicture" />
-    <span>uVulpos</span>
+    <img src={user.profile_picture} alt="" class="profilepicture" />
+    <div class="account-name" title="{user.display_name} ({user.username})">
+      <span class="displayname">{user.display_name} </span>
+      <span class="username">
+        ({user.username})
+      </span>
+    </div>
     <div class="margin-left">
-      <Menu>
+      <Menu class="menu">
         <Menu.Label>{$_("page.navigation.application.header")}</Menu.Label>
         <a href="/settings">
           <Menu.Item icon={Pencil1} href="/settings"
@@ -17,13 +25,12 @@
           >
         </a>
         <Menu.Label>Account</Menu.Label>
-        <a href="/logout">
-          <!-- <Menu.Item icon={Pencil1} href="/to/identity provider"
-            >{$_("page.navigation.account.edit-account")}</Menu.Item
-          > -->
-          <Menu.Item icon={Exit} href="/logout" color="red"
-            >{$_("page.navigation.account.logout")}</Menu.Item
-          >
+        <a href="/api/v1/oauth/logout">
+          <div class="red-button">
+            <Menu.Item icon={Exit} color="red"
+              >{$_("page.navigation.account.logout")}</Menu.Item
+            >
+          </div>
         </a>
       </Menu>
     </div>
@@ -47,8 +54,25 @@
         height: $size
         width: $size
         background-color: #f60
+        object-fit: cover
+
+      .account-name
+        display: flex
+        flex-direction: column
+        gap: .1rem
+
+        .displayname
+          font-size: 1rem
+        .username
+          font-size: .8rem
+          color: var(--sidebar-font-color-secondary)
 
       .margin-left
         margin-left: auto
+
+      :global(.menu button:hover)
+        background-color: var(--sidebar-background-color-hover)
+      :global(.menu button svg)
+        color: var(--sidebar-svg-color)
 
 </style>

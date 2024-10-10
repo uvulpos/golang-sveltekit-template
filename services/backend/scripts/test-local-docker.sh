@@ -10,4 +10,4 @@ swag fmt -g src/web-app/app.go && swag init -g src/web-app/app.go -o swagger-doc
 
 go run src/main.go migrate-db
 
-gotestsum --format testname
+gotestsum --format testname ./src/...
