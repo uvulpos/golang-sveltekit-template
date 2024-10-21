@@ -156,7 +156,7 @@ services:
   # -----------------------------------------------------------------------------------------------------
 
   postgres:
-    image: postgis/postgis
+    image: postgres:latest
     environment:
       POSTGRES_USER: ${APP_DATABASE_USERNAME}
       POSTGRES_PASSWORD: ${APP_DATABASE_PASSWORD}
