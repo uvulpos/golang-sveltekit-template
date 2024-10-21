@@ -82,7 +82,6 @@
     }
 
     let selfData = await getSelfInformation();
-    console.log(selfData);
 
     if (selfData === undefined || selfData == null) {
       goto("/login");
