@@ -9,8 +9,8 @@ var (
 	WEBSERVER_SHOW_SWAGGER  = GetEnvOrDefaultBool("WEBSERVER_SHOW_SWAGGER", true)
 
 	// Database
-	DATABASE_ADDR = GetEnvOrDefaultString("DATABASE_ADDR", "127.0.0.1")
-	// DATABASE_ADDR     = GetEnvOrDefaultString("DATABASE_ADDR", "postgres")
+	// DATABASE_ADDR = GetEnvOrDefaultString("DATABASE_ADDR", "127.0.0.1")
+	DATABASE_ADDR     = GetEnvOrDefaultString("DATABASE_ADDR", "postgres")
 	DATABASE_PORT     = GetEnvOrDefaultInt("DATABASE_PORT", 5432)
 	DATABASE_SSL      = GetEnvOrDefaultBool("DATABASE_SSL", false)
 	DATABASE_USERNAME = GetEnvOrDefaultString("DATABASE_USERNAME", "postgres")

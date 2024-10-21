@@ -6,6 +6,8 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/uvulpos/golang-sveltekit-template/src/configuration"
+	"github.com/uvulpos/golang-sveltekit-template/src/resources/auth/http/cookies"
+	sessionlocals "github.com/uvulpos/golang-sveltekit-template/src/web-app/middlewares/http/consts/session-locals"
 )
 
 // @Summary		Get new access token via refresh token
@@ -20,7 +22,7 @@ import (
 //
 // @Router			/api/v1/auth/refresh [get]
 func (h *AuthHandler) Refresh(c *fiber.Ctx) error {
-	sessionID := c.Locals("session-uuid").(string)
+	sessionID := c.Locals(sessionlocals.SessionUUID).(string)
 
 	jwtToken, refreshTokenErr := h.service.RecreateJwtFromSession(sessionID)
 	if refreshTokenErr != nil {
@@ -28,12 +30,8 @@ func (h *AuthHandler) Refresh(c *fiber.Ctx) error {
 		return c.Status(httpStatus).SendString(userMessage)
 	}
 
-	c.Cookie(&fiber.Cookie{
-		Name:    "jwt",
-		Path:    "/",
-		Value:   jwtToken,
-		Expires: time.Now().Add(time.Minute * time.Duration(configuration.JWT_TOKEN_VALIDITY_IN_MINUTES)),
-	})
+	jwtValidity := time.Now().Add(time.Minute * time.Duration(configuration.JWT_TOKEN_VALIDITY_IN_MINUTES))
+	c.Cookie(cookies.GenerateJwtToken(jwtToken, false, jwtValidity))
 
 	return c.Status(http.StatusCreated).SendString(jwtToken)
 }

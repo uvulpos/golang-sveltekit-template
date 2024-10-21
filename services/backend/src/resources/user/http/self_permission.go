@@ -5,6 +5,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	httpModels "github.com/uvulpos/golang-sveltekit-template/src/resources/user/http/http-models"
+	sessionLocals "github.com/uvulpos/golang-sveltekit-template/src/web-app/middlewares/http/consts/session-locals"
 )
 
 // @Summary		Get own user permissions
@@ -19,7 +20,7 @@ import (
 //
 // @Router			/api/v1/self/permissions [get]
 func (s *UserHandler) GetSelfPermissions(c *fiber.Ctx) error {
-	userID := c.Locals("user-uuid").(string)
+	userID := c.Locals(sessionLocals.UserUUID).(string)
 
 	permissions, permissionsErr := s.service.GetUserPermissionsByID(nil, userID)
 	if permissionsErr != nil {

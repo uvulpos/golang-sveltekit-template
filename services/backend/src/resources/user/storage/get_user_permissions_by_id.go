@@ -1,8 +1,8 @@
 package storage
 
 import (
-	"database/sql"
 	"encoding/json"
+	"fmt"
 
 	"github.com/go-sqlx/sqlx"
 	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
@@ -34,14 +34,17 @@ func (a *UserStore) GetUserPermissionsByID(tx *sqlx.Tx, userID string) ([]string
 
 		switch err {
 
-		case sql.ErrNoRows:
-			return []string{}, customerrors.NewDatabaseNotFoundError(err, userID, sqlquery, data)
-
 		default:
 			return []string{}, customerrors.NewDatabaseError(err, userID, "Cannot get user permissions", sqlquery, data)
 		}
 	}
 
+	// if result is nil, user has no role or permissions yet
+	if permissionsJSONB == nil {
+		return []string{}, nil
+	}
+
+	fmt.Println("wrong exit!", permissionsJSONB)
 	var permissions []string
 	if err := json.Unmarshal(permissionsJSONB, &permissions); err != nil {
 		data := customerrors.SqlData{

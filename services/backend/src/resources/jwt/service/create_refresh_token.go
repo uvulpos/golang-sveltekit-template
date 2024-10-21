@@ -11,9 +11,10 @@ import (
 
 func (s *JwtService) CreateRefreshToken(sessionID string) (string, customerrors.ErrorInterface) {
 	claims := jwt.MapClaims{
-		"session-uuid": sessionID,
-		"exp":          time.Now().Add(time.Hour * 24 * time.Duration(configuration.REFRESH_TOKEN_VALIDITY_IN_DAYS)).Unix(),
-		"authorized":   true,
+		"auth-provider": "authentik",
+		"session-uuid":  sessionID,
+		"exp":           time.Now().Add(time.Hour * 24 * time.Duration(configuration.REFRESH_TOKEN_VALIDITY_IN_DAYS)).Unix(),
+		"authorized":    true,
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)

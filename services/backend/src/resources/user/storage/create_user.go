@@ -11,7 +11,13 @@ func (s *UserStore) CreateUser(tx *sqlx.Tx, displayName string, username string,
 	sqlquery := "INSERT INTO public.users (display_name, username, email, email_verified) VALUES ($1, $2, $3, $4) RETURNING id"
 
 	var userID string
-	err := tx.Get(&userID, sqlquery, displayName, username, email, emailVerified)
+	var err error
+	if tx != nil {
+		err = tx.Get(&userID, sqlquery, displayName, username, email, emailVerified)
+	} else {
+		err = s.db.Get(&userID, sqlquery, displayName, username, email, emailVerified)
+	}
+
 	if err != nil {
 
 		data := customerrors.SqlData{
@@ -27,7 +33,7 @@ func (s *UserStore) CreateUser(tx *sqlx.Tx, displayName string, username string,
 			return "", customerrors.NewDatabaseNotFoundError(err, "", sqlquery, data)
 
 		default:
-			return "", customerrors.NewDatabaseError(err, "", "", sqlquery, nil)
+			return "", customerrors.NewDatabaseError(err, "", "", sqlquery, data)
 		}
 	}
 

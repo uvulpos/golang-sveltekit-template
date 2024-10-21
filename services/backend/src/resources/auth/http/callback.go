@@ -11,20 +11,12 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/uvulpos/golang-sveltekit-template/src/configuration"
 	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
+	"github.com/uvulpos/golang-sveltekit-template/src/resources/auth/http/cookies"
 )
 
 func (h *AuthHandler) CallbackHandler(c *fiber.Ctx) error {
 	authCode := c.Query("code", "")
 	state := c.Query("state", "")
-
-	// oauthstate := c.Cookies("oauthstate", "")
-	// fmt.Printf("DATA: %s %s\n", state, oauthstate)
-	// fmt.Printf("DATA: %s %s\n", state, oauthstate)
-	// fmt.Printf("DATA: %s %s\n", state, oauthstate)
-	// fmt.Printf("DATA: %s %s\n", state, oauthstate)
-	// if state != oauthstate {
-	// 	return c.Status(http.StatusBadRequest).SendString("Your oauthstate Cookie is Missing")
-	// }
 
 	jwtToken, refreshToken, err := h.service.CallbackFunction(
 		authCode,
@@ -34,32 +26,17 @@ func (h *AuthHandler) CallbackHandler(c *fiber.Ctx) error {
 		--------------------------------------------- */
 		"", // c.IP(),              // 	for GDPR reasons disabled be default
 		"", // c.Get("User-Agent"), // 	for GDPR reasons disabled be default
-
 	)
+
 	if err != nil || jwtToken == "" {
 		return err
 	}
 
-	// set jwt
-	c.Cookie(&fiber.Cookie{
-		Name:    "jwt",
-		Path:    "/",
-		Value:   jwtToken,
-		Expires: time.Now().Add(time.Minute * time.Duration(configuration.JWT_TOKEN_VALIDITY_IN_MINUTES)),
-	})
+	jwtTokenValidity := time.Now().Add(time.Minute * time.Duration(configuration.JWT_TOKEN_VALIDITY_IN_MINUTES))
+	c.Cookie(cookies.GenerateJwtToken(jwtToken, false, jwtTokenValidity))
 
-	// set refreshToken
-	c.Cookie(&fiber.Cookie{
-		Name:     "refresh_token",
-		Path:     "/api/v1/auth",
-		Value:    refreshToken,
-		HTTPOnly: true,
-		Expires:  time.Now().Add(time.Hour * time.Duration(configuration.REFRESH_TOKEN_VALIDITY_IN_DAYS)),
-		// Secure:   true,
-		SameSite: "Strict",
-	})
-
-	// return c.Status(http.StatusOK).SendString("OK!")
+	refreshTokenValidity := time.Now().Add(time.Minute * time.Duration(configuration.REFRESH_TOKEN_VALIDITY_IN_DAYS))
+	c.Cookie(cookies.GenerateRefreshToken(refreshToken, false, refreshTokenValidity))
 
 	redirectURL, redirectURLErr := generateRandomHashURL(configuration.WEBSERVER_DISPLAYNAME)
 	if redirectURLErr != nil {

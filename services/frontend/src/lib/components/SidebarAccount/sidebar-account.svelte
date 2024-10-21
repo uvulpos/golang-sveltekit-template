@@ -25,7 +25,7 @@
           >
         </a>
         <Menu.Label>Account</Menu.Label>
-        <a href="/api/v1/oauth/logout">
+        <a href="/logout">
           <div class="red-button">
             <Menu.Item icon={Exit} color="red"
               >{$_("page.navigation.account.logout")}</Menu.Item

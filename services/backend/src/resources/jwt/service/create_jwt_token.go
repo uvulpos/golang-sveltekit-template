@@ -11,11 +11,12 @@ import (
 
 func (s *JwtService) CreateJWT(jwtData *JwtDataModel) (string, customerrors.ErrorInterface) {
 	claims := jwt.MapClaims{
-		"user-uuid":    jwtData.UserUuid,
-		"session-uuid": jwtData.SessionID,
-		"scopes":       jwtData.Scopes,
-		"exp":          time.Now().Add(time.Minute * time.Duration(configuration.JWT_TOKEN_VALIDITY_IN_MINUTES)).Unix(),
-		"authorized":   true,
+		"auth-provider": "authentik",
+		"user-uuid":     jwtData.UserUuid,
+		"session-uuid":  jwtData.SessionID,
+		"scopes":        jwtData.Scopes,
+		"exp":           time.Now().Add(time.Minute * time.Duration(configuration.JWT_TOKEN_VALIDITY_IN_MINUTES)).Unix(),
+		"authorized":    true,
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)

@@ -2,6 +2,6 @@
   import { onMount } from "svelte";
 
   onMount(async () => {
-    window.location.href = "/api/v1/oauth/logout";
+    window.location.href = "/api/v1/auth/logout";
   });
 </script>

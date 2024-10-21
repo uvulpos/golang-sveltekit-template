@@ -6,6 +6,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	customerrorconst "github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors/custom-error-const"
+	sessionLocals "github.com/uvulpos/golang-sveltekit-template/src/web-app/middlewares/http/consts/session-locals"
 )
 
 func (h *MiddlewareHandler) Authentication(requiredPermissions []string) func(c *fiber.Ctx) error {
@@ -37,8 +38,8 @@ func (h *MiddlewareHandler) Authentication(requiredPermissions []string) func(c 
 		}
 
 		// after jwt got evaluated, add information from jwt to fiber request context
-		c.Locals("user-uuid", jwtData.UserUuid)
-		c.Locals("permissions", permissions)
+		c.Locals(sessionLocals.UserUUID, jwtData.UserUuid)
+		c.Locals(sessionLocals.Permissions, permissions)
 
 		return c.Next()
 	}

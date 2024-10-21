@@ -14,6 +14,9 @@ local-release: .install-deps ## build all app versions locally (via goreleaser)
 test-be: ## run golang tests
 	@docker compose -f docker-compose.dev.yaml up --abort-on-container-exit postgres backend-tests
 
+test-be-integrationtest: ## run golang integration tests
+	@docker compose -f docker-compose.dev.yaml up --abort-on-container-exit postgres backend-integration-tests
+
 test-fe: ## run sveltekit tests
 	@docker compose -f docker-compose.dev.yaml up --abort-on-container-exit frontend-tests
 

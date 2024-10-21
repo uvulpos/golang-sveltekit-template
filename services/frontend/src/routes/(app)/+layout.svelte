@@ -73,6 +73,8 @@
     if (jwtToken === undefined || jwtToken === "") {
       // check jwt refresh token
       const newToken = await refreshJwtToken();
+      console.log("NEW JWT TOKEN", { newToken });
+
       if (newToken === null || newToken === "") {
         window.location.href = "/login";
         return;
@@ -80,6 +82,7 @@
     }
 
     let selfData = await getSelfInformation();
+    console.log(selfData);
 
     if (selfData === undefined || selfData == null) {
       goto("/login");

@@ -1,12 +1,12 @@
 package middlewares
 
 import (
-	"fmt"
 	"net/http"
 	"strings"
 
 	"github.com/gofiber/fiber/v2"
 	customerrorconst "github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors/custom-error-const"
+	sessionLocals "github.com/uvulpos/golang-sveltekit-template/src/web-app/middlewares/http/consts/session-locals"
 )
 
 func (h *MiddlewareHandler) AuthenticationRefreshToken() func(c *fiber.Ctx) error {
@@ -27,10 +27,8 @@ func (h *MiddlewareHandler) AuthenticationRefreshToken() func(c *fiber.Ctx) erro
 			return c.Status(fiber.StatusInternalServerError).SendString(customerrorconst.INTERNAL_SERVER_ERROR_MESSAGE)
 		}
 
-		fmt.Println("jwtData", jwtData)
-
 		// after jwt got evaluated, add information from jwt to fiber request context
-		c.Locals("session-uuid", jwtData.SessionID)
+		c.Locals(sessionLocals.SessionUUID, jwtData.SessionID)
 
 		return c.Next()
 	}
