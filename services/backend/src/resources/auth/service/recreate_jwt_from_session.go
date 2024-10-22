@@ -1,8 +1,6 @@
 package service
 
 import (
-	"fmt"
-
 	"github.com/go-sqlx/sqlx"
 	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
 	customerrorconst "github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors/custom-error-const"
@@ -26,9 +24,6 @@ func (s *AuthService) RecreateJwtFromSession(sessionID string) (string, customer
 		}
 	}
 
-	fmt.Println("PRE KATASTROPHE")
-	fmt.Println("PRE KATASTROPHE")
-	fmt.Println("PRE KATASTROPHE", session)
 	user, userErr := s.userSvc.GetUserByID(tx, session.UserID)
 	if userErr != nil {
 		return "", userErr

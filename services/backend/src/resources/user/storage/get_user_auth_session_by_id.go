@@ -2,7 +2,6 @@ package storage
 
 import (
 	"database/sql"
-	"fmt"
 
 	"github.com/go-sqlx/sqlx"
 	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
@@ -16,14 +15,11 @@ func (s *UserStore) GetUserAuthSessionByID(tx *sqlx.Tx, sessionID string) (*serv
 	var session storageModel.SessionModel
 	var err error
 
-	// TODO: SESSION IS NIL
 	if tx != nil {
 		err = tx.QueryRowx(sqlquery, sessionID).StructScan(&session)
 	} else {
 		err = s.db.QueryRowx(sqlquery, sessionID).StructScan(&session)
 	}
-
-	fmt.Println("session", session)
 
 	if err != nil {
 		data := customerrors.SqlData{
