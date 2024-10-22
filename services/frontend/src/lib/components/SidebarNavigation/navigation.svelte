@@ -16,14 +16,14 @@
       href: "/settings",
       subelements: [
         {
+          name: "Swagger",
+          href: "/swagger",
+        },
+        {
           name: "Logout",
           href: "/logout",
         },
       ],
-    },
-    {
-      name: "Swagger",
-      href: "/swagger",
     },
   ];
 
@@ -63,6 +63,7 @@
       {/if}
     </li>
   {/each}
+  <li style="margin-top: auto;"></li>
 </ul>
 
 <style lang="sass">

@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { SelfInformation } from "$lib/api/user/models/SelfInformation";
-  import { Menu } from "@svelteuidev/core";
-  import { Exit, Pencil1 } from "radix-icons-svelte";
+  import { Exit } from "radix-icons-svelte";
   import { _ } from "svelte-i18n";
 
   export let user: SelfInformation;
@@ -17,22 +16,11 @@
       </span>
     </div>
     <div class="margin-left">
-      <Menu class="menu">
-        <Menu.Label>{$_("page.navigation.application.header")}</Menu.Label>
-        <a href="/settings">
-          <Menu.Item icon={Pencil1} href="/settings"
-            >{$_("page.navigation.application.settings")}</Menu.Item
-          >
-        </a>
-        <Menu.Label>Account</Menu.Label>
-        <a href="/logout">
-          <div class="red-button">
-            <Menu.Item icon={Exit} color="red"
-              >{$_("page.navigation.account.logout")}</Menu.Item
-            >
-          </div>
-        </a>
-      </Menu>
+      <a href="/logout">
+        <div class="logout-button">
+          <Exit />
+        </div>
+      </a>
     </div>
   </div>
 </div>
@@ -69,6 +57,21 @@
 
       .margin-left
         margin-left: auto
+
+      .logout-button
+        :global(svg)
+          height: 1.2rem
+          width: 1.2rem
+          object-fit: contain
+          color: var(--sidebar-font-color-red)
+          transition: 200ms color ease-in-out
+          &:hover
+            color: var(--sidebar-font-color-red-hover)
+        :global(svg path)
+          transition: 200ms stroke ease-in-out
+          stroke: .2px var(--sidebar-font-color-red)
+        :global(svg:hover path)
+          stroke-color: .2px var(--sidebar-font-color-red-hover)
 
       :global(.menu button:hover)
         background-color: var(--sidebar-background-color-hover)

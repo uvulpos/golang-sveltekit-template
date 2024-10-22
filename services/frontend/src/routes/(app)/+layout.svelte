@@ -119,7 +119,7 @@
 {:else if !pageIsLoading && selfInformation != null}
   <SvelteUIProvider withNormalizeCSS withGlobalStyles>
     {#if !preMount}
-      <AppShell>
+      <AppShell class={"app-shell"}>
         <Navbar
           slot="navbar"
           fixed
@@ -150,6 +150,10 @@
   :global(body)
       background: var(--background-color)
       color: var(--font-color)
+
+  :global(.app-shell)
+    height: 100vh
+    overflow-y: scroll
 
   :global(.sidebar)
       overflow-y: scroll

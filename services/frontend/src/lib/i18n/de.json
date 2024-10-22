@@ -40,10 +40,16 @@
                 "header": "Impressum",
                 "this-website-template": "Diese Website ist ein Template von GitHub.",
                 "using-template-liable": "Die Benutzung des Templates fällt unter die MIT Lizenz und macht somit den Betreiber für alle Änderungen und das Template an sich haftbar.",
-                "project-on-github": "Das Projekt auf GitHub.com"
+                "project-on-github": "Das Projekt auf GitHub.com",
+                "licenses": "Lizenzen"
             },
             "gdpr-notice": {
                 "header": "Datenschutzerklärung"
+            },
+            "licenses": {
+                "header-software-licenses": "Software Lizenzen",
+                "header-participating-developers": "Partizipierende Developer",
+                "text-participating-developers": "Hier dürfen sich alle Entwickler verewigen, welche an diesem Projekt gearbeitet haben:"
             }
         }
     }

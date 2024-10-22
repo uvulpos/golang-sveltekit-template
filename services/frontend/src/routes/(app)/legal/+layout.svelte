@@ -14,5 +14,10 @@
         :global(a) 
           text-decoration: none
           color: var(--anchor-font-color)
+        
+        :global(h1)
+          border-bottom: 1px solid var(--header-font-border-color)
+          padding-bottom: 1rem
+          margin-bottom: 2rem
 
 </style>

@@ -15,6 +15,7 @@ body{
     --anchor-font-color: #0099ff;
 
     --sidebar-font-color: #f1f1f1;
+    --sidebar-font-color-hover: #f1f1f189;
     --sidebar-font-color-secondary: #f1f1f189;
     --sidebar-font-color-menu: #1b1b1b;
     --sidebar-svg-color: #f1f1f1;
@@ -27,7 +28,11 @@ body{
     --sidebar-border-color-secondary: #cfcfcf;
     --sidebar-background-color-secondary-hover: #dadada;
     
+    --sidebar-font-color-red: #ec2e2e;
+    --sidebar-font-color-red-hover: rgba(221, 72, 72, 0.6);
+    
     --header-font-color: #ffffff;
+    --header-font-border-color: rgba(0, 0, 0, 0.3);
     --header-background-color: #212526;
 }
 
@@ -36,6 +41,7 @@ body.darkmode {
     --color-red-10: rgb(234, 63, 63, .1);
 
     --background-color: #33373a;
+    --background-color-hover: #242729;
     --background-color-secondary: #242729;
     --background-color-tertiary: #50565b;
     --font-color: #dadada;
@@ -48,5 +54,6 @@ body.darkmode {
     --sidebar-background-color-secondary-hover: #434a4d;
 
     --header-font-color: #fff;
+    --header-font-border-color: rgba(255,255,255, 0.3);
     --header-background-color: #212526;
 }

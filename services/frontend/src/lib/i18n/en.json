@@ -41,10 +41,16 @@
                 "header": "Imprint",
                 "this-website-template": "This website is just a template from GitHub.",
                 "using-template-liable": "Using this template makes you reliable for all changes and the template itsself, according to the MIT license",
-                "project-on-github": "Project on GitHub.com"
+                "project-on-github": "Project on GitHub.com",
+                "licenses": "Licenses"
             },
             "gdpr-notice": {
                 "header": "GDPR Statement"
+            },
+            "licenses": {
+                "header-software-licenses": "Software Licenses",
+                "header-participating-developers": "Participating Developers",
+                "text-participating-developers": "All developers who have worked on this project can immortalize themselves here:"
             }
         }
     }

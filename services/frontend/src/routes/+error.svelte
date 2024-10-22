@@ -3,16 +3,22 @@
   import Cookies from "js-cookie";
 
   onMount(() => {
-    const jwt = Cookies.get("");
+    const jwt = Cookies.get("jwt");
     if (!jwt) {
       window.location.href = "/login";
     }
   });
+
+  function returnPreviousPage() {
+    history.back();
+  }
 </script>
 
 <div class="error">
   <h1>Error 404</h1>
   <span>Not Found</span>
+
+  <button on:click={returnPreviousPage}>Go Back</button>
 </div>
 
 <style lang="sass">
@@ -38,6 +44,8 @@
             padding: 0
         span
             font-size: 2rem
+        button
+          cursor: pointer
         
 
 </style>
