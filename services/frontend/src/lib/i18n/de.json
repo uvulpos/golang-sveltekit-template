@@ -24,6 +24,7 @@
         "settings": {
             "header": "Einstellungen",
             "device_header": "Geräte Einstellungen",
+            "device_description": "Folgende Einstellungen werden als Cookies nur für dieses Gerät gespeichert",
             "language": {
                 "label": "Sprache der Applikation",
                 "placeholder": "Wähle deine Sprache aus",
@@ -31,16 +32,24 @@
             },
             "theme": {
                 "label": "Farbschema für dieses Gerät",
-                "placeholder": "Wähle dein Farbschema aus",
-                "description": "Auswahl macht die Applikation dunkel oder hell"
+                "placeholder": "Wähle dein Farbschema aus"
             }
         },
         "legal": {
             "imprint": {
-                "header": "Impressum"
+                "header": "Impressum",
+                "this-website-template": "Diese Website ist ein Template von GitHub.",
+                "using-template-liable": "Die Benutzung des Templates fällt unter die MIT Lizenz und macht somit den Betreiber für alle Änderungen und das Template an sich haftbar.",
+                "project-on-github": "Das Projekt auf GitHub.com",
+                "licenses": "Lizenzen"
             },
             "gdpr-notice": {
                 "header": "Datenschutzerklärung"
+            },
+            "licenses": {
+                "header-software-licenses": "Software Lizenzen",
+                "header-participating-developers": "Partizipierende Developer",
+                "text-participating-developers": "Hier dürfen sich alle Entwickler verewigen, welche an diesem Projekt gearbeitet haben:"
             }
         }
     }

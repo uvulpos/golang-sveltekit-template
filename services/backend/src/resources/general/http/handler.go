@@ -1,6 +1,6 @@
 package http
 
-import "github.com/uvulpos/go-svelte/src/resources/general/service"
+import "github.com/uvulpos/golang-sveltekit-template/src/resources/general/service"
 
 type GeneralHandler struct {
 	service *service.GeneralSvc

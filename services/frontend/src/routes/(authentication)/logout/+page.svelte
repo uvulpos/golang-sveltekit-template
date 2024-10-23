@@ -1,5 +1,7 @@
-<script lang="ts"></script>
+<script lang="ts">
+  import { onMount } from "svelte";
 
-<h1>Logout...</h1>
-
-<style lang="sass"></style>
+  onMount(async () => {
+    window.location.href = "/api/v1/auth/logout";
+  });
+</script>

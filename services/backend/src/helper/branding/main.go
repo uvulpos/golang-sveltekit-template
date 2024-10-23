@@ -3,8 +3,8 @@ package branding
 import (
 	"fmt"
 
-	"github.com/uvulpos/go-svelte/src/configuration"
-	"github.com/uvulpos/go-svelte/src/helper/branding/models"
+	"github.com/uvulpos/golang-sveltekit-template/src/configuration"
+	"github.com/uvulpos/golang-sveltekit-template/src/helper/branding/models"
 )
 
 func PrintBranding() {

@@ -3,3 +3,4 @@ dist/
 swagger-docs/
 src/assets/frontend/
 !src/assets/frontend/.gitkeep
+integration-tests/
