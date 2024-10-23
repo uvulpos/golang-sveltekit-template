@@ -73,7 +73,6 @@
     if (jwtToken === undefined || jwtToken === "") {
       // check jwt refresh token
       const newToken = await refreshJwtToken();
-      console.log("NEW JWT TOKEN", { newToken });
 
       if (newToken === null || newToken === "") {
         window.location.href = "/login";

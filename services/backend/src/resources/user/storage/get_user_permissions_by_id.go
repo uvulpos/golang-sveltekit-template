@@ -2,7 +2,6 @@ package storage
 
 import (
 	"encoding/json"
-	"fmt"
 
 	"github.com/go-sqlx/sqlx"
 	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
@@ -44,7 +43,6 @@ func (a *UserStore) GetUserPermissionsByID(tx *sqlx.Tx, userID string) ([]string
 		return []string{}, nil
 	}
 
-	fmt.Println("wrong exit!", permissionsJSONB)
 	var permissions []string
 	if err := json.Unmarshal(permissionsJSONB, &permissions); err != nil {
 		data := customerrors.SqlData{

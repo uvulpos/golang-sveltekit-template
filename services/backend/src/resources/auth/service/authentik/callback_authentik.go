@@ -3,7 +3,6 @@ package service
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"io"
 
 	"github.com/go-sqlx/sqlx"
@@ -16,7 +15,6 @@ func (s *AuthService) AuthentikCallbackFunction(authCode, state string) (string,
 
 	authToken, err := s.authentikConfig.Exchange(context.Background(), authCode)
 	if err != nil {
-		fmt.Println("Exchange ERROR")
 		return "", customerrors.NewInternalServerError(err, "", "(oauth callback authentik) Failed to exchange auth code with authentik provider")
 	}
 

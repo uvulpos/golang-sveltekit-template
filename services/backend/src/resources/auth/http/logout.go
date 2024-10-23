@@ -17,9 +17,5 @@ func (h *AuthHandler) Logout(c *fiber.Ctx) error {
 	c.Cookie(cookies.GenerateJwtToken("", true, time.Now()))
 	c.Cookie(cookies.GenerateRefreshToken("", true, time.Now()))
 
-	logoutURL, logoutErr := h.service.Logout()
-	if logoutErr != nil {
-		return logoutErr
-	}
-	return c.Redirect(logoutURL, http.StatusMovedPermanently)
+	return c.Redirect("/", http.StatusMovedPermanently)
 }
