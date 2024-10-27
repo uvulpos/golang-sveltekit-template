@@ -70,5 +70,5 @@ func (e *DatabaseNotFoundError) LoggerError() (time.Time, int, errorconst.ErrorI
 }
 
 func (e *DatabaseNotFoundError) GetDeveloperMessage() string {
-	return fmt.Sprintf("[%s] #%s <br> %s <br> %s", e.errorIdentifier, e.ID, e.httpUserMessage, e.error.Error())
+	return fmt.Sprintf("[%s] #%s <br>\n %s <br>\n %s", e.errorIdentifier, e.ID, e.httpUserMessage, e.error.Error())
 }

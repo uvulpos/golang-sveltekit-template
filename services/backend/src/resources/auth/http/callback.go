@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
-	"time"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/uvulpos/golang-sveltekit-template/src/configuration"
@@ -17,8 +16,14 @@ import (
 func (h *AuthHandler) CallbackHandler(c *fiber.Ctx) error {
 	authCode := c.Query("code", "")
 	state := c.Query("state", "")
+	authProvider := c.Cookies(cookies.CookieName_AuthProvider, "")
+
+	fmt.Println()
+	fmt.Println("authProvider", authProvider)
+	fmt.Println()
 
 	jwtToken, refreshToken, err := h.service.CallbackFunction(
+		authProvider,
 		authCode,
 		state,
 		/* ---------------------------------------------
@@ -32,11 +37,8 @@ func (h *AuthHandler) CallbackHandler(c *fiber.Ctx) error {
 		return err
 	}
 
-	jwtTokenValidity := time.Now().Add(time.Minute * time.Duration(configuration.JWT_TOKEN_VALIDITY_IN_MINUTES))
-	c.Cookie(cookies.GenerateJwtToken(jwtToken, false, jwtTokenValidity))
-
-	refreshTokenValidity := time.Now().Add(time.Minute * time.Duration(configuration.REFRESH_TOKEN_VALIDITY_IN_DAYS))
-	c.Cookie(cookies.GenerateRefreshToken(refreshToken, false, refreshTokenValidity))
+	c.Cookie(cookies.GenerateJwtToken(jwtToken, false))
+	c.Cookie(cookies.GenerateRefreshToken(refreshToken, false))
 
 	redirectURL, redirectURLErr := generateRandomHashURL(configuration.WEBSERVER_DISPLAYNAME)
 	if redirectURLErr != nil {

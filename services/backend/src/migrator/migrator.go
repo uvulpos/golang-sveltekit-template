@@ -16,8 +16,8 @@ import (
 //go:embed migration-files-app/*.sql
 var migrationAppDir embed.FS
 
-//go:embed migration-files-test/*.sql
-var migrationTestDir embed.FS
+// //go:embed migration-files-test/*.sql
+// var migrationTestDir embed.FS
 
 type Migrator struct {
 	db *sql.DB
@@ -52,7 +52,7 @@ func (m *Migrator) migrateDatabase(migrationPrefix string) error {
 
 	var migrationDirectory embed.FS = migrationAppDir
 
-	sourceInstance, err := httpfs.New(http.FS(migrationDirectory), fmt.Sprintf("%s-migration-files", migrationPrefix))
+	sourceInstance, err := httpfs.New(http.FS(migrationDirectory), fmt.Sprintf("migration-files-%s", migrationPrefix))
 	if err != nil {
 		return err
 	}

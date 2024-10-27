@@ -1,6 +1,8 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import Cookies from "js-cookie";
+  import { redirect } from "@sveltejs/kit";
+  import { goto } from "$app/navigation";
 
   onMount(() => {
     const jwt = Cookies.get("jwt");
@@ -18,7 +20,10 @@
   <h1>Error 404</h1>
   <span>Not Found</span>
 
-  <button on:click={returnPreviousPage}>Go Back</button>
+  <div class="buttons">
+    <button on:click={returnPreviousPage}>Go Back</button>
+    <button on:click={async () => goto("/")}>Go Home</button>
+  </div>
 </div>
 
 <style lang="sass">
@@ -44,8 +49,13 @@
             padding: 0
         span
             font-size: 2rem
-        button
-          cursor: pointer
+        .buttons
+          display: flex
+          justify-content: center
+          gap: 1rem
+          button
+            cursor: pointer
+            flex-grow: 1
         
 
 </style>

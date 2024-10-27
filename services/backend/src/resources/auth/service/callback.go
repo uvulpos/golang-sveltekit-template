@@ -2,13 +2,22 @@ package service
 
 import (
 	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
+	badrequestconstraints "github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors/bad-request-constraints"
+	providerConst "github.com/uvulpos/golang-sveltekit-template/src/resources/auth/service/provider-const"
 	jwtService "github.com/uvulpos/golang-sveltekit-template/src/resources/jwt/service"
 )
 
-func (s *AuthService) CallbackFunction(authCode, state, ipaddr, userAgent string) (string, string, customerrors.ErrorInterface) {
-	loggedinUser, loggedinUserErr := s.authentikProviderSvc.AuthentikCallbackFunction(authCode, state)
-	if loggedinUserErr != nil {
-		return "", "", loggedinUserErr
+func (s *AuthService) CallbackFunction(provider, authCode, state, ipaddr, userAgent string) (string, string, customerrors.ErrorInterface) {
+	var loggedinUser string
+	var loggedinUserErr customerrors.ErrorInterface
+
+	if provider == string(providerConst.Authentik) {
+		loggedinUser, loggedinUserErr = s.authentikProviderSvc.AuthentikCallbackFunction(authCode, state)
+		if loggedinUserErr != nil {
+			return "", "", loggedinUserErr
+		}
+	} else {
+		return "", "", customerrors.NewBadRequestError(badrequestconstraints.BadRequest_AuthenticationProviderInvalid)
 	}
 
 	tx, txErr := s.storage.StartTransaction()

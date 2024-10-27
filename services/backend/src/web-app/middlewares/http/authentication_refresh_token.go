@@ -6,12 +6,13 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	customerrorconst "github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors/custom-error-const"
+	"github.com/uvulpos/golang-sveltekit-template/src/resources/auth/http/cookies"
 	sessionLocals "github.com/uvulpos/golang-sveltekit-template/src/web-app/middlewares/http/consts/session-locals"
 )
 
 func (h *MiddlewareHandler) AuthenticationRefreshToken() func(c *fiber.Ctx) error {
 	return func(c *fiber.Ctx) error {
-		refreshToken := c.Cookies("refresh_token", "")
+		refreshToken := c.Cookies(cookies.CookieName_RefreshToken, "")
 
 		authorizationHeader := c.Get("Authorization")
 

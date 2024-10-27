@@ -8,6 +8,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
+	"github.com/uvulpos/golang-sveltekit-template/src/resources/auth/http/cookies"
 )
 
 func (h *AuthHandler) CreateRedirect(c *fiber.Ctx) error {
@@ -31,8 +32,7 @@ func (h *AuthHandler) CreateRedirect(c *fiber.Ctx) error {
 	}
 	c.Cookie(cookie)
 
+	c.Cookie(cookies.GenerateAuthProviderCookie("authentik", false))
+
 	return c.Redirect(redirectUrl, http.StatusPermanentRedirect)
 }
-
-// http://localhost:9000/application/o/authorize/?access_type=offline&client_id=ZcSZxYTcWUCsumYZFaPfjBlB6Q7MaFMQ7yIFkukD&redirect_uri=
-// http://web.localhost/api/v1/oauth/callback&response_type=code&scope=email+openid+profile&state=uwzDKVONYhmqzRqZFfRd0Q%3D%3D

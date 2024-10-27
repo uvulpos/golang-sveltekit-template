@@ -1,5 +1,7 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
   import type { SelfInformation } from "$lib/api/user/models/SelfInformation";
+  import { logoutSession } from "$lib/functions/logout/logout";
   import { Exit } from "radix-icons-svelte";
   import { _ } from "svelte-i18n";
 
@@ -15,8 +17,16 @@
         ({user.username})
       </span>
     </div>
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div class="margin-left">
-      <a href="/logout">
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <!-- svelte-ignore a11y-missing-attribute -->
+      <a
+        on:click={() => {
+          logoutSession();
+        }}
+      >
         <div class="logout-button">
           <Exit />
         </div>

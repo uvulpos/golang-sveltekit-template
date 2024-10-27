@@ -2,10 +2,8 @@ package http
 
 import (
 	"net/http"
-	"time"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/uvulpos/golang-sveltekit-template/src/configuration"
 	"github.com/uvulpos/golang-sveltekit-template/src/resources/auth/http/cookies"
 	sessionlocals "github.com/uvulpos/golang-sveltekit-template/src/web-app/middlewares/http/consts/session-locals"
 )
@@ -30,8 +28,7 @@ func (h *AuthHandler) Refresh(c *fiber.Ctx) error {
 		return c.Status(httpStatus).SendString(userMessage)
 	}
 
-	jwtValidity := time.Now().Add(time.Minute * time.Duration(configuration.JWT_TOKEN_VALIDITY_IN_MINUTES))
-	c.Cookie(cookies.GenerateJwtToken(jwtToken, false, jwtValidity))
+	c.Cookie(cookies.GenerateJwtToken(jwtToken, false))
 
 	return c.Status(http.StatusCreated).SendString(jwtToken)
 }

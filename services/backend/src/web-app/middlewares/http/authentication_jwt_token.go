@@ -6,12 +6,13 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	customerrorconst "github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors/custom-error-const"
+	"github.com/uvulpos/golang-sveltekit-template/src/resources/auth/http/cookies"
 	sessionLocals "github.com/uvulpos/golang-sveltekit-template/src/web-app/middlewares/http/consts/session-locals"
 )
 
 func (h *MiddlewareHandler) Authentication(requiredPermissions []string) func(c *fiber.Ctx) error {
 	return func(c *fiber.Ctx) error {
-		jwtToken := c.Cookies("jwt", "")
+		jwtToken := c.Cookies(cookies.CookieName_JwtToken, "")
 
 		authorizationHeader := c.Get("Authorization")
 
@@ -21,7 +22,6 @@ func (h *MiddlewareHandler) Authentication(requiredPermissions []string) func(c 
 			return c.Status(http.StatusUnauthorized).SendString(customerrorconst.NOT_AUTHORIZED_ERROR_MESSAGE)
 		}
 
-		// 🚨 NOT THE RIGHT IMPLEMENTATION, USE INJECTION
 		jwtData, jwtDataErr := h.jwtSvc.VerifyJWT(jwtToken)
 		if jwtDataErr != nil {
 			return c.Status(fiber.StatusInternalServerError).SendString(customerrorconst.INTERNAL_SERVER_ERROR_MESSAGE)

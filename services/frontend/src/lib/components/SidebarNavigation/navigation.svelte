@@ -1,5 +1,6 @@
 <script lang="ts">
   import { page } from "$app/stores";
+  import { logoutSession } from "$lib/functions/logout/logout";
   import type { Page } from "@sveltejs/kit";
   import { _ } from "svelte-i18n";
   import { slide } from "svelte/transition";
@@ -10,18 +11,17 @@
     {
       name: $_("page.navigation.home"),
       href: "/",
+      onclickFn: undefined,
     },
     {
       name: "Settings",
       href: "/settings",
+      onclickFn: undefined,
       subelements: [
         {
           name: "Swagger",
           href: "/swagger",
-        },
-        {
-          name: "Logout",
-          href: "/logout",
+          onclickFn: undefined,
         },
       ],
     },

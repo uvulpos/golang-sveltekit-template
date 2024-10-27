@@ -4,21 +4,25 @@ import (
 	"time"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/uvulpos/golang-sveltekit-template/src/configuration"
 )
 
-func GenerateRefreshToken(value string, delete bool, expires time.Time) *fiber.Cookie {
+const CookieName_RefreshToken = "refresh_token"
+
+func GenerateRefreshToken(value string, delete bool) *fiber.Cookie {
 
 	maxAge := 0
+	expires := time.Now().Add(time.Minute * time.Duration(configuration.REFRESH_TOKEN_VALIDITY_IN_DAYS))
 
 	if delete {
 		value = ""
-		expires = time.Now()
+		expires = time.Now().Add(-(time.Hour * 100))
 		maxAge = -1
 	}
 
 	// set refreshToken
 	return &fiber.Cookie{
-		Name:     "refresh_token",
+		Name:     CookieName_RefreshToken,
 		Path:     "/api/v1/auth",
 		Value:    value,
 		HTTPOnly: true,

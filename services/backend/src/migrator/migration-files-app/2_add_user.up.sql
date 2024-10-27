@@ -1,4 +1,4 @@
-CREATE TYPE identity_provider IF NOT EXISTS AS ENUM ();
+CREATE TYPE identity_provider AS ENUM ();
 ALTER TYPE identity_provider ADD VALUE 'Authentik';
 
 CREATE TABLE users (
@@ -33,26 +33,9 @@ CREATE TABLE user_sessions (
 -- Value can be null, but not empty string
 ALTER TABLE user_sessions
 ADD CONSTRAINT created_ip_addr_not_empty_string
-CHECK (created_ip_addr IS NOT NULL AND IS NOT EMPTY);
+CHECK (created_ip_addr IS NULL AND created_ip_addr <> '');
 
 -- Value can be null, but not empty string
 ALTER TABLE user_sessions
 ADD CONSTRAINT last_jwt_refresh_ip_addr_not_empty_string
-CHECK (last_jwt_refresh_ip_addr IS NOT NULL AND IS NOT EMPTY);
-
-CREATE TYPE app_language IF NOT EXISTS AS ENUM ();
-ALTER TYPE app_language ADD VALUE 'en';
-ALTER TYPE app_language ADD VALUE 'de';
-
-CREATE TYPE app_theme IF NOT EXISTS AS ENUM ();
-ALTER TYPE app_theme ADD VALUE 'lightmode';
-ALTER TYPE app_theme ADD VALUE 'darkmode';
-
-CREATE TABLE user_settings (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    user_id UUID NOT NULL,
-    app_language identity_provider NOT NULL DEFAULT 'en',
-    app_theme app_theme NOT NULL DEFAULT 'lightmode',
-    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
-    UNIQUE (id, user_id)
-);
+CHECK (last_jwt_refresh_ip_addr IS NULL AND last_jwt_refresh_ip_addr <> '');
