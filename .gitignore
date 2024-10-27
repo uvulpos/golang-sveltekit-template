@@ -12,3 +12,4 @@ results.html
 .secrets
 node_modules
 .env.safety-copy
+.env
