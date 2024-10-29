@@ -11,19 +11,19 @@
     },
     "devDependencies": {
         "@macfja/svelte-multi-adapter": "^1.0.2",
-        "@sveltejs/adapter-auto": "^3.2.4",
-        "@sveltejs/adapter-static": "^3.0.4",
-        "@sveltejs/kit": "^2.6.4",
-        "@sveltejs/vite-plugin-svelte": "^3.1.2",
+        "@sveltejs/adapter-auto": "^3.2.5",
+        "@sveltejs/adapter-static": "^3.0.5",
+        "@sveltejs/kit": "^2.7.1",
+        "@sveltejs/vite-plugin-svelte": "^4.0.0",
         "@types/throttle-debounce": "^5.0.2",
         "mdsvex": "^0.12.3",
-        "sass": "^1.77.8",
-        "svelte": "^4.2.19",
+        "sass": "^1.80.3",
+        "svelte": "^5.0.5",
         "svelte-check": "^4.0.4",
         "svelte-loading-spinners": "^0.3.6",
-        "tslib": "^2.7.0",
+        "tslib": "^2.8.0",
         "typescript": "^5.6.3",
-        "vite": "^5.4.8"
+        "vite": "^5.4.9"
     },
     "type": "module",
     "dependencies": {
