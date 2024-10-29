@@ -22,7 +22,6 @@ func (h *MiddlewareHandler) AuthenticationRefreshToken() func(c *fiber.Ctx) erro
 			return c.Status(http.StatusUnauthorized).SendString(customerrorconst.NOT_AUTHORIZED_ERROR_MESSAGE)
 		}
 
-		// 🚨 NOT THE RIGHT IMPLEMENTATION, USE INJECTION
 		jwtData, jwtDataErr := h.jwtSvc.VerifyRefreshToken(refreshToken)
 		if jwtDataErr != nil {
 			return c.Status(fiber.StatusInternalServerError).SendString(customerrorconst.INTERNAL_SERVER_ERROR_MESSAGE)

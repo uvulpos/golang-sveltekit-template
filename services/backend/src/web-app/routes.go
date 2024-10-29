@@ -51,6 +51,6 @@ func Handle404(c *fiber.Ctx) error {
 
 func TestEP(c *fiber.Ctx) error {
 	return c.Status(http.StatusOK).JSON(fiber.Map{
-		"message": "Hallo, wie gehts",
+		"message": "Hello World",
 	})
 }

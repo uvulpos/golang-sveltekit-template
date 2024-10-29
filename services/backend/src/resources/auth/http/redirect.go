@@ -9,9 +9,11 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
 	"github.com/uvulpos/golang-sveltekit-template/src/resources/auth/http/cookies"
+	providerConst "github.com/uvulpos/golang-sveltekit-template/src/resources/auth/service/provider-const"
 )
 
 func (h *AuthHandler) CreateRedirect(c *fiber.Ctx) error {
+
 	var expiration = time.Now().Add(10 * time.Minute)
 
 	b := make([]byte, 16)
@@ -32,7 +34,7 @@ func (h *AuthHandler) CreateRedirect(c *fiber.Ctx) error {
 	}
 	c.Cookie(cookie)
 
-	c.Cookie(cookies.GenerateAuthProviderCookie("authentik", false))
+	c.Cookie(cookies.GenerateAuthProviderCookie(string(providerConst.Authentik), false))
 
-	return c.Redirect(redirectUrl, http.StatusPermanentRedirect)
+	return c.Redirect(redirectUrl, http.StatusTemporaryRedirect)
 }
