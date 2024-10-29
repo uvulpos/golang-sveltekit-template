@@ -19,3 +19,11 @@
 <a href="./images/create-application.png">
     <img src="./images/create-application.png" width="500px" alt="New Application">
 </a>
+
+## Edit .env File
+
+After you have the credentials, you can insert them into the env file. If you only working locally with `make dev`, you need to replace the Client Key + Secret. The URLs are matching with the endpoint. If you are working with a remote solution, you can inspect them in your provider view. Auto-OpenID-Configuration is not supportet yet.
+
+<a href="./images/env.png">
+    <img src="./images/env.png" width="500px" alt="Env File">
+</a>
