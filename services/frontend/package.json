@@ -11,31 +11,31 @@
     },
     "devDependencies": {
         "@macfja/svelte-multi-adapter": "^1.0.2",
-        "@sveltejs/adapter-auto": "^3.2.4",
-        "@sveltejs/adapter-static": "^3.0.4",
-        "@sveltejs/kit": "^2.6.4",
+        "@sveltejs/adapter-auto": "^3.3.1",
+        "@sveltejs/adapter-static": "^3.0.6",
+        "@sveltejs/kit": "^2.7.3",
         "@sveltejs/vite-plugin-svelte": "^3.1.2",
         "@types/throttle-debounce": "^5.0.2",
         "mdsvex": "^0.12.3",
-        "sass": "^1.77.8",
+        "sass": "^1.80.4",
         "svelte": "^4.2.19",
-        "svelte-check": "^4.0.4",
+        "svelte-check": "^4.0.5",
         "svelte-loading-spinners": "^0.3.6",
-        "tslib": "^2.7.0",
+        "tslib": "^2.8.0",
         "typescript": "^5.6.3",
-        "vite": "^5.4.8"
+        "vite": "^5.4.10"
     },
     "type": "module",
     "dependencies": {
         "@fontsource/inter": "^5.1.0",
-        "@svelteuidev/composables": "^0.15.6",
+        "@svelteuidev/composables": "^0.15.7",
         "@svelteuidev/core": "^0.15.7",
         "@types/js-cookie": "^3.0.6",
         "cookies": "^0.9.1",
         "js-cookie": "^3.0.5",
-        "ky": "^1.6.0",
+        "ky": "^1.7.2",
         "radix-icons-svelte": "^1.2.1",
-        "svelte-i18n": "^4.0.0",
-        "throttle-debounce": "^5.0.0"
+        "svelte-i18n": "^4.0.1",
+        "throttle-debounce": "^5.0.2"
     }
 }
