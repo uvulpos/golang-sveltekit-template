@@ -8,6 +8,7 @@ import (
 	"github.com/go-sqlx/sqlx"
 	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
 	customerrorconst "github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors/custom-error-const"
+	models "github.com/uvulpos/golang-sveltekit-template/src/resources/auth/service/authentik/models"
 	providerConst "github.com/uvulpos/golang-sveltekit-template/src/resources/auth/service/provider-const"
 )
 
@@ -29,7 +30,7 @@ func (s *AuthService) AuthentikCallbackFunction(authCode, state string) (string,
 		return "", customerrors.NewInternalServerError(err, "", "(oauth callback authentik) Failed to read authentik oauth user response body")
 	}
 
-	var result *AuthentikUserInfo
+	var result *models.AuthentikUserInfo
 	if err := json.Unmarshal(data, &result); err != nil {
 		return "", customerrors.NewInternalServerError(err, "", "(oauth callback authentik) Failed to unmarshal authentik oauth user response body")
 	}

@@ -1,17 +1,18 @@
 package service
 
 import (
+	"github.com/uvulpos/golang-sveltekit-template/src/configuration"
 	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
 	badrequestconstraints "github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors/bad-request-constraints"
 	providerConst "github.com/uvulpos/golang-sveltekit-template/src/resources/auth/service/provider-const"
 	jwtService "github.com/uvulpos/golang-sveltekit-template/src/resources/jwt/service"
 )
 
-func (s *AuthService) CallbackFunction(provider, authCode, state, ipaddr, userAgent string) (string, string, customerrors.ErrorInterface) {
+func (s *AuthService) CallbackFunction(provider, authCode, state string) (string, string, customerrors.ErrorInterface) {
 	var loggedinUser string
 	var loggedinUserErr customerrors.ErrorInterface
 
-	if provider == string(providerConst.Authentik) {
+	if provider == string(providerConst.Authentik) && configuration.AUTHORIZATION_OAUTH_AUTHENIK {
 		loggedinUser, loggedinUserErr = s.authentikProviderSvc.AuthentikCallbackFunction(authCode, state)
 		if loggedinUserErr != nil {
 			return "", "", loggedinUserErr
@@ -27,15 +28,9 @@ func (s *AuthService) CallbackFunction(provider, authCode, state, ipaddr, userAg
 
 	defer tx.Rollback()
 
+	// as long as they are not used, they are nil / null by default
 	var dbIPAddr *string = nil
-	if ipaddr != "" {
-		dbIPAddr = &ipaddr
-	}
-
 	var dbUserAgent *string = nil
-	if userAgent != "" {
-		dbUserAgent = &userAgent
-	}
 
 	sessionID, sessionIDErr := s.storage.StartLoginSession(tx, loggedinUser, dbUserAgent, dbIPAddr)
 	if sessionIDErr != nil {

@@ -6,9 +6,9 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-const CookieName_AuthProvider = "auth_provder"
+const CookieName_OauthState = "auth_provder"
 
-func GenerateAuthProviderCookie(value string, delete bool) *fiber.Cookie {
+func GenerateOauthStateCookie(value string, delete bool) *fiber.Cookie {
 	maxAge := 0
 	expires := time.Now().Add(time.Minute * 15)
 
@@ -20,8 +20,8 @@ func GenerateAuthProviderCookie(value string, delete bool) *fiber.Cookie {
 
 	return &fiber.Cookie{
 		Name:    CookieName_AuthProvider,
-		Path:    "/api/v1/oauth",
 		Value:   value,
+		Path:    "/api/v1/oauth",
 		Expires: expires,
 		MaxAge:  maxAge,
 	}

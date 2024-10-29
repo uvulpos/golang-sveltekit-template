@@ -1,6 +1,10 @@
 # Setup Authentik
 
+To setup a (local) authentication provider, start your docker development stack `make dev` and connect to [your local authentik server (http://localhost:9000/)](http://localhost:9000/)
+
 ## Create Provider
+
+First you need to create a new provider, that we can reference in an application:
 
 <a href="./images/create-provider-1.png">
     <img src="./images/create-provider-1.png" width="500px" alt="New Provider New Provider Type">
@@ -16,6 +20,8 @@
 
 ## Create Application
 
+After your provider is created, create a new application and reference your provider:
+
 <a href="./images/create-application.png">
     <img src="./images/create-application.png" width="500px" alt="New Application">
 </a>
@@ -27,3 +33,5 @@ After you have the credentials, you can insert them into the env file. If you on
 <a href="./images/env.png">
     <img src="./images/env.png" width="500px" alt="Env File">
 </a>
+
+After you edited the configuration, restart the docker stack by interrupting the signal and to restart the application by executing `make dev`

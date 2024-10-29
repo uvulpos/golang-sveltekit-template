@@ -4,7 +4,6 @@ import (
 	"crypto/rand"
 	"encoding/base64"
 	"net/http"
-	"time"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
@@ -13,8 +12,6 @@ import (
 )
 
 func (h *AuthHandler) CreateRedirect(c *fiber.Ctx) error {
-
-	var expiration = time.Now().Add(10 * time.Minute)
 
 	b := make([]byte, 16)
 	_, readErr := rand.Read(b)
@@ -26,14 +23,7 @@ func (h *AuthHandler) CreateRedirect(c *fiber.Ctx) error {
 	state := base64.URLEncoding.EncodeToString(b)
 	redirectUrl := h.service.CreateRedirect(state)
 
-	cookie := &fiber.Cookie{
-		Name:    "oauthstate",
-		Value:   state,
-		Path:    "/api/v1/oauth",
-		Expires: expiration,
-	}
-	c.Cookie(cookie)
-
+	c.Cookie(cookies.GenerateOauthStateCookie(state, false))
 	c.Cookie(cookies.GenerateAuthProviderCookie(string(providerConst.Authentik), false))
 
 	return c.Redirect(redirectUrl, http.StatusTemporaryRedirect)
