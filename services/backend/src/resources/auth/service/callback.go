@@ -47,12 +47,12 @@ func (s *AuthService) CallbackFunction(provider, authCode, state string) (string
 		return "", "", customerrors.NewDatabaseTransactionCommitError(commitErr, "Failed to commit transaction")
 	}
 
-	jwt, jwtErr := s.jwt.CreateJWT(jwtService.NewJwtDataModel(loggedinUser, sessionID, permissionScopes))
+	jwt, jwtErr := s.jwt.CreateJWT(providerConst.Authentik, jwtService.NewJwtDataModel(loggedinUser, sessionID, permissionScopes))
 	if jwtErr != nil {
 		return "", "", customerrors.NewInternalServerError(jwtErr, loggedinUser, "cannot create jwt after login / signup")
 	}
 
-	refreshToken, refreshTokenErr := s.jwt.CreateRefreshToken(sessionID)
+	refreshToken, refreshTokenErr := s.jwt.CreateRefreshToken(providerConst.Authentik, sessionID)
 	if refreshTokenErr != nil {
 		return "", "", customerrors.NewInternalServerError(refreshTokenErr, loggedinUser, "cannot create refreshToken after login / signup")
 	}
