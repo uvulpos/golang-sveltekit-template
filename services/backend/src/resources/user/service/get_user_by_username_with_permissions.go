@@ -17,12 +17,5 @@ func (s *UserService) GetUserByUsernameWithPermissions(tx *sqlx.Tx, username str
 		return nil, permissionsErr
 	}
 
-	return &models.UserWithPermissionsModel{
-		ID:            user.ID,
-		Username:      user.Username,
-		DisplayName:   user.DisplayName,
-		Email:         user.Email,
-		EmailVerified: user.EmailVerified,
-		Permissions:   permissions,
-	}, nil
+	return models.NewUserWithPermissionsModel(user, permissions), nil
 }

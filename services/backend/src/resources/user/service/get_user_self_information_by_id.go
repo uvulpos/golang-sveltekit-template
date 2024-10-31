@@ -18,7 +18,5 @@ func (s *UserService) GetUserSelfInformationByID(userID string) (*serviceModel.U
 		return nil, permissionsErr
 	}
 
-	selfInformationModel := serviceModel.NewUserSelfInformationModel(user, permissions)
-
-	return selfInformationModel, nil
+	return serviceModel.NewUserSelfInformationModel(user, permissions), nil
 }

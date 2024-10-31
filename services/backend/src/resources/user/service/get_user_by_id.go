@@ -11,12 +11,5 @@ func (s *UserService) GetUserByID(tx *sqlx.Tx, userID string) (*models.UserModel
 	if userErr != nil {
 		return nil, userErr
 	}
-
-	return &models.UserModel{
-		ID:            user.ID,
-		Username:      user.Username,
-		DisplayName:   user.DisplayName,
-		Email:         user.Email,
-		EmailVerified: user.EmailVerified,
-	}, nil
+	return user, nil
 }
