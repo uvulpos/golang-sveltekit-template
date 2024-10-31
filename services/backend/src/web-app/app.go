@@ -170,11 +170,6 @@ func (a *App) RunApp() {
 
 	router.Use(Handle404)
 
-	// tlsCert, err := tls.X509KeyPair(certificatePEM, privateKeyPEM)
-	// if err != nil {
-	// 	panic("Fehler beim Erstellen des tls.Certificate:" + err.Error())
-	// }
-
 	serverPort := fmt.Sprintf(":%d", configuration.WEBSERVER_PORT)
 	err = router.Listen(serverPort)
 	// err = router.ListenTLSWithCertificate(serverPort, tlsCert)

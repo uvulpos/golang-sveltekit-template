@@ -1,9 +1,6 @@
 package middlewares
 
 import (
-	"net/http"
-	"strings"
-
 	"github.com/gofiber/fiber/v2"
 	"github.com/uvulpos/golang-sveltekit-template/src/resources/auth/http/cookies"
 
@@ -15,14 +12,6 @@ import (
 func (h *MiddlewareHandler) AuthenticationRefreshToken() func(c *fiber.Ctx) error {
 	return func(c *fiber.Ctx) error {
 		refreshToken := c.Cookies(cookies.CookieName_RefreshToken, "")
-
-		authorizationHeader := c.Get("Authorization")
-
-		if refreshToken == "" && len(authorizationHeader) > 7 && strings.HasPrefix(authorizationHeader, "Bearer ") {
-			refreshToken = authorizationHeader[7:]
-		} else if refreshToken == "" {
-			return c.Status(http.StatusUnauthorized).SendString(customerrorconst.NOT_AUTHORIZED_ERROR_MESSAGE)
-		}
 
 		jwtData, jwtDataErr := jwt.VerifyRefreshToken(refreshToken)
 		if jwtDataErr != nil {
