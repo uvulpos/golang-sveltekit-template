@@ -8,10 +8,6 @@ import (
 	models "github.com/uvulpos/golang-sveltekit-template/src/helper/jwt/models"
 )
 
-func (svc *JwtService) VerifyRefreshToken(refreshTokenString string) (*models.RefreshDataModel, error) {
-	return VerifyRefreshToken(refreshTokenString)
-}
-
 func VerifyRefreshToken(refreshTokenString string) (*models.RefreshDataModel, error) {
 
 	token, err := jwt.Parse(refreshTokenString, func(token *jwt.Token) (interface{}, error) {

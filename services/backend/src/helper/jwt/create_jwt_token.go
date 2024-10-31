@@ -11,13 +11,15 @@ import (
 	"github.com/uvulpos/golang-sveltekit-template/src/resources/auth/service/provider-const"
 )
 
-func (s *JwtService) CreateJWT(authProvider provider.AuthProvider, jwtData *models.JwtDataModel) (string, customerrors.ErrorInterface) {
+func CreateJWT(authProvider provider.AuthProvider, jwtData *models.JwtDataModel) (string, customerrors.ErrorInterface) {
+	validityMinutes := time.Duration(configuration.JWT_TOKEN_VALIDITY_IN_MINUTES)
+
 	claims := jwt.MapClaims{
 		"auth-provider": authProvider,
 		"user-uuid":     jwtData.UserUuid,
 		"session-uuid":  jwtData.SessionID,
 		"scopes":        jwtData.Scopes,
-		"exp":           time.Now().Add(time.Minute * time.Duration(configuration.JWT_TOKEN_VALIDITY_IN_MINUTES)).Unix(),
+		"exp":           time.Now().Add(time.Minute * validityMinutes).Unix(),
 		"authorized":    true,
 	}
 

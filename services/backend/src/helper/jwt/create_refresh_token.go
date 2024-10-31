@@ -10,11 +10,13 @@ import (
 	"github.com/uvulpos/golang-sveltekit-template/src/resources/auth/service/provider-const"
 )
 
-func (s *JwtService) CreateRefreshToken(authProvider provider.AuthProvider, sessionID string) (string, customerrors.ErrorInterface) {
+func CreateRefreshToken(authProvider provider.AuthProvider, sessionID string) (string, customerrors.ErrorInterface) {
+	validityDays := time.Duration(configuration.REFRESH_TOKEN_VALIDITY_IN_DAYS) * 24
+
 	claims := jwt.MapClaims{
 		"auth-provider": authProvider,
 		"session-uuid":  sessionID,
-		"exp":           time.Now().Add(time.Hour * 24 * time.Duration(configuration.REFRESH_TOKEN_VALIDITY_IN_DAYS)).Unix(),
+		"exp":           time.Now().Add(time.Hour * validityDays).Unix(),
 		"authorized":    true,
 	}
 

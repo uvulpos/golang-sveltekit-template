@@ -4,6 +4,7 @@ import (
 	"github.com/go-sqlx/sqlx"
 	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
 	customerrorconst "github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors/custom-error-const"
+	jwt "github.com/uvulpos/golang-sveltekit-template/src/helper/jwt"
 	jwtModels "github.com/uvulpos/golang-sveltekit-template/src/helper/jwt/models"
 	"github.com/uvulpos/golang-sveltekit-template/src/resources/auth/service/provider-const"
 )
@@ -40,7 +41,7 @@ func (s *AuthService) RecreateJwtFromSession(sessionID string) (string, customer
 		return "", customerrors.NewDatabaseError(commitErr, "", "(session jwt refresh) Failed to commit transaction (receive session + user data)", "", nil)
 	}
 
-	refreshToken, refreshTokenErr := s.jwt.CreateJWT(provider.Authentik, jwtModels.NewJwtDataModel(user.ID, sessionID, permissions))
+	refreshToken, refreshTokenErr := jwt.CreateJWT(provider.Authentik, jwtModels.NewJwtDataModel(user.ID, sessionID, permissions))
 	if refreshTokenErr != nil {
 		return "", refreshTokenErr
 	}

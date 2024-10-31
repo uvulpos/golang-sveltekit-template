@@ -4,7 +4,8 @@ import (
 	"github.com/uvulpos/golang-sveltekit-template/src/configuration"
 	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
 	badrequestconstraints "github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors/bad-request-constraints"
-	jwtModels "github.com/uvulpos/golang-sveltekit-template/src/helper/jwt/models"
+	jwtHelper "github.com/uvulpos/golang-sveltekit-template/src/helper/jwt"
+	jwtHelperModels "github.com/uvulpos/golang-sveltekit-template/src/helper/jwt/models"
 	providerConst "github.com/uvulpos/golang-sveltekit-template/src/resources/auth/service/provider-const"
 )
 
@@ -47,12 +48,13 @@ func (s *AuthService) CallbackFunction(provider, authCode, state string) (string
 		return "", "", customerrors.NewDatabaseTransactionCommitError(commitErr, "Failed to commit transaction")
 	}
 
-	jwt, jwtErr := s.jwt.CreateJWT(providerConst.Authentik, jwtModels.NewJwtDataModel(loggedinUser, sessionID, permissionScopes))
+	jwt, jwtErr := jwtHelper.CreateJWT(providerConst.Authentik, jwtHelperModels.NewJwtDataModel(loggedinUser, sessionID, permissionScopes))
 	if jwtErr != nil {
 		return "", "", customerrors.NewInternalServerError(jwtErr, loggedinUser, "cannot create jwt after login / signup")
 	}
 
-	refreshToken, refreshTokenErr := s.jwt.CreateRefreshToken(providerConst.Authentik, sessionID)
+	// refreshToken, refreshTokenErr := s.jwt.CreateRefreshToken(providerConst.Authentik, sessionID)
+	refreshToken, refreshTokenErr := jwtHelper.CreateRefreshToken(providerConst.Authentik, sessionID)
 	if refreshTokenErr != nil {
 		return "", "", customerrors.NewInternalServerError(refreshTokenErr, loggedinUser, "cannot create refreshToken after login / signup")
 	}

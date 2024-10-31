@@ -33,8 +33,6 @@ import (
 	userHttp "github.com/uvulpos/golang-sveltekit-template/src/resources/user/http"
 	userService "github.com/uvulpos/golang-sveltekit-template/src/resources/user/service"
 	userStorage "github.com/uvulpos/golang-sveltekit-template/src/resources/user/storage"
-
-	jwtPackageService "github.com/uvulpos/golang-sveltekit-template/src/helper/jwt"
 )
 
 type App struct {
@@ -69,8 +67,6 @@ type AppServices struct {
 	GeneralSvc     *generalService.GeneralSvc
 	GeneralStore   *generalStorage.GeneralStore
 
-	JwtPackageSvc *jwtPackageService.JwtService
-
 	MiddlewareHandler *middlewareHttp.MiddlewareHandler
 	MiddlewareSvc     *middlewareService.MiddlewareService
 
@@ -95,10 +91,8 @@ func SetupServices() (*AppServices, error) {
 		if err != nil {
 			return nil, err
 		}
-		return nil, errors.New("Cannot create the database for unknown reasons!")
+		return nil, errors.New("cannot create the database for unknown reasons")
 	}
-
-	jwtPackageSvc := jwtPackageService.NewJwtService("somethingNice")
 
 	generalStore := generalStorage.NewGeneralStore(dbConn)
 	generalSvc := generalService.NewGeneralSvc(generalStore)
@@ -109,11 +103,11 @@ func SetupServices() (*AppServices, error) {
 	userHandler := userHttp.NewUserHandler(userSvc)
 
 	authStore := authStorage.NewAuthStore(dbConn)
-	authService := authService.NewAuthService(authStore, jwtPackageSvc, userSvc)
-	authHandler := authHttp.NewAuthHandler(authService, jwtPackageSvc)
+	authService := authService.NewAuthService(authStore, userSvc)
+	authHandler := authHttp.NewAuthHandler(authService)
 
 	middlewareSvc := middlewareService.NewMiddlewareService(userSvc)
-	middlewareHandler := middlewareHttp.NewMiddlewareHandler(middlewareSvc, jwtPackageSvc)
+	middlewareHandler := middlewareHttp.NewMiddlewareHandler(middlewareSvc)
 
 	return &AppServices{
 		AuthHandler: authHandler,
@@ -123,8 +117,6 @@ func SetupServices() (*AppServices, error) {
 		GeneralHandler: generalHandler,
 		GeneralSvc:     generalSvc,
 		GeneralStore:   generalStore,
-
-		JwtPackageSvc: jwtPackageSvc,
 
 		MiddlewareHandler: middlewareHandler,
 		MiddlewareSvc:     middlewareSvc,

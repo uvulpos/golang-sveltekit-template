@@ -1,18 +1,15 @@
 package middlewares
 
 import (
-	jwtService "github.com/uvulpos/golang-sveltekit-template/src/helper/jwt"
 	middlewareService "github.com/uvulpos/golang-sveltekit-template/src/web-app/middlewares/service"
 )
 
 type MiddlewareHandler struct {
 	service *middlewareService.MiddlewareService
-	jwtSvc  *jwtService.JwtService
 }
 
-func NewMiddlewareHandler(service *middlewareService.MiddlewareService, jwtSvc *jwtService.JwtService) *MiddlewareHandler {
+func NewMiddlewareHandler(service *middlewareService.MiddlewareService) *MiddlewareHandler {
 	return &MiddlewareHandler{
 		service,
-		jwtSvc,
 	}
 }
