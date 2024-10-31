@@ -4,8 +4,8 @@ import (
 	"github.com/uvulpos/golang-sveltekit-template/src/configuration"
 	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
 	badrequestconstraints "github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors/bad-request-constraints"
+	jwtModels "github.com/uvulpos/golang-sveltekit-template/src/helper/jwt/models"
 	providerConst "github.com/uvulpos/golang-sveltekit-template/src/resources/auth/service/provider-const"
-	jwtService "github.com/uvulpos/golang-sveltekit-template/src/resources/jwt/service"
 )
 
 func (s *AuthService) CallbackFunction(provider, authCode, state string) (string, string, customerrors.ErrorInterface) {
@@ -47,7 +47,7 @@ func (s *AuthService) CallbackFunction(provider, authCode, state string) (string
 		return "", "", customerrors.NewDatabaseTransactionCommitError(commitErr, "Failed to commit transaction")
 	}
 
-	jwt, jwtErr := s.jwt.CreateJWT(providerConst.Authentik, jwtService.NewJwtDataModel(loggedinUser, sessionID, permissionScopes))
+	jwt, jwtErr := s.jwt.CreateJWT(providerConst.Authentik, jwtModels.NewJwtDataModel(loggedinUser, sessionID, permissionScopes))
 	if jwtErr != nil {
 		return "", "", customerrors.NewInternalServerError(jwtErr, loggedinUser, "cannot create jwt after login / signup")
 	}

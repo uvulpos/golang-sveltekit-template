@@ -1,7 +1,7 @@
 package middlewares
 
 import (
-	jwtService "github.com/uvulpos/golang-sveltekit-template/src/resources/jwt/service"
+	jwtService "github.com/uvulpos/golang-sveltekit-template/src/helper/jwt"
 	middlewareService "github.com/uvulpos/golang-sveltekit-template/src/web-app/middlewares/service"
 )
 

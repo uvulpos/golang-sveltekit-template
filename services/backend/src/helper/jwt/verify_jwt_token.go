@@ -5,13 +5,10 @@ import (
 
 	"github.com/golang-jwt/jwt"
 	"github.com/uvulpos/golang-sveltekit-template/src/configuration"
+	models "github.com/uvulpos/golang-sveltekit-template/src/helper/jwt/models"
 )
 
-func (svc *JwtService) VerifyJWT(jwtString string) (*JwtDataModel, error) {
-	return VerifyJWT(jwtString)
-}
-
-func VerifyJWT(jwtString string) (*JwtDataModel, error) {
+func VerifyJWT(jwtString string) (*models.JwtDataModel, error) {
 
 	token, err := jwt.Parse(jwtString, func(token *jwt.Token) (interface{}, error) {
 		_, okECDSA := token.Method.(*jwt.SigningMethodECDSA)
@@ -42,7 +39,7 @@ func VerifyJWT(jwtString string) (*JwtDataModel, error) {
 		permissionScopes = value
 	}
 
-	data := NewJwtDataModel(
+	data := models.NewJwtDataModel(
 		claims["user-uuid"].(string),
 		claims["session-uuid"].(string),
 		permissionScopes,

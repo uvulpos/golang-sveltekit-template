@@ -1,8 +1,8 @@
 package http
 
 import (
+	jwtService "github.com/uvulpos/golang-sveltekit-template/src/helper/jwt"
 	"github.com/uvulpos/golang-sveltekit-template/src/resources/auth/service"
-	jwtService "github.com/uvulpos/golang-sveltekit-template/src/resources/jwt/service"
 )
 
 type AuthHandler struct {

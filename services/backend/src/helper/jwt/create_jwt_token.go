@@ -7,10 +7,11 @@ import (
 	"github.com/golang-jwt/jwt"
 	"github.com/uvulpos/golang-sveltekit-template/src/configuration"
 	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
+	models "github.com/uvulpos/golang-sveltekit-template/src/helper/jwt/models"
 	"github.com/uvulpos/golang-sveltekit-template/src/resources/auth/service/provider-const"
 )
 
-func (s *JwtService) CreateJWT(authProvider provider.AuthProvider, jwtData *JwtDataModel) (string, customerrors.ErrorInterface) {
+func (s *JwtService) CreateJWT(authProvider provider.AuthProvider, jwtData *models.JwtDataModel) (string, customerrors.ErrorInterface) {
 	claims := jwt.MapClaims{
 		"auth-provider": authProvider,
 		"user-uuid":     jwtData.UserUuid,

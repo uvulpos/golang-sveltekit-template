@@ -34,7 +34,7 @@ import (
 	userService "github.com/uvulpos/golang-sveltekit-template/src/resources/user/service"
 	userStorage "github.com/uvulpos/golang-sveltekit-template/src/resources/user/storage"
 
-	jwtPackageService "github.com/uvulpos/golang-sveltekit-template/src/resources/jwt/service"
+	jwtPackageService "github.com/uvulpos/golang-sveltekit-template/src/helper/jwt"
 )
 
 type App struct {

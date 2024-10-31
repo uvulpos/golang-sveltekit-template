@@ -5,13 +5,14 @@ import (
 
 	"github.com/golang-jwt/jwt"
 	"github.com/uvulpos/golang-sveltekit-template/src/configuration"
+	models "github.com/uvulpos/golang-sveltekit-template/src/helper/jwt/models"
 )
 
-func (svc *JwtService) VerifyRefreshToken(refreshTokenString string) (*RefreshDataModel, error) {
+func (svc *JwtService) VerifyRefreshToken(refreshTokenString string) (*models.RefreshDataModel, error) {
 	return VerifyRefreshToken(refreshTokenString)
 }
 
-func VerifyRefreshToken(refreshTokenString string) (*RefreshDataModel, error) {
+func VerifyRefreshToken(refreshTokenString string) (*models.RefreshDataModel, error) {
 
 	token, err := jwt.Parse(refreshTokenString, func(token *jwt.Token) (interface{}, error) {
 		_, okECDSA := token.Method.(*jwt.SigningMethodECDSA)
@@ -42,6 +43,6 @@ func VerifyRefreshToken(refreshTokenString string) (*RefreshDataModel, error) {
 		sessionUuid = val.(string)
 	}
 
-	data := NewRefreshDataModel(sessionUuid)
+	data := models.NewRefreshDataModel(sessionUuid)
 	return data, nil
 }

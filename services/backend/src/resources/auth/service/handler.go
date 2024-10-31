@@ -3,8 +3,8 @@ package service
 import (
 	"github.com/go-sqlx/sqlx"
 	"github.com/uvulpos/golang-sveltekit-template/src/helper/customerrors"
+	jwtService "github.com/uvulpos/golang-sveltekit-template/src/helper/jwt"
 	authentikProviderService "github.com/uvulpos/golang-sveltekit-template/src/resources/auth/service/authentik"
-	jwtService "github.com/uvulpos/golang-sveltekit-template/src/resources/jwt/service"
 	userService "github.com/uvulpos/golang-sveltekit-template/src/resources/user/service"
 )
 
