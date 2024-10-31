@@ -12,7 +12,7 @@ import (
 func (h *AuthHandler) CallbackHandler(c *fiber.Ctx) error {
 	authCode := c.Query("code", "")
 	state := c.Query("state", "")
-	authProvider := c.Cookies(cookies.CookieName_AuthProvider, "")
+	authProvider := c.Cookies(cookies.CookieName_AuthProvider)
 
 	jwtToken, refreshToken, err := h.service.CallbackFunction(
 		authProvider,
