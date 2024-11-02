@@ -15,12 +15,9 @@ jobs:
 
       - name: create .env file
         run: |
-          echo "APP_DB_ADDR=postgres" > .env
-          echo "APP_DB_PORT=5432" >> .env
-          echo "APP_DB_USERNAME=postgres" >> .env
-          echo "APP_DB_PASSWORD=postgres" >> .env
-          echo "APP_DB_DATABASENAME=postgres" >> .env
-          echo "APP_DB_SSL_MODE=False" >> .env
+          echo "APP_DATABASE_USERNAME=postgres" >> .env
+          echo "APP_DATABASE_PASSWORD=postgres" >> .env
+          echo "APP_DATABASE_DATABASE=postgres" >> .env
 
       - name: run backend tests
         if: ${{ always() }}
