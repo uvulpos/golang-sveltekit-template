@@ -56,11 +56,13 @@ func (e *DatabaseError) ErrorType() (errorIdentifier errorconst.ErrorIdentifier)
 }
 
 func (e *DatabaseError) HttpError() (int, errorconst.ErrorIdentifier, string) {
+
+	errormessage := e.GetUserMessage()
 	if debugMode {
-		errormessage := e.GetDeveloperMessage()
-		return e.httpStatus, e.errorIdentifier, errormessage
+		errormessage = e.GetDeveloperMessage()
 	}
-	return e.httpStatus, e.errorIdentifier, e.httpUserMessage
+
+	return e.httpStatus, e.errorIdentifier, errormessage
 }
 
 func (e *DatabaseError) LoggerError() (time.Time, int, errorconst.ErrorIdentifier, string, string, string) {
@@ -75,4 +77,8 @@ func (e *DatabaseError) LoggerError() (time.Time, int, errorconst.ErrorIdentifie
 
 func (e *DatabaseError) GetDeveloperMessage() string {
 	return fmt.Sprintf("[%s] #%s <br> %s <br> %s", e.errorIdentifier, e.ID, e.httpUserMessage, e.error.Error())
+}
+
+func (e *DatabaseError) GetUserMessage() string {
+	return fmt.Sprintf("(#%s) %s", e.ID, e.httpUserMessage)
 }

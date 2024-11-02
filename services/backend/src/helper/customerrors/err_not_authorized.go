@@ -45,11 +45,13 @@ func (e *NotAuthorizedError) ErrorType() (errorIdentifier errorconst.ErrorIdenti
 }
 
 func (e *NotAuthorizedError) HttpError() (int, errorconst.ErrorIdentifier, string) {
+
+	errormessage := e.GetUserMessage()
 	if debugMode {
-		errormessage := e.GetDeveloperMessage()
-		return e.httpStatus, e.errorIdentifier, errormessage
+		errormessage = e.GetDeveloperMessage()
 	}
-	return e.httpStatus, e.errorIdentifier, e.httpUserMessage
+
+	return e.httpStatus, e.errorIdentifier, errormessage
 }
 
 func (e *NotAuthorizedError) LoggerError() (time.Time, int, errorconst.ErrorIdentifier, string, string, string) {
@@ -58,4 +60,8 @@ func (e *NotAuthorizedError) LoggerError() (time.Time, int, errorconst.ErrorIden
 
 func (e *NotAuthorizedError) GetDeveloperMessage() string {
 	return fmt.Sprintf("[%s] #%s <br> %s <br> %s", e.errorIdentifier, e.ID, e.httpUserMessage, e.error.Error())
+}
+
+func (e *NotAuthorizedError) GetUserMessage() string {
+	return fmt.Sprintf("(#%s) %s", e.ID, e.httpUserMessage)
 }

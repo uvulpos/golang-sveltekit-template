@@ -52,11 +52,13 @@ func (e *InternalServerError) ErrorType() (errorIdentifier errorconst.ErrorIdent
 }
 
 func (e *InternalServerError) HttpError() (int, errorconst.ErrorIdentifier, string) {
+
+	errormessage := e.GetUserMessage()
 	if debugMode {
-		errormessage := e.GetDeveloperMessage()
-		return e.httpStatus, e.errorIdentifier, errormessage
+		errormessage = e.GetDeveloperMessage()
 	}
-	return e.httpStatus, e.errorIdentifier, e.httpUserMessage
+
+	return e.httpStatus, e.errorIdentifier, errormessage
 }
 
 func (e *InternalServerError) LoggerError() (time.Time, int, errorconst.ErrorIdentifier, string, string, string) {
@@ -65,4 +67,8 @@ func (e *InternalServerError) LoggerError() (time.Time, int, errorconst.ErrorIde
 
 func (e *InternalServerError) GetDeveloperMessage() string {
 	return fmt.Sprintf("[%s] #%s <br> %s <br> %s", e.errorIdentifier, e.ID, e.httpUserMessage, e.error.Error())
+}
+
+func (e *InternalServerError) GetUserMessage() string {
+	return fmt.Sprintf("(#%s) %s", e.ID, e.httpUserMessage)
 }

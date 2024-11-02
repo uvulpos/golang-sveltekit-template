@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/uvulpos/golang-sveltekit-template/src/configuration"
 )
 
 const CookieName_OauthState = "auth_provder"
@@ -21,7 +22,7 @@ func GenerateOauthStateCookie(value string, delete bool) *fiber.Cookie {
 	return &fiber.Cookie{
 		Name:    CookieName_AuthProvider,
 		Value:   value,
-		Path:    "/api/v1/oauth",
+		Path:    configuration.AUTHCOOKIES_PATH_API_V1,
 		Expires: expires,
 		MaxAge:  maxAge,
 	}

@@ -53,11 +53,13 @@ func (e *DatabaseNotFoundError) ErrorType() (errorIdentifier errorconst.ErrorIde
 }
 
 func (e *DatabaseNotFoundError) HttpError() (int, errorconst.ErrorIdentifier, string) {
+
+	errormessage := e.GetUserMessage()
 	if debugMode {
-		errormessage := e.GetDeveloperMessage()
-		return e.httpStatus, e.errorIdentifier, errormessage
+		errormessage = e.GetDeveloperMessage()
 	}
-	return e.httpStatus, e.errorIdentifier, e.httpUserMessage
+
+	return e.httpStatus, e.errorIdentifier, errormessage
 }
 
 func (e *DatabaseNotFoundError) LoggerError() (time.Time, int, errorconst.ErrorIdentifier, string, string, string) {
@@ -71,4 +73,8 @@ func (e *DatabaseNotFoundError) LoggerError() (time.Time, int, errorconst.ErrorI
 
 func (e *DatabaseNotFoundError) GetDeveloperMessage() string {
 	return fmt.Sprintf("[%s] #%s <br>\n %s <br>\n %s", e.errorIdentifier, e.ID, e.httpUserMessage, e.error.Error())
+}
+
+func (e *DatabaseNotFoundError) GetUserMessage() string {
+	return fmt.Sprintf("(#%s) %s", e.ID, e.httpUserMessage)
 }

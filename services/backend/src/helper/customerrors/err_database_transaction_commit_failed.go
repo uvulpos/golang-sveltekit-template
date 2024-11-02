@@ -48,11 +48,13 @@ func (e *DatabaseTransactionCommitError) ErrorType() (errorIdentifier errorconst
 }
 
 func (e *DatabaseTransactionCommitError) HttpError() (int, errorconst.ErrorIdentifier, string) {
+
+	errormessage := e.GetUserMessage()
 	if debugMode {
-		errormessage := e.GetDeveloperMessage()
-		return e.httpStatus, e.errorIdentifier, errormessage
+		errormessage = e.GetDeveloperMessage()
 	}
-	return e.httpStatus, e.errorIdentifier, e.httpUserMessage
+
+	return e.httpStatus, e.errorIdentifier, errormessage
 }
 
 func (e *DatabaseTransactionCommitError) LoggerError() (time.Time, int, errorconst.ErrorIdentifier, string, string, string) {
@@ -61,4 +63,8 @@ func (e *DatabaseTransactionCommitError) LoggerError() (time.Time, int, errorcon
 
 func (e *DatabaseTransactionCommitError) GetDeveloperMessage() string {
 	return fmt.Sprintf("[%s] #%s <br> %s <br> %s", e.errorIdentifier, e.ID, e.httpUserMessage, e.error.Error())
+}
+
+func (e *DatabaseTransactionCommitError) GetUserMessage() string {
+	return fmt.Sprintf("(#%s) %s", e.ID, e.httpUserMessage)
 }

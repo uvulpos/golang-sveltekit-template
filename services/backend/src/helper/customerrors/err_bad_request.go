@@ -34,7 +34,7 @@ func NewBadRequestError(badRequestContraint *badrequestconstraints.BadRequestCon
 		inputKey:   badRequestContraint.KeyName,
 		constraint: badRequestContraint.ConstraintMessage,
 
-		error: fmt.Errorf("Bad Request [key: %s] %s", badRequestContraint.KeyName, badRequestContraint.ConstraintMessage),
+		error: fmt.Errorf("bad request [key: %s] %s", badRequestContraint.KeyName, badRequestContraint.ConstraintMessage),
 	}
 
 	fmt.Printf("🌪️ %s\n", model.GetDeveloperMessage())
@@ -51,11 +51,13 @@ func (e *BadRequestError) ErrorType() errorconst.ErrorIdentifier {
 }
 
 func (e *BadRequestError) HttpError() (int, errorconst.ErrorIdentifier, string) {
+
+	errormessage := e.GetUserMessage()
 	if debugMode {
-		errormessage := e.GetDeveloperMessage()
-		return e.httpStatus, e.errorIdentifier, errormessage
+		errormessage = e.GetDeveloperMessage()
 	}
-	return e.httpStatus, e.errorIdentifier, e.httpUserMessage
+
+	return e.httpStatus, e.errorIdentifier, errormessage
 }
 
 func (e *BadRequestError) LoggerError() (time.Time, int, errorconst.ErrorIdentifier, string, string, string) {
@@ -64,4 +66,8 @@ func (e *BadRequestError) LoggerError() (time.Time, int, errorconst.ErrorIdentif
 
 func (e *BadRequestError) GetDeveloperMessage() string {
 	return fmt.Sprintf("[%s] #%s <br> %s <br> %s: %s", e.errorIdentifier, e.ID, e.httpUserMessage, e.inputKey, e.constraint)
+}
+
+func (e *BadRequestError) GetUserMessage() string {
+	return fmt.Sprintf("(#%s) %s", e.ID, e.httpUserMessage)
 }

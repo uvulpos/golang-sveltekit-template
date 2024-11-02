@@ -40,10 +40,6 @@ func (m *Migrator) MigrateUp() error {
 	return m.migrateDatabase("app")
 }
 
-func (m *Migrator) MigrateTestData() error {
-	return m.migrateDatabase("test")
-}
-
 func (m *Migrator) migrateDatabase(migrationPrefix string) error {
 	driver, err := postgres.WithInstance(m.db, new(postgres.Config))
 	if err != nil {

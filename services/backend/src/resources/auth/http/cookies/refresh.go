@@ -23,7 +23,7 @@ func GenerateRefreshToken(value string, delete bool) *fiber.Cookie {
 	// set refreshToken
 	return &fiber.Cookie{
 		Name:     CookieName_RefreshToken,
-		Path:     "/api/v1/auth",
+		Path:     configuration.AUTHCOOKIES_PATH_API_V1,
 		Value:    value,
 		HTTPOnly: true,
 		Expires:  expires,
