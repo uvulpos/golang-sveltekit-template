@@ -3,7 +3,7 @@ module github.com/uvulpos/golang-sveltekit-template
 go 1.22.5
 
 require (
-	github.com/charmbracelet/lipgloss v0.13.0
+	github.com/charmbracelet/lipgloss v1.0.0
 	github.com/cortesi/termlog v0.0.0-20210222042314-a1eec763abec
 	github.com/go-sqlx/sqlx v1.3.8
 	github.com/gofiber/fiber/v2 v2.52.5
@@ -14,7 +14,6 @@ require (
 	github.com/lib/pq v1.10.9
 	github.com/qeesung/image2ascii v1.0.1
 	github.com/spf13/cobra v1.8.1
-	github.com/swaggo/swag v1.16.3
 	golang.org/x/oauth2 v0.22.0
 	gotest.tools v2.2.0+incompatible
 )
@@ -32,7 +31,7 @@ require (
 	github.com/andybalholm/brotli v1.0.5 // indirect
 	github.com/aybabtme/rgbterm v0.0.0-20170906152045-cc83f3b3ce59 // indirect
 	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
-	github.com/charmbracelet/x/ansi v0.1.4 // indirect
+	github.com/charmbracelet/x/ansi v0.4.2 // indirect
 	github.com/fatih/color v1.16.0 // indirect
 	github.com/go-openapi/jsonpointer v0.19.5 // indirect
 	github.com/go-openapi/jsonreference v0.19.6 // indirect
@@ -55,6 +54,7 @@ require (
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/swaggo/files/v2 v2.0.0 // indirect
+	github.com/swaggo/swag v1.16.3 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.51.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
