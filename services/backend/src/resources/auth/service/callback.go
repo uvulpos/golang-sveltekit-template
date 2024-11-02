@@ -13,7 +13,7 @@ func (s *AuthService) CallbackFunction(provider, authCode, state string) (string
 	var loggedinUser string
 	var loggedinUserErr customerrors.ErrorInterface
 
-	if provider == string(providerConst.Authentik) && configuration.AUTHORIZATION_OAUTH_AUTHENIK {
+	if provider == string(providerConst.Authentik) && configuration.AUTHORIZATION_OAUTH_AUTHENTIK {
 		loggedinUser, loggedinUserErr = s.authentikProviderSvc.AuthentikCallbackFunction(authCode, state)
 		if loggedinUserErr != nil {
 			return "", "", loggedinUserErr

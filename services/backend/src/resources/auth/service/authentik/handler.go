@@ -19,23 +19,23 @@ type AuthService struct {
 
 func NewAuthService(userSvc *userService.UserService) *AuthService {
 	authentikConfig := &oauth2.Config{
-		ClientID:     configuration.AUTHORIZATION_OAUTH_AUTHENIK_KEY,
-		ClientSecret: configuration.AUTHORIZATION_OAUTH_AUTHENIK_SECRET,
+		ClientID:     configuration.AUTHORIZATION_OAUTH_AUTHENTIK_KEY,
+		ClientSecret: configuration.AUTHORIZATION_OAUTH_AUTHENTIK_SECRET,
 
-		RedirectURL: configuration.AUTHORIZATION_OAUTH_AUTHENIK_CALLBACK_URL,
-		Scopes:      configuration.AUTHORIZATION_OAUTH_AUTHENIK_SCOPES,
+		RedirectURL: configuration.AUTHORIZATION_OAUTH_AUTHENTIK_CALLBACK_URL,
+		Scopes:      configuration.AUTHORIZATION_OAUTH_AUTHENTIK_SCOPES,
 
 		Endpoint: oauth2.Endpoint{
-			AuthURL:  configuration.AUTHORIZATION_OAUTH_AUTHENIK_AUTHORIZATION_URL,
-			TokenURL: configuration.AUTHORIZATION_OAUTH_AUTHENIK_TOKEN_URL,
+			AuthURL:  configuration.AUTHORIZATION_OAUTH_AUTHENTIK_AUTHORIZATION_URL,
+			TokenURL: configuration.AUTHORIZATION_OAUTH_AUTHENTIK_TOKEN_URL,
 
 			AuthStyle: oauth2.AuthStyleInParams,
 		},
 	}
 	return &AuthService{
 		authentikConfig:          authentikConfig,
-		authentikOauthUserInfoEP: configuration.AUTHORIZATION_OAUTH_AUTHENIK_USERINFO_URL,
-		authentikOauthLogoutEP:   configuration.AUTHORIZATION_OAUTH_AUTHENIK_LOGOUT_URL,
+		authentikOauthUserInfoEP: configuration.AUTHORIZATION_OAUTH_AUTHENTIK_USERINFO_URL,
+		authentikOauthLogoutEP:   configuration.AUTHORIZATION_OAUTH_AUTHENTIK_LOGOUT_URL,
 
 		userSvc: userSvc,
 	}
