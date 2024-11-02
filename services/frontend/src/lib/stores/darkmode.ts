@@ -34,6 +34,19 @@ class ThemeStore {
             this.toDarkMode()
     }
 
+    isThemeSetOrAutoDetect(window: any) {
+        const themeCookie = Cookies.get(themeCookieName)
+
+        if (themeCookie == "" || themeCookie == null) {
+            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStore.toDarkMode()
+            }
+            else {
+                themeStore.toLightMode()
+            }
+        }
+    }
+
     toLightMode() {
         Cookies.set(themeCookieName, THEME_COOKIE_LIGHTMODE, { sameSite: "lax" })
         this.themeStore.set(ThemeEnum.Lightmode)
@@ -49,17 +62,5 @@ class ThemeStore {
     }
 
 }
-
-
-// export async function autoChangeTheme() {
-//     console.log("do browser theme");
-
-//     window.matchMedia('(prefers-color-scheme: dark)').addEventListener("change", ({ matches }) => {
-//         if (matches)
-//             return themeStore.toLightMode()
-
-//         return themeStore.toDarkMode()
-//     })
-// }
 
 export const themeStore = new ThemeStore();

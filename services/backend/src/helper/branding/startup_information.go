@@ -2,7 +2,7 @@ package branding
 
 import (
 	"github.com/charmbracelet/lipgloss"
-	"github.com/uvulpos/go-svelte/src/configuration"
+	"github.com/uvulpos/golang-sveltekit-template/src/configuration"
 )
 
 func getAsciiStartupInformation() (string, lipgloss.Style) {

@@ -10,11 +10,14 @@ import (
 	"github.com/golang-migrate/migrate/v4/database/postgres"
 	"github.com/golang-migrate/migrate/v4/source/httpfs"
 	_ "github.com/lib/pq"
-	dbHelper "github.com/uvulpos/go-svelte/src/helper/database"
+	dbHelper "github.com/uvulpos/golang-sveltekit-template/src/helper/database"
 )
 
-//go:embed migration-files/*.sql
-var migrationDir embed.FS
+//go:embed migration-files-app/*.sql
+var migrationAppDir embed.FS
+
+// //go:embed migration-files-test/*.sql
+// var migrationTestDir embed.FS
 
 type Migrator struct {
 	db *sql.DB
@@ -33,12 +36,19 @@ func NewMigrator() *Migrator {
 	}
 }
 
-func (m Migrator) MigrateUp() error {
+func (m *Migrator) MigrateUp() error {
+	return m.migrateDatabase("app")
+}
+
+func (m *Migrator) migrateDatabase(migrationPrefix string) error {
 	driver, err := postgres.WithInstance(m.db, new(postgres.Config))
 	if err != nil {
 		return err
 	}
-	sourceInstance, err := httpfs.New(http.FS(migrationDir), "migration-files")
+
+	var migrationDirectory embed.FS = migrationAppDir
+
+	sourceInstance, err := httpfs.New(http.FS(migrationDirectory), fmt.Sprintf("migration-files-%s", migrationPrefix))
 	if err != nil {
 		return err
 	}

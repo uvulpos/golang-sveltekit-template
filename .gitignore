@@ -11,3 +11,5 @@ results.html
 .input
 .secrets
 node_modules
+.env.safety-copy
+.env

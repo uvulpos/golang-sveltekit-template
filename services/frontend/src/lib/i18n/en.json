@@ -25,6 +25,7 @@
         "settings": {
             "header": "Settings",
             "device_header": "Device Settings",
+            "device_description": "The following settings are stored on your local device via cookie",
             "language": {
                 "label": "Language for this application",
                 "placeholder": "Select a language",
@@ -32,16 +33,24 @@
             },
             "theme": {
                 "label": "Color theme for this device",
-                "placeholder": "Select a color schema",
-                "description": "Selects if the application is light or dark mode"
+                "placeholder": "Select a color schema"
             }
         },
         "legal": {
             "imprint": {
-                "header": "Imprint"
+                "header": "Imprint",
+                "this-website-template": "This website is just a template from GitHub.",
+                "using-template-liable": "Using this template makes you reliable for all changes and the template itsself, according to the MIT license",
+                "project-on-github": "Project on GitHub.com",
+                "licenses": "Licenses"
             },
             "gdpr-notice": {
                 "header": "GDPR Statement"
+            },
+            "licenses": {
+                "header-software-licenses": "Software Licenses",
+                "header-participating-developers": "Participating Developers",
+                "text-participating-developers": "All developers who have worked on this project can immortalize themselves here:"
             }
         }
     }

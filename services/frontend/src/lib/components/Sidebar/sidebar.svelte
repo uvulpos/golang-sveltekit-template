@@ -1,7 +1,10 @@
-<script>
+<script lang="ts">
   import { _ } from "svelte-i18n";
   import { SidebarAccount } from "../SidebarAccount";
   import { SidebarNavigation } from "../SidebarNavigation";
+  import type { SelfInformation } from "$lib/api/user/models/SelfInformation";
+
+  export let user: SelfInformation;
 </script>
 
 <ul class="sidebar-content">
@@ -9,15 +12,10 @@
     <SidebarNavigation />
   </li>
   <li class="margin-top" />
-  <!-- <li class="margin-top no-anchor-underline">
-    <a href="/swagger" target="_blank">
-      <Button size="xs" fullSize>Swagger</Button>
-    </a>
-  </li> -->
-  <li>
-    <SidebarAccount />
+  <li class="account-section">
+    <SidebarAccount {user} />
   </li>
-  <li>
+  <li class="legal-section">
     <hr />
     <div class="legal">
       <a href="/legal/imprint">{$_("page.navigation.imprint")}</a>
@@ -37,10 +35,13 @@
     &>li
       &.margin-top
         margin-top: auto
+      &.legal-section, &.account-section
+        padding: 0 1rem
       .legal
         display: flex
         align-items: center
         justify-content: space-around
+        user-select: none
 
         a 
           text-decoration: none

@@ -1,0 +1,13 @@
+package customerrorconst
+
+type ErrorIdentifier string
+
+const (
+	ERROR_IDENTIFIER_BAD_REQUEST ErrorIdentifier = "BAD_REQUEST"
+
+	ERROR_IDENTIFIER_UNAUTHORIZED                     ErrorIdentifier = "USER_UNAUTHORIZED"
+	ERROR_IDENTIFIER_DATABASE_NOT_FOUND               ErrorIdentifier = "DATABASE_NOT_FOUND_ERROR"
+	ERROR_IDENTIFIER_DATABASE_TRANSACTION_NOT_STARTED ErrorIdentifier = "DATABASE_TRANSACTION_NOT_STARTED_ERROR"
+	ERROR_IDENTIFIER_DATABASE                         ErrorIdentifier = "DATABASE_ERROR"
+	ERROR_IDENTIFIER_INTERNAL_SERVER_ERROR            ErrorIdentifier = "INTERNAL_SERVER_ERROR"
+)

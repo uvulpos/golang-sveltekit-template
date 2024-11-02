@@ -3,7 +3,7 @@
 	@bash  ./devops/scripts/utils/install-dependencies.sh
 
 dev: .install-deps ## start debugging in docker compose microservices (auto reload)
-	@docker compose -f docker-compose.dev.yaml up --abort-on-container-exit backend frontend reverse-proxy
+	@docker compose -f docker-compose.dev.yaml up --abort-on-container-exit backend frontend reverse-proxy authentik-server authentik-worker
 
 build-full: .install-deps ## build current plattform
 	@bash ./devops/scripts/build-service/binary.sh
@@ -13,6 +13,9 @@ local-release: .install-deps ## build all app versions locally (via goreleaser)
 
 test-be: ## run golang tests
 	@docker compose -f docker-compose.dev.yaml up --abort-on-container-exit postgres backend-tests
+
+test-be-integrationtest: ## run golang integration tests
+	@docker compose -f docker-compose.dev.yaml up --abort-on-container-exit postgres backend-integration-tests
 
 test-fe: ## run sveltekit tests
 	@docker compose -f docker-compose.dev.yaml up --abort-on-container-exit frontend-tests

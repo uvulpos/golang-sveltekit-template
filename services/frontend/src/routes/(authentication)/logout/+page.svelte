@@ -1,5 +1,15 @@
-<script lang="ts"></script>
+<script lang="ts">
+  import { onMount } from "svelte";
+  import { invalidateAll } from "$app/navigation";
 
-<h1>Logout...</h1>
+  onMount(() => {
+    const interval = setInterval(() => {
+      invalidateAll();
+      window.location.href = "/api/v1/auth/logout";
+    }, 1000);
 
-<style lang="sass"></style>
+    return () => {
+      clearInterval(interval);
+    };
+  });
+</script>

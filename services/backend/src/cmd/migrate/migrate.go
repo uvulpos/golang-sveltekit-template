@@ -10,8 +10,8 @@ import (
 	"github.com/charmbracelet/lipgloss"
 	gomigrator "github.com/golang-migrate/migrate/v4"
 	"github.com/spf13/cobra"
-	"github.com/uvulpos/go-svelte/src/helper/branding"
-	"github.com/uvulpos/go-svelte/src/migrator"
+	"github.com/uvulpos/golang-sveltekit-template/src/helper/branding"
+	"github.com/uvulpos/golang-sveltekit-template/src/migrator"
 )
 
 var MigrateCmd = &cobra.Command{

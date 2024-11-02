@@ -1,25 +1,36 @@
 package configuration
 
-import (
-	configurationHelper "github.com/uvulpos/go-svelte/basic-utils/configuration"
-)
-
 var (
 	// WEBSERVER
-	WEBSERVER_DISPLAYNAME   = configurationHelper.GetEnvOrDefaultString("WEBSERVER_DISPLAYHOST", "http://web.localhost/")
-	WEBSERVER_HOST          = configurationHelper.GetEnvOrDefaultString("WEBSERVER_HOST", "127.0.0.1")
-	WEBSERVER_PORT          = configurationHelper.GetEnvOrDefaultInt("WEBSERVER_PORT", 3000)
-	WEBSERVER_SHOW_FRONTEND = configurationHelper.GetEnvOrDefaultBool("WEBSERVER_SHOW_FRONTEND", true)
-	WEBSERVER_SHOW_SWAGGER  = configurationHelper.GetEnvOrDefaultBool("WEBSERVER_SHOW_SWAGGER", true)
+	WEBSERVER_DISPLAYNAME   = GetEnvOrDefaultString("WEBSERVER_DISPLAYHOST", "http://web.localhost/")
+	WEBSERVER_HOST          = GetEnvOrDefaultString("WEBSERVER_HOST", "127.0.0.1")
+	WEBSERVER_PORT          = GetEnvOrDefaultInt("WEBSERVER_PORT", 3000)
+	WEBSERVER_SHOW_FRONTEND = GetEnvOrDefaultBool("WEBSERVER_SHOW_FRONTEND", true)
+	WEBSERVER_SHOW_SWAGGER  = GetEnvOrDefaultBool("WEBSERVER_SHOW_SWAGGER", true)
 
 	// Database
-	DATABASE_ADDR     = configurationHelper.GetEnvOrDefaultString("DATABASE_ADDR", "postgres")
-	DATABASE_PORT     = configurationHelper.GetEnvOrDefaultInt("DATABASE_PORT", 5432)
-	DATABASE_SSL      = configurationHelper.GetEnvOrDefaultBool("DATABASE_SSL", false)
-	DATABASE_USERNAME = configurationHelper.GetEnvOrDefaultString("DATABASE_USERNAME", "postgres")
-	DATABASE_PASSWORD = configurationHelper.GetEnvOrDefaultString("DATABASE_PASSWORD", "postgres")
-	DATABASE_DATABASE = configurationHelper.GetEnvOrDefaultString("DATABASE_DATABASE", "postgres")
+	// DATABASE_ADDR = GetEnvOrDefaultString("DATABASE_ADDR", "127.0.0.1")
+	DATABASE_ADDR     = GetEnvOrDefaultString("DATABASE_ADDR", "postgres")
+	DATABASE_PORT     = GetEnvOrDefaultInt("DATABASE_PORT", 5432)
+	DATABASE_SSL      = GetEnvOrDefaultBool("DATABASE_SSL", false)
+	DATABASE_USERNAME = GetEnvOrDefaultString("DATABASE_USERNAME", "postgres")
+	DATABASE_PASSWORD = GetEnvOrDefaultString("DATABASE_PASSWORD", "postgres")
+	DATABASE_DATABASE = GetEnvOrDefaultString("DATABASE_DATABASE", "postgres")
 
-	// Security
-	SECURITY_JWT_SECRET = configurationHelper.GetEnvOrDefaultString("SECURITY_JWT_SECRET", "loafofbread")
+	// JWT
+	JWT_TOKEN_VALIDITY_IN_MINUTES  = GetEnvOrDefaultInt("JWT_TOKEN_VALIDITY_MINS", 15)
+	REFRESH_TOKEN_VALIDITY_IN_DAYS = GetEnvOrDefaultInt("REFRESH_TOKEM_VALIDITY_MINS", 30)
+	JWT_SIGNING_KEY                = GetEnvOrDefaultString("JWT_SIGNING_KEY", "qWeRtZ12345")
+	REFRESH_TOKEN_SIGNING_KEY      = GetEnvOrDefaultString("JWT_SIGNING_KEY", "qWeRtZ12345")
+
+	// Oauth
+	AUTHORIZATION_OAUTH_AUTHENIK                   = GetEnvOrDefaultBool("AUTHORIZATION_OAUTH_AUTHENIK", true)
+	AUTHORIZATION_OAUTH_AUTHENIK_KEY               = GetEnvOrDefaultString("AUTHORIZATION_OAUTH_AUTHENIK_CLIENT_KEY", "")
+	AUTHORIZATION_OAUTH_AUTHENIK_SECRET            = GetEnvOrDefaultString("AUTHORIZATION_OAUTH_AUTHENIK_CLIENT_SECRET", "")
+	AUTHORIZATION_OAUTH_AUTHENIK_CALLBACK_URL      = GetEnvOrDefaultString("AUTHORIZATION_OAUTH_AUTHENIK_REDIRECT_URL", "http://web.localhost/api/v1/callback")
+	AUTHORIZATION_OAUTH_AUTHENIK_AUTHORIZATION_URL = GetEnvOrDefaultString("AUTHORIZATION_OAUTH_AUTHENIK_AUTHORIZATION_URL", "http://localhost:9000/application/o/authorize/")
+	AUTHORIZATION_OAUTH_AUTHENIK_TOKEN_URL         = GetEnvOrDefaultString("AUTHORIZATION_OAUTH_AUTHENIK_TOKEN_URL", "")
+	AUTHORIZATION_OAUTH_AUTHENIK_USERINFO_URL      = GetEnvOrDefaultString("AUTHORIZATION_OAUTH_AUTHENIK_USERINFO_URL", "")
+	AUTHORIZATION_OAUTH_AUTHENIK_SCOPES            = GetEnvOrDefaultStringArray("AUTHORIZATION_OAUTH_AUTHENIK_SCOPES", []string{})
+	AUTHORIZATION_OAUTH_AUTHENIK_LOGOUT_URL        = GetEnvOrDefaultString("AUTHORIZATION_OAUTH_AUTHENIK_LOGOUT_URL", "")
 )

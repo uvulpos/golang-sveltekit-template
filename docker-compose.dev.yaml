@@ -1,6 +1,6 @@
-# include:
-#   - path: devops/docker-compose/dev-dependencies/docker-compose.authentik.yaml
-#     env_file: .env
+include:
+  - path: devops/docker-compose/dev-dependencies/docker-compose.authentik.yaml
+    env_file: .env
 
 networks:
   intranet:
@@ -17,12 +17,14 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     ports:
       - "80:80"
+      - "443:443"
       - "8080:8080"
     command:
       - "--api.insecure=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
+      - "--entrypoints.web-secure.address=:443"
     networks:
       - intranet
 
@@ -35,36 +37,28 @@ services:
   frontend:
     image: node:latest
     container_name: web-ui
-    restart: always
+    restart: unless-stopped
     ports:
       - 5173:5173
     volumes:
       - ./services/frontend:/app
     networks:
       - intranet
+    environment:
+      - BACKEND_URL=http://backend:3000/
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.frontend.rule=Host(`web.localhost`)&&PathPrefix(`/`)"
       - "traefik.http.routers.frontend.priority=1"
       - "traefik.http.routers.frontend.service=frontend"
       - "traefik.http.services.frontend.loadbalancer.server.port=5173"
-      - "traefik.http.routers.frontend.entrypoints=web"
+      - "traefik.http.routers.frontend.entrypoints=web,web-secure"
     command: ["sh", "-c", "cd /app && npm install && npm run dev"]
 
   frontend-tests:
     image: node:latest
     container_name: web-ui-test
-    restart: always
-    volumes:
-      - ./services/frontend:/app
-    networks:
-      - intranet
-    command: ["sh", "-c", "cd /app && npm install && npm run test"]
-
-  frontend-tests-ci:
-    image: node:latest
-    container_name: web-ui-test-ci
-    restart: always
+    restart: unless-stopped
     volumes:
       - ./services/frontend:/app
     networks:
@@ -82,9 +76,9 @@ services:
     container_name: web-api
     volumes:
       - ./services/backend:/app/backend
-      - ./services/go_app_modules:/app/go_app_modules
-      - ./services/go.work:/app/go.work
-      - ./services/go.work.sum:/app/go.work.sum
+      # - ./services/go_app_modules:/app/go_app_modules
+      # - ./services/go.work:/app/go.work
+      # - ./services/go.work.sum:/app/go.work.sum
     networks:
       - intranet
     # environments:
@@ -99,12 +93,12 @@ services:
       - "traefik.http.routers.backend.priority=2"
       - "traefik.http.routers.backend.service=backend"
       - "traefik.http.services.backend.loadbalancer.server.port=3000"
-      - "traefik.http.routers.backend.entrypoints=web"
-    command:
-      [
+      - "traefik.http.routers.backend.entrypoints=web,web-secure"
+    command: [
         "sh",
         "-c",
-        "cd /app && go work sync && cd /app/backend && bash scripts/run-local-docker.sh",
+        # "cd /app && go work sync && cd /app/backend && bash scripts/run-local-docker.sh",
+        "cd /app/backend && bash scripts/run-local-docker.sh",
       ]
 
   backend-tests:
@@ -112,9 +106,9 @@ services:
     container_name: web-api-test
     volumes:
       - ./services/backend:/app/backend
-      - ./services/go_app_modules:/app/go_app_modules
-      - ./services/go.work:/app/go.work
-      - ./services/go.work.sum:/app/go.work.sum
+      # - ./services/go_app_modules:/app/go_app_modules
+      # - ./services/go.work:/app/go.work
+      # - ./services/go.work.sum:/app/go.work.sum
     networks:
       - intranet
     depends_on:
@@ -124,29 +118,35 @@ services:
     tty: true
     environment:
       - TERM=xterm-256color`
-    command:
-      [
+    command: [
         "sh",
         "-c",
-        "cd /app && go work sync && cd /app/backend && bash scripts/test-local-docker.sh",
+        # "cd /app && go work sync && cd /app/backend && bash scripts/test-local-docker.sh",
+        "cd /app/backend && bash scripts/test-local-docker.sh",
       ]
 
-  backend-tests-ci:
+  backend-integration-tests:
     image: golang:latest
-    container_name: web-api-test-ci
+    container_name: web-api-test
     volumes:
       - ./services/backend:/app/backend
-      - ./services/go_app_modules:/app/go_app_modules
-      - ./services/go.work:/app/go.work
-      - ./services/go.work.sum:/app/go.work.sum
+      # - ./services/go_app_modules:/app/go_app_modules
+      # - ./services/go.work:/app/go.work
+      # - ./services/go.work.sum:/app/go.work.sum
+    networks:
+      - intranet
+    depends_on:
+      postgres:
+        condition: service_healthy
+        restart: true
     tty: true
     environment:
       - TERM=xterm-256color`
-    command:
-      [
+    command: [
         "sh",
         "-c",
-        "cd /app && go work sync && cd /app/backend && bash scripts/test-local-docker.sh",
+        # "cd /app && go work sync && cd /app/backend && bash scripts/test-local-docker.sh",
+        "cd /app/backend && bash scripts/test-local-docker-integrationtests.sh",
       ]
 
   # -----------------------------------------------------------------------------------------------------
