@@ -161,7 +161,6 @@ services:
       POSTGRES_USER: ${APP_DATABASE_USERNAME}
       POSTGRES_PASSWORD: ${APP_DATABASE_PASSWORD}
       POSTGRES_DB: ${APP_DATABASE_DATABASE}
-      POSTGRES_HOST_AUTH_METHOD: trust
       PGDATA: /var/lib/postgresql/data/pgdata
     ports:
       - "5432:5432"
