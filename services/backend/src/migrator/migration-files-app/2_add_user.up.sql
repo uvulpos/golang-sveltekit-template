@@ -29,13 +29,3 @@ CREATE TABLE user_sessions (
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
     UNIQUE (id, user_id)
 );
-
--- Value can be null, but not empty string
-ALTER TABLE user_sessions
-ADD CONSTRAINT created_ip_addr_not_empty_string
-CHECK (created_ip_addr IS NULL AND created_ip_addr <> '');
-
--- Value can be null, but not empty string
-ALTER TABLE user_sessions
-ADD CONSTRAINT last_jwt_refresh_ip_addr_not_empty_string
-CHECK (last_jwt_refresh_ip_addr IS NULL AND last_jwt_refresh_ip_addr <> '');
