@@ -14,8 +14,7 @@ require (
 	github.com/lib/pq v1.10.9
 	github.com/qeesung/image2ascii v1.0.1
 	github.com/spf13/cobra v1.8.1
-	github.com/swaggo/swag v1.16.3
-	golang.org/x/oauth2 v0.22.0
+	golang.org/x/oauth2 v0.23.0
 	gotest.tools v2.2.0+incompatible
 )
 
@@ -55,6 +54,7 @@ require (
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/swaggo/files/v2 v2.0.0 // indirect
+	github.com/swaggo/swag v1.16.3 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.51.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
