@@ -1,0 +1,19 @@
+name: "Renovate Update"
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 3,4 * * *"
+
+jobs:
+  renovate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Self-hosted Renovate
+        uses: renovatebot/github-action@v41.0.3
+        with:
+          docker-user: root
+          configurationFile: renovate.json
+          token: ${{ secrets.RENOVATE_BOT_GITHUB_TOKEN }}

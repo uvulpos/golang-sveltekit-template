@@ -1,0 +1,40 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [
+        ":pinVersions",
+        ":separateMultipleMajorReleases",
+        ":combinePatchMinorReleases",
+        "config:recommended",
+        ":automergePatch",
+        ":automergeMinor"
+    ],
+    "packageRules": [
+        {
+            "matchUpdateTypes": [
+                "minor",
+                "patch",
+                "pin",
+                "digest"
+            ],
+            "automerge": true,
+            "platformAutomerge": true,
+            "automergeStrategy": "squash",
+            "schedule": "at any time",
+            "branchPrefix": "renovate/",
+            "commitMessagePrefix": "chore(deps): "
+        },
+        {
+            "matchPackageNames": [
+                "svelte",
+                "@sveltejs/vite-plugin-svelte"
+            ],
+            "matchUpdateTypes": [
+                "major"
+            ],
+            "enabled": false
+        }
+    ],
+    "repositories": [
+        "uvulpos/golang-sveltekit-template"
+    ]
+}
