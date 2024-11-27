@@ -3,7 +3,7 @@ module github.com/uvulpos/golang-sveltekit-template
 go 1.22.5
 
 require (
-	github.com/charmbracelet/lipgloss v0.13.0
+	github.com/charmbracelet/lipgloss v0.13.1
 	github.com/cortesi/termlog v0.0.0-20210222042314-a1eec763abec
 	github.com/go-sqlx/sqlx v1.3.8
 	github.com/gofiber/fiber/v2 v2.52.5
