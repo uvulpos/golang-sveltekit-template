@@ -1,0 +1,203 @@
+basePath: /
+definitions:
+  httpModels.SelfInformationModel:
+    properties:
+      display_name:
+        type: string
+      email:
+        type: string
+      id:
+        type: string
+      permissions:
+        items:
+          type: string
+        type: array
+      profile_picture:
+        type: string
+      username:
+        type: string
+    type: object
+  httpModels.SelfPermissionsModel:
+    properties:
+      permissions:
+        items:
+          type: string
+        type: array
+    type: object
+  swagger.NotFoundErrorResponse:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
+host: web.localhost
+info:
+  contact: {}
+  description: |2-
+
+    <img alt="coffee drinking gopher" src="/api/asset/gopher-coffee" height="200px">
+
+    This is a sample swagger for this template
+
+    [Return back to application](/) // [View on GitHub](https://github.com/uvulpos/golang-sveltekit-binary)
+  title: Golang + SvelteKit API
+  version: "0.1"
+paths:
+  /api/asset/gopher-coffee:
+    get:
+      description: Retrieves a GIF image of a gopher enjoying coffee.
+      produces:
+      - image/gif
+      responses:
+        "200":
+          description: A GIF image of a gopher drinking coffee.
+          schema:
+            type: file
+        "404":
+          description: "code\":\t404,\t\"message\":\t\"Not found ❌"
+          schema:
+            $ref: '#/definitions/swagger.NotFoundErrorResponse'
+      summary: Get a nice gopher trinking coffee - image
+      tags:
+      - assets
+  /api/asset/logo:
+    get:
+      description: Retrieves the website logo
+      produces:
+      - image/png
+      responses:
+        "200":
+          description: Website Logo.
+          schema:
+            type: file
+        "404":
+          description: "code\":\t404,\t\"message\":\t\"Not found ❌"
+          schema:
+            $ref: '#/definitions/swagger.NotFoundErrorResponse'
+      summary: Get the website logo
+      tags:
+      - assets
+  /api/asset/logo-branding:
+    get:
+      description: Retrieves the website logo
+      produces:
+      - image/png
+      responses:
+        "200":
+          description: Website Logo.
+          schema:
+            type: file
+        "404":
+          description: "code\":\t404,\t\"message\":\t\"Not found ❌"
+          schema:
+            $ref: '#/definitions/swagger.NotFoundErrorResponse'
+      summary: Get the website logo
+      tags:
+      - assets
+  /api/ping:
+    get:
+      description: get string by ID
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: API is online
+          schema:
+            type: string
+        "404":
+          description: "code\":\t404,\t\"message\":\t\"Not found ❌"
+          schema:
+            $ref: '#/definitions/swagger.NotFoundErrorResponse'
+      summary: Ping the server if startup was successful
+      tags:
+      - health
+  /api/system-healthcheck:
+    get:
+      description: Checks all depdent systems, if they are still up and responding
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: ✅ System healthy
+          schema:
+            type: string
+        "404":
+          description: "code\":\t404,\t\"message\":\t\"Not found ❌"
+          schema:
+            $ref: '#/definitions/swagger.NotFoundErrorResponse'
+        "500":
+          description: ❌ System unhealthy
+          schema:
+            type: string
+      summary: System health-check
+      tags:
+      - health
+  /api/v1/auth/refresh:
+    get:
+      description: Reads the session out of the refresh token and recreates a new
+        temporary access token out of it
+      produces:
+      - text/plain
+      responses:
+        "201":
+          description: Created
+          schema:
+            type: string
+        "404":
+          description: The requested data could not be found.
+          schema:
+            type: string
+        "500":
+          description: 'An error occurred while processing your request. Please try
+            again later. '
+          schema:
+            type: string
+      summary: Get new access token via refresh token
+      tags:
+      - auth
+  /api/v1/self:
+    get:
+      description: Returns all set permission for authorized users
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/httpModels.SelfInformationModel'
+        "404":
+          description: The requested data could not be found.
+          schema:
+            type: string
+        "500":
+          description: 'An error occurred while processing your request. Please try
+            again later. '
+          schema:
+            type: string
+      summary: Get own user permissions
+      tags:
+      - user
+  /api/v1/self/permissions:
+    get:
+      description: Returns all set permission for authorized users
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/httpModels.SelfPermissionsModel'
+        "404":
+          description: The requested data could not be found.
+          schema:
+            type: string
+        "500":
+          description: 'An error occurred while processing your request. Please try
+            again later. '
+          schema:
+            type: string
+      summary: Get own user permissions
+      tags:
+      - user
+swagger: "2.0"
