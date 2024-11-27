@@ -2,8 +2,8 @@ name: "Renovate Update"
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "0 3,4 * * *"
+  #schedule:
+  #  - cron: "0 3,4 * * *"
 
 jobs:
   renovate:

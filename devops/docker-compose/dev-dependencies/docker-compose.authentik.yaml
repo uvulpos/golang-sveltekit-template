@@ -12,7 +12,7 @@ volumes:
 
 services:
   authentik-postgres:
-    image: postgres:16-alpine
+    image: postgres:17-alpine
     restart: unless-stopped
     container_name: authentik-postgres
     healthcheck:
