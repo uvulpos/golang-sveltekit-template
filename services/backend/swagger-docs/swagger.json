@@ -1,0 +1,295 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "\n\u003cimg alt=\"coffee drinking gopher\" src=\"/api/asset/gopher-coffee\" height=\"200px\"\u003e\n\nThis is a sample swagger for this template\n\n[Return back to application](/) // [View on GitHub](https://github.com/uvulpos/golang-sveltekit-binary)",
+        "title": "Golang + SvelteKit API",
+        "contact": {},
+        "version": "0.1"
+    },
+    "host": "web.localhost",
+    "basePath": "/",
+    "paths": {
+        "/api/asset/gopher-coffee": {
+            "get": {
+                "description": "Retrieves a GIF image of a gopher enjoying coffee.",
+                "produces": [
+                    "image/gif"
+                ],
+                "tags": [
+                    "assets"
+                ],
+                "summary": "Get a nice gopher trinking coffee - image",
+                "responses": {
+                    "200": {
+                        "description": "A GIF image of a gopher drinking coffee.",
+                        "schema": {
+                            "type": "file"
+                        }
+                    },
+                    "404": {
+                        "description": "code\":\t404,\t\"message\":\t\"Not found ❌",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.NotFoundErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/asset/logo": {
+            "get": {
+                "description": "Retrieves the website logo",
+                "produces": [
+                    "image/png"
+                ],
+                "tags": [
+                    "assets"
+                ],
+                "summary": "Get the website logo",
+                "responses": {
+                    "200": {
+                        "description": "Website Logo.",
+                        "schema": {
+                            "type": "file"
+                        }
+                    },
+                    "404": {
+                        "description": "code\":\t404,\t\"message\":\t\"Not found ❌",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.NotFoundErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/asset/logo-branding": {
+            "get": {
+                "description": "Retrieves the website logo",
+                "produces": [
+                    "image/png"
+                ],
+                "tags": [
+                    "assets"
+                ],
+                "summary": "Get the website logo",
+                "responses": {
+                    "200": {
+                        "description": "Website Logo.",
+                        "schema": {
+                            "type": "file"
+                        }
+                    },
+                    "404": {
+                        "description": "code\":\t404,\t\"message\":\t\"Not found ❌",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.NotFoundErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/ping": {
+            "get": {
+                "description": "get string by ID",
+                "produces": [
+                    "text/plain"
+                ],
+                "tags": [
+                    "health"
+                ],
+                "summary": "Ping the server if startup was successful",
+                "responses": {
+                    "200": {
+                        "description": "API is online",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "code\":\t404,\t\"message\":\t\"Not found ❌",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.NotFoundErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/system-healthcheck": {
+            "get": {
+                "description": "Checks all depdent systems, if they are still up and responding",
+                "produces": [
+                    "text/plain"
+                ],
+                "tags": [
+                    "health"
+                ],
+                "summary": "System health-check",
+                "responses": {
+                    "200": {
+                        "description": "✅ System healthy",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "code\":\t404,\t\"message\":\t\"Not found ❌",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.NotFoundErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "❌ System unhealthy",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/refresh": {
+            "get": {
+                "description": "Reads the session out of the refresh token and recreates a new temporary access token out of it",
+                "produces": [
+                    "text/plain"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Get new access token via refresh token",
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "The requested data could not be found.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "An error occurred while processing your request. Please try again later. ",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/self": {
+            "get": {
+                "description": "Returns all set permission for authorized users",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Get own user permissions",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/httpModels.SelfInformationModel"
+                        }
+                    },
+                    "404": {
+                        "description": "The requested data could not be found.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "An error occurred while processing your request. Please try again later. ",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/self/permissions": {
+            "get": {
+                "description": "Returns all set permission for authorized users",
+                "produces": [
+                    "text/plain"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Get own user permissions",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/httpModels.SelfPermissionsModel"
+                        }
+                    },
+                    "404": {
+                        "description": "The requested data could not be found.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "An error occurred while processing your request. Please try again later. ",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "httpModels.SelfInformationModel": {
+            "type": "object",
+            "properties": {
+                "display_name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "permissions": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "profile_picture": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "httpModels.SelfPermissionsModel": {
+            "type": "object",
+            "properties": {
+                "permissions": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "swagger.NotFoundErrorResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
