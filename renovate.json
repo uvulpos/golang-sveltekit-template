@@ -33,8 +33,5 @@
             ],
             "enabled": false
         }
-    ],
-    "repositories": [
-        "uvulpos/golang-sveltekit-template"
     ]
 }
