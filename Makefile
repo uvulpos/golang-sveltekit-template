@@ -1,3 +1,6 @@
+ALLOWED_LICENSES_COMMA ?= "MIT,BSD-3-Clause,Apache-2.0,MPL-2.0,ISC"
+ALLOWED_LICENSES_SEMICOLON ?= "MIT;BSD-3-Clause;Apache-2.0;ISC;OFL-1.1;CC0-1.0;0BSD;UNLICENSED"
+IGNORE ?= "github.com/uvulpos/golang-sveltekit-template,golang.org/x"
 
 .install-deps: ## install all dependencies
 	@bash  ./devops/scripts/utils/install-dependencies.sh
@@ -28,6 +31,16 @@ build-dockerfile-frontend: ## build the frontend microservice
 
 build-dockerfile-backend: ## build the backend microservice
 	@bash ./devops/scripts/build-container/backend.sh
+
+license-check-be: ## runs golang license check
+	@(cd services/backend ; go-licenses check ./... --allowed_licenses=$(ALLOWED_LICENSES_COMMA) --ignore=$(IGNORE) --one_output); \
+	STATUS=$$?; \
+	exit $$STATUS
+
+license-check-fe: ## runs npm license check
+	@(cd services/frontend ; license-checker --onlyAllow=$(ALLOWED_LICENSES_SEMICOLON)); \
+	STATUS=$$?; \
+	exit $$STATUS
 
 help: ## print our all commands to commandline
 	@echo "\033[34m"
