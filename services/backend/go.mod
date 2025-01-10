@@ -7,7 +7,7 @@ require (
 	github.com/cortesi/termlog v0.0.0-20210222042314-a1eec763abec
 	github.com/go-sqlx/sqlx v1.3.8
 	github.com/gofiber/fiber/v2 v2.52.6
-	github.com/gofiber/swagger v1.1.0
+	github.com/gofiber/swagger v1.1.1
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/golang-migrate/migrate/v4 v4.18.1
 	github.com/google/uuid v1.6.0
@@ -54,7 +54,7 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	github.com/swaggo/files/v2 v2.0.0 // indirect
+	github.com/swaggo/files/v2 v2.0.2 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.51.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
