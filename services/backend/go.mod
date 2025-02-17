@@ -13,7 +13,7 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/lib/pq v1.10.9
 	github.com/qeesung/image2ascii v1.0.1
-	github.com/spf13/cobra v1.9.0
+	github.com/spf13/cobra v1.9.1
 	github.com/swaggo/swag v1.16.4
 	golang.org/x/oauth2 v0.26.0
 	gotest.tools v2.2.0+incompatible
