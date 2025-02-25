@@ -12,7 +12,7 @@ volumes:
 
 services:
   reverse-proxy:
-    image: "traefik:v3.3.3"
+    image: "traefik:v3.3.4"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     ports:
