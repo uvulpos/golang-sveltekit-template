@@ -1,6 +1,8 @@
 module github.com/uvulpos/golang-sveltekit-template
 
-go 1.22.5
+go 1.23.0
+
+toolchain go1.24.1
 
 require (
 	github.com/charmbracelet/lipgloss v1.0.0
@@ -15,7 +17,7 @@ require (
 	github.com/qeesung/image2ascii v1.0.1
 	github.com/spf13/cobra v1.9.1
 	github.com/swaggo/swag v1.16.4
-	golang.org/x/oauth2 v0.26.0
+	golang.org/x/oauth2 v0.28.0
 	gotest.tools v2.2.0+incompatible
 )
 
