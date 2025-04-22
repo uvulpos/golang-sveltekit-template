@@ -16,7 +16,7 @@
         "@sveltejs/kit": "2.20.7",
         "@sveltejs/vite-plugin-svelte": "3.1.2",
         "@types/throttle-debounce": "5.0.2",
-        "mdsvex": "0.12.4",
+        "mdsvex": "0.12.5",
         "sass": "1.86.3",
         "svelte": "4.2.19",
         "svelte-check": "4.1.6",
