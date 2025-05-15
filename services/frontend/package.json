@@ -19,7 +19,7 @@
         "mdsvex": "0.12.6",
         "sass": "1.88.0",
         "svelte": "4.2.19",
-        "svelte-check": "4.2.0",
+        "svelte-check": "4.2.1",
         "svelte-loading-spinners": "0.3.6",
         "tslib": "2.8.1",
         "typescript": "5.8.3",
