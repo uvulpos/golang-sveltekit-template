@@ -33,7 +33,7 @@
         "@types/js-cookie": "3.0.6",
         "cookies": "0.9.1",
         "js-cookie": "3.0.5",
-        "ky": "1.8.2",
+        "ky": "1.9.0",
         "radix-icons-svelte": "1.2.1",
         "svelte-i18n": "4.0.1",
         "throttle-debounce": "5.0.2"
