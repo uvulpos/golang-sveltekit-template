@@ -1,6 +1,6 @@
 module github.com/uvulpos/golang-sveltekit-template
 
-go 1.23.0
+go 1.24.0
 
 toolchain go1.25.1
 
@@ -17,7 +17,7 @@ require (
 	github.com/qeesung/image2ascii v1.0.1
 	github.com/spf13/cobra v1.10.1
 	github.com/swaggo/swag v1.16.6
-	golang.org/x/oauth2 v0.30.0
+	golang.org/x/oauth2 v0.31.0
 	gotest.tools v2.2.0+incompatible
 )
 
