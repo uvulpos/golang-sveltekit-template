@@ -2,7 +2,7 @@ module github.com/uvulpos/golang-sveltekit-template
 
 go 1.24.0
 
-toolchain go1.25.1
+toolchain go1.25.6
 
 require (
 	github.com/charmbracelet/lipgloss v1.1.0
