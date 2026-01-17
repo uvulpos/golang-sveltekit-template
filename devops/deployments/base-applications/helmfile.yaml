@@ -18,7 +18,7 @@ releases:
   
   - name: longhorn
     chart: longhorn/longhorn
-    version: 1.9.1
+    version: 1.9.2
     namespace: longhorn
     createNamespace: true
     values:
