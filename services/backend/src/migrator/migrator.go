@@ -46,7 +46,7 @@ func (m *Migrator) migrateDatabase(migrationPrefix string) error {
 		return err
 	}
 
-	var migrationDirectory embed.FS = migrationAppDir
+	migrationDirectory := migrationAppDir
 
 	sourceInstance, err := httpfs.New(http.FS(migrationDirectory), fmt.Sprintf("migration-files-%s", migrationPrefix))
 	if err != nil {

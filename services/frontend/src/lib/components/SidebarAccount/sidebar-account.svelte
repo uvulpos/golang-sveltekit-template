@@ -1,38 +1,38 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
-  import type { SelfInformation } from "$lib/api/user/models/SelfInformation";
-  import { logoutSession } from "$lib/functions/logout/logout";
-  import { Exit } from "radix-icons-svelte";
-  import { _ } from "svelte-i18n";
+	// import { goto } from '$app/navigation';
+	import type { SelfInformation } from '$lib/api/user/models/SelfInformation';
+	import { logoutSession } from '$lib/functions/logout/logout';
+	import { Exit } from 'radix-icons-svelte';
+	import { _ } from 'svelte-i18n';
 
-  export let user: SelfInformation;
+	export let user: SelfInformation;
 </script>
 
 <div class="content-element sidebar-account-content-element">
-  <div class="account">
-    <img src={user.profile_picture} alt="" class="profilepicture" />
-    <div class="account-name" title="{user.display_name} ({user.username})">
-      <span class="displayname">{user.display_name} </span>
-      <span class="username">
-        ({user.username})
-      </span>
-    </div>
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <div class="margin-left">
-      <!-- svelte-ignore a11y-click-events-have-key-events -->
-      <!-- svelte-ignore a11y-missing-attribute -->
-      <a
-        on:click={() => {
-          logoutSession();
-        }}
-      >
-        <div class="logout-button">
-          <Exit />
-        </div>
-      </a>
-    </div>
-  </div>
+	<div class="account">
+		<img src={user.profile_picture} alt="" class="profilepicture" />
+		<div class="account-name" title="{user.display_name} ({user.username})">
+			<span class="displayname">{user.display_name} </span>
+			<span class="username">
+				({user.username})
+			</span>
+		</div>
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<!-- svelte-ignore a11y-no-static-element-interactions -->
+		<div class="margin-left">
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
+			<!-- svelte-ignore a11y-missing-attribute -->
+			<a
+				on:click={() => {
+					logoutSession();
+				}}
+			>
+				<div class="logout-button">
+					<Exit />
+				</div>
+			</a>
+		</div>
+	</div>
 </div>
 
 <style lang="sass">

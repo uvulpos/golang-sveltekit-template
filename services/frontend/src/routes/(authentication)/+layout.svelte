@@ -1,14 +1,14 @@
 <script>
-  import { SvelteUIProvider } from "@svelteuidev/core";
-  import "$lib/theme/index.sass";
+	import { SvelteUIProvider } from '@svelteuidev/core';
+	import '$lib/theme/index.sass';
 </script>
 
 <SvelteUIProvider withNormalizeCSS withGlobalStyles>
-  <div class="background">
-    <div class="content">
-      <slot />
-    </div>
-  </div>
+	<div class="background">
+		<div class="content">
+			<slot />
+		</div>
+	</div>
 </SvelteUIProvider>
 
 <style lang="sass">

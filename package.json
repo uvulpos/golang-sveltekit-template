@@ -1,0 +1,59 @@
+{
+  "name": "golang-sveltekit-template",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Full-stack application template with Golang backend and SvelteKit frontend",
+  "scripts": {
+    "dev": "make dev",
+    "dev:frontend": "cd services/frontend && npm run dev",
+    "dev:backend": "cd services/backend && go run src/main.go run",
+    "build": "make build-full",
+    "build:frontend": "cd services/frontend && npm run build",
+    "build:backend": "cd services/backend && go build -o ../../bin/app src/main.go",
+    "test": "npm run test:backend && npm run test:frontend",
+    "test:backend": "make test-be",
+    "test:frontend": "make test-fe",
+    "test:integration": "make test-be-integrationtest",
+    "lint": "npm run lint:backend && npm run lint:frontend",
+    "lint:backend": "cd services/backend && golangci-lint run ./...",
+    "lint:frontend": "cd services/frontend && npm run lint",
+    "format": "npm run format:backend && npm run format:frontend",
+    "format:backend": "cd services/backend && gofmt -w -s .",
+    "format:frontend": "cd services/frontend && npm run format:fix",
+    "check": "npm run check:backend && npm run check:frontend",
+    "check:backend": "cd services/backend && go vet ./...",
+    "check:frontend": "cd services/frontend && npm run check",
+    "license:check": "make license-check-be && make license-check-fe",
+    "install": "npm run install:frontend",
+    "install:frontend": "cd services/frontend && npm install",
+    "docker:build": "make build-dockerfile-binary",
+    "docker:build:frontend": "make build-dockerfile-frontend",
+    "docker:build:backend": "make build-dockerfile-backend",
+    "swagger:generate": "cd services/backend && swag init -g ./src/main.go -o ./swagger-docs --parseDependency --parseInternal",
+    "migrate:up": "cd services/backend && go run src/main.go migrate-db up",
+    "migrate:down": "cd services/backend && go run src/main.go migrate-db down",
+    "clean": "rm -rf bin/ services/frontend/dist services/frontend/.svelte-kit services/backend/src/assets/frontend/*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uvulpos/golang-sveltekit-template.git"
+  },
+  "keywords": [
+    "golang",
+    "sveltekit",
+    "fullstack",
+    "template",
+    "docker",
+    "microservices"
+  ],
+  "author": "uvulpos",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/uvulpos/golang-sveltekit-template/issues"
+  },
+  "homepage": "https://github.com/uvulpos/golang-sveltekit-template#readme",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}

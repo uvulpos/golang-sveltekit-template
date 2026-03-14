@@ -1,5 +1,5 @@
 <div class="spacing">
-  <slot />
+	<slot />
 </div>
 
 <style lang="sass">

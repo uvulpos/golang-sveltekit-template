@@ -1,146 +1,139 @@
 <script lang="ts">
-  // svelte config
-  // export const prerender = true;
-  // export const ssr = true;
-  // export const trailingSlash = "always";
+	// svelte config
+	// export const prerender = true;
+	// export const ssr = true;
+	// export const trailingSlash = "always";
 
-  /** @type {import('./$types').PageData} */
-  export let data;
+	// /** @type {import('./$types').PageData} */
+	// export let data: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
-  // import code
-  import { onDestroy, onMount } from "svelte";
-  import { _ } from "svelte-i18n";
-  import { addMessages, init } from "svelte-i18n";
-  import {
-    AppShell,
-    Navbar,
-    Header,
-    SvelteUIProvider,
-  } from "@svelteuidev/core";
-  import { allowedLanguages, getLocale } from "$lib/i18n";
-  import { Header as PageHeader } from "$lib/components/Header";
-  import { DarkNavbar } from "./style";
-  import Cookies from "js-cookie";
+	// import code
+	import { onDestroy, onMount } from 'svelte';
+	import { _ } from 'svelte-i18n';
+	import { addMessages, init } from 'svelte-i18n';
+	import { AppShell, Navbar, Header, SvelteUIProvider } from '@svelteuidev/core';
+	import { allowedLanguages, getLocale } from '$lib/i18n';
+	import { Header as PageHeader } from '$lib/components/Header';
+	import { DarkNavbar } from './style';
+	import Cookies from 'js-cookie';
 
-  // install fonts
-  import "$lib/theme/index.sass";
-  import "@fontsource/inter";
+	// install fonts
+	import '$lib/theme/index.sass';
+	import '@fontsource/inter';
 
-  // import i18n files
-  import en from "$lib/i18n/en.json";
-  import de from "$lib/i18n/de.json";
-  import { logo } from "$lib/assets";
-  import { Sidebar } from "$lib/components/Sidebar";
-  import { themeStore } from "$lib/stores";
-  import { changePageTheme } from "$lib/functions/theme/theme";
-  import { goto } from "$app/navigation";
-  import { getSelfInformation } from "$lib/api/user/get-self_information";
-  import { refreshJwtToken } from "$lib/api/authentication/refresh-jwt_token";
-  import type { SelfInformation } from "$lib/api/user/models/SelfInformation";
+	// import i18n files
+	import en from '$lib/i18n/en.json';
+	import de from '$lib/i18n/de.json';
+	import { logo } from '$lib/assets';
+	import { Sidebar } from '$lib/components/Sidebar';
+	import { themeStore } from '$lib/stores';
+	import { changePageTheme } from '$lib/functions/theme/theme';
+	import { goto } from '$app/navigation';
+	import { getSelfInformation } from '$lib/api/user/get-self_information';
+	import { refreshJwtToken } from '$lib/api/authentication/refresh-jwt_token';
+	import type { SelfInformation } from '$lib/api/user/models/SelfInformation';
 
-  // configure i18n
-  addMessages("en", en);
-  addMessages("de", de);
-  init({
-    fallbackLocale: "en",
-    initialLocale: getLocale(allowedLanguages),
-  });
+	// configure i18n
+	addMessages('en', en);
+	addMessages('de', de);
+	init({
+		fallbackLocale: 'en',
+		initialLocale: getLocale(allowedLanguages),
+	});
 
-  let collapseSidebar = true;
-  let preMount: boolean = true;
-  let bodyElement: HTMLElement | undefined;
-  let pageIsLoading: boolean = true;
-  let selfInformation: SelfInformation | null = null;
-  let refreshIntervalID: number | undefined;
+	let collapseSidebar = true;
+	let preMount: boolean = true;
+	let bodyElement: HTMLElement | undefined;
+	let pageIsLoading: boolean = true;
+	let selfInformation: SelfInformation | null = null;
+	let refreshIntervalID: number | undefined;
 
-  onMount(async () => {
-    preMount = false;
-    bodyElement = document.body;
-    themeStore.isThemeSetOrAutoDetect(window);
+	onMount(async () => {
+		preMount = false;
+		bodyElement = document.body;
+		themeStore.isThemeSetOrAutoDetect(window);
 
-    // remove hash from url
-    const refreshHahName = "refresh-hash";
-    const url = new URL(window.location.href);
+		// remove hash from url
+		const refreshHahName = 'refresh-hash';
+		const url = new URL(window.location.href);
 
-    if (url.searchParams.has(refreshHahName)) {
-      url.searchParams.delete(refreshHahName);
-      history.replaceState(null, "", url.toString());
-    }
+		if (url.searchParams.has(refreshHahName)) {
+			url.searchParams.delete(refreshHahName);
+			history.replaceState(null, '', url.toString());
+		}
 
-    // check if jwt exists
-    let jwtToken = Cookies.get("jwt");
+		// check if jwt exists
+		let jwtToken = Cookies.get('jwt');
 
-    if (jwtToken === undefined || jwtToken === "") {
-      // check jwt refresh token
-      const newToken = await refreshJwtToken();
+		if (jwtToken === undefined || jwtToken === '') {
+			// check jwt refresh token
+			const newToken = await refreshJwtToken();
 
-      if (newToken === null || newToken === "") {
-        window.location.href = "/login";
-        return;
-      }
-    }
+			if (newToken === null || newToken === '') {
+				window.location.href = '/login';
+				return;
+			}
+		}
 
-    let selfData = await getSelfInformation();
+		let selfData = await getSelfInformation();
 
-    if (selfData === undefined || selfData == null) {
-      goto("/login");
-    }
+		if (selfData === undefined || selfData == null) {
+			goto('/login');
+		}
 
-    refreshIntervalID = setInterval(
-      async () => {
-        const newToken = await refreshJwtToken();
-        if (newToken === undefined || newToken === "") {
-          clearInterval(refreshIntervalID);
-          window.location.href = "/login";
-          return;
-        }
-      },
-      1000 * 60 * 5 // 5 minutes
-    );
+		refreshIntervalID = setInterval(
+			async () => {
+				const newToken = await refreshJwtToken();
+				if (newToken === undefined || newToken === '') {
+					clearInterval(refreshIntervalID);
+					window.location.href = '/login';
+					return;
+				}
+			},
+			1000 * 60 * 5 // 5 minutes
+		);
 
-    selfInformation = selfData;
-    pageIsLoading = false;
-  });
+		selfInformation = selfData;
+		pageIsLoading = false;
+	});
 
-  onDestroy(() => {
-    clearInterval(refreshIntervalID);
-  });
+	onDestroy(() => {
+		clearInterval(refreshIntervalID);
+	});
 
-  $: {
-    changePageTheme(bodyElement, $themeStore);
-  }
+	$: {
+		changePageTheme(bodyElement, $themeStore);
+	}
 </script>
 
 {#if pageIsLoading}
-  <div>
-    <p>Loading...</p>
-  </div>
+	<div>
+		<p>Loading...</p>
+	</div>
 {:else if !pageIsLoading && selfInformation != null}
-  <SvelteUIProvider withNormalizeCSS withGlobalStyles>
-    {#if !preMount}
-      <AppShell class={"app-shell"}>
-        <Navbar
-          slot="navbar"
-          fixed
-          class="sidebar {!collapseSidebar
-            ? 'sidebar-expandSidebar'
-            : 'collapsedSidebar'}"
-        >
-          <Sidebar user={selfInformation} />
-        </Navbar>
-        <Header slot="header" fixed override={DarkNavbar} height={67}>
-          <PageHeader {logo} bind:collapseSidebar />
-        </Header>
-        <div class="subpage-content" class:expandSidebar={collapseSidebar}>
-          <slot />
-        </div>
-      </AppShell>
-    {/if}
-  </SvelteUIProvider>
+	<SvelteUIProvider withNormalizeCSS withGlobalStyles>
+		{#if !preMount}
+			<AppShell class={'app-shell'}>
+				<Navbar
+					slot="navbar"
+					fixed
+					class="sidebar {!collapseSidebar ? 'sidebar-expandSidebar' : 'collapsedSidebar'}"
+				>
+					<Sidebar user={selfInformation} />
+				</Navbar>
+				<Header slot="header" fixed override={DarkNavbar} height={67}>
+					<PageHeader {logo} bind:collapseSidebar />
+				</Header>
+				<div class="subpage-content" class:expandSidebar={collapseSidebar}>
+					<slot />
+				</div>
+			</AppShell>
+		{/if}
+	</SvelteUIProvider>
 {:else}
-  <div>
-    <p>Unexpexted Error</p>
-  </div>
+	<div>
+		<p>Unexpexted Error</p>
+	</div>
 {/if}
 
 <style lang="sass">

@@ -25,7 +25,7 @@ func CreateDatabase() (*sqlx.DB, error) {
 
 func GetSqlConnectionString() string {
 
-	var sslMode string = "disable"
+	sslMode := "disable"
 	if configuration.DATABASE_SSL {
 		sslMode = "require"
 	}

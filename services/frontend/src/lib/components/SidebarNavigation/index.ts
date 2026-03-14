@@ -1,1 +1,1 @@
-export { default as SidebarNavigation } from "./navigation.svelte"
+export { default as SidebarNavigation } from './navigation.svelte';

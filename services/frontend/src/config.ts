@@ -1,3 +1,3 @@
-type DeployableEnvironments = "DEV" | "PROD" | undefined;
+type DeployableEnvironments = 'DEV' | 'PROD' | undefined;
 
-export const DeployedEnvironment: DeployableEnvironments = undefined
+export const DeployedEnvironment: DeployableEnvironments = undefined;

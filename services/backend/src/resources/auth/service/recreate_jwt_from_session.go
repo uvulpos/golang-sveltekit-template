@@ -16,7 +16,7 @@ func (s *AuthService) RecreateJwtFromSession(sessionID string) (string, customer
 		return "", txErr
 	}
 	defer func(tx *sqlx.Tx) {
-		tx.Rollback()
+		_ = tx.Rollback()
 	}(tx)
 
 	session, sessionErr := s.userSvc.GetUserAuthSessionByID(tx, sessionID)

@@ -1,29 +1,29 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import Cookies from "js-cookie";
-  import { redirect } from "@sveltejs/kit";
-  import { goto } from "$app/navigation";
+	import { onMount } from 'svelte';
+	import Cookies from 'js-cookie';
+	// import { redirect } from '@sveltejs/kit';
+	import { goto } from '$app/navigation';
 
-  onMount(() => {
-    const jwt = Cookies.get("jwt");
-    if (!jwt) {
-      window.location.href = "/login";
-    }
-  });
+	onMount(() => {
+		const jwt = Cookies.get('jwt');
+		if (!jwt) {
+			window.location.href = '/login';
+		}
+	});
 
-  function returnPreviousPage() {
-    history.back();
-  }
+	function returnPreviousPage() {
+		history.back();
+	}
 </script>
 
 <div class="error">
-  <h1>Error 404</h1>
-  <span>Not Found</span>
+	<h1>Error 404</h1>
+	<span>Not Found</span>
 
-  <div class="buttons">
-    <button on:click={returnPreviousPage}>Go Back</button>
-    <button on:click={async () => goto("/")}>Go Home</button>
-  </div>
+	<div class="buttons">
+		<button on:click={returnPreviousPage}>Go Back</button>
+		<button on:click={async () => goto('/')}>Go Home</button>
+	</div>
 </div>
 
 <style lang="sass">

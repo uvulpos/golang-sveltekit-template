@@ -21,7 +21,7 @@ func getAsciiLogo() (string, error) {
 	if err != nil {
 		return "", err
 	}
-	defer file.Close()
+	defer func() { _ = file.Close() }()
 
 	// Decode the image file
 	img, _, err := image.Decode(file)

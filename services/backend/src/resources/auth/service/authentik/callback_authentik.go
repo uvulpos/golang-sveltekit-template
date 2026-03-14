@@ -24,7 +24,7 @@ func (s *AuthService) AuthentikCallbackFunction(authCode, state string) (string,
 	if err != nil {
 		return "", customerrors.NewInternalServerError(err, "", "(oauth callback authentik) Failed to get user info from authentik provider")
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 	data, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return "", customerrors.NewInternalServerError(err, "", "(oauth callback authentik) Failed to read authentik oauth user response body")
@@ -49,7 +49,7 @@ func (s *AuthService) AuthentikCallbackFunction(authCode, state string) (string,
 		}
 
 		defer func(tx *sqlx.Tx) {
-			tx.Rollback()
+			_ = tx.Rollback()
 		}(tx)
 
 		createdUserID, createUserErr := s.userSvc.CreateUser(
@@ -60,7 +60,7 @@ func (s *AuthService) AuthentikCallbackFunction(authCode, state string) (string,
 			result.EmailVerified,
 		)
 		if createUserErr != nil {
-			tx.Rollback()
+			_ = tx.Rollback()
 			return "", createUserErr
 		}
 
@@ -73,7 +73,7 @@ func (s *AuthService) AuthentikCallbackFunction(authCode, state string) (string,
 			result.ID,
 		)
 		if createdUserLoginIdentityErr != nil {
-			tx.Rollback()
+			_ = tx.Rollback()
 			return "", createdUserLoginIdentityErr
 		}
 

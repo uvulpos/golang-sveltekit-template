@@ -1,0 +1,118 @@
+#!/bin/bash
+
+# Pre-commit hook for golang-sveltekit-template
+# This hook runs quality checks before allowing a commit
+
+set -e
+
+echo "🔍 Running pre-commit checks..."
+echo ""
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+# Check if we should skip the hook
+if [ "$SKIP_CHECKS" = "1" ] || [ "$SKIP_CHECKS" = "true" ]; then
+    echo -e "${YELLOW}⚠️  Pre-commit checks skipped (SKIP_CHECKS is set)${NC}"
+    exit 0
+fi
+
+# Function to check if command exists
+command_exists() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+# Track if any checks fail
+CHECKS_FAILED=0
+
+# Backend checks
+echo "📦 Checking backend..."
+
+if command_exists golangci-lint; then
+    echo "  Running Go linting..."
+    if ! make lint-be > /dev/null 2>&1; then
+        echo -e "  ${RED}❌ Backend linting failed${NC}"
+        echo "     Run 'make lint-be' to see details"
+        CHECKS_FAILED=1
+    else
+        echo -e "  ${GREEN}✅ Backend linting passed${NC}"
+    fi
+else
+    echo -e "  ${YELLOW}⚠️  golangci-lint not installed, skipping Go linting${NC}"
+    echo "     Install with: brew install golangci-lint"
+fi
+
+echo "  Running Go tests..."
+if ! make test-be-local > /dev/null 2>&1; then
+    echo -e "  ${RED}❌ Backend tests failed${NC}"
+    echo "     Run 'make test-be-local' to see details"
+    CHECKS_FAILED=1
+else
+    echo -e "  ${GREEN}✅ Backend tests passed${NC}"
+fi
+
+echo ""
+
+# Frontend checks
+echo "📦 Checking frontend..."
+
+# Check if npm dependencies are installed
+if [ ! -d "services/frontend/node_modules" ]; then
+    echo -e "  ${YELLOW}Installing frontend dependencies...${NC}"
+    (cd services/frontend && npm install) > /dev/null 2>&1
+fi
+
+echo "  Running frontend linting..."
+if ! make lint-fe > /dev/null 2>&1; then
+    echo -e "  ${RED}❌ Frontend linting failed${NC}"
+    echo "     Run 'make lint-fe' to see details"
+    echo "     Run 'make lint-fix-fe' to fix automatically"
+    CHECKS_FAILED=1
+else
+    echo -e "  ${GREEN}✅ Frontend linting passed${NC}"
+fi
+
+echo "  Checking frontend formatting..."
+if ! make format-check-fe > /dev/null 2>&1; then
+    echo -e "  ${RED}❌ Frontend formatting check failed${NC}"
+    echo "     Run 'make format-check-fe' to see details"
+    echo "     Run 'make format-fe' to fix automatically"
+    CHECKS_FAILED=1
+else
+    echo -e "  ${GREEN}✅ Frontend formatting check passed${NC}"
+fi
+
+echo "  Running frontend tests..."
+if ! make test-fe-local > /dev/null 2>&1; then
+    echo -e "  ${RED}❌ Frontend tests failed${NC}"
+    echo "     Run 'make test-fe-local' to see details"
+    CHECKS_FAILED=1
+else
+    echo -e "  ${GREEN}✅ Frontend tests passed${NC}"
+fi
+
+echo ""
+
+# Summary
+if [ $CHECKS_FAILED -eq 1 ]; then
+    echo -e "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo -e "${RED}❌ Pre-commit checks failed!${NC}"
+    echo -e "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo ""
+    echo "Fix the issues above and try again."
+    echo "To fix formatting/linting issues automatically, run:"
+    echo -e "${YELLOW}  make fix-all${NC}"
+    echo ""
+    echo "To bypass these checks (not recommended), use:"
+    echo -e "${YELLOW}  SKIP_CHECKS=1 git commit ...${NC}"
+    exit 1
+else
+    echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo -e "${GREEN}✅ All pre-commit checks passed!${NC}"
+    echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+fi
+
+exit 0

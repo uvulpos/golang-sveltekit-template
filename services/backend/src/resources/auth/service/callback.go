@@ -27,7 +27,7 @@ func (s *AuthService) CallbackFunction(provider, authCode, state string) (string
 		return "", "", txErr
 	}
 
-	defer tx.Rollback()
+	defer func() { _ = tx.Rollback() }()
 
 	// as long as they are not used, they are nil / null by default
 	var dbIPAddr *string = nil

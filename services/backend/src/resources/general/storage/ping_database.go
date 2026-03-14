@@ -1,5 +1,5 @@
 package storage
 
 func (s *GeneralStore) PingDatabase() error {
-	return s.dbstore.DB.Ping()
+	return s.dbstore.Ping()
 }

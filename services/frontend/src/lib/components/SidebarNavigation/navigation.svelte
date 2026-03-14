@@ -1,69 +1,67 @@
 <script lang="ts">
-  import { page } from "$app/stores";
-  import { logoutSession } from "$lib/functions/logout/logout";
-  import type { Page } from "@sveltejs/kit";
-  import { _ } from "svelte-i18n";
-  import { slide } from "svelte/transition";
+	import { page } from '$app/stores';
+	// import { logoutSession } from '$lib/functions/logout/logout';
+	import type { Page } from '@sveltejs/kit';
+	import { _ } from 'svelte-i18n';
+	import { slide } from 'svelte/transition';
 
-  let activeElementIndex = 0;
+	let activeElementIndex = 0;
 
-  const navigation = [
-    {
-      name: $_("page.navigation.home"),
-      href: "/",
-      onclickFn: undefined,
-    },
-    {
-      name: "Settings",
-      href: "/settings",
-      onclickFn: undefined,
-      subelements: [
-        {
-          name: "Swagger",
-          href: "/swagger",
-          onclickFn: undefined,
-        },
-      ],
-    },
-  ];
+	const navigation = [
+		{
+			name: $_('page.navigation.home'),
+			href: '/',
+			onclickFn: undefined,
+		},
+		{
+			name: 'Settings',
+			href: '/settings',
+			onclickFn: undefined,
+			subelements: [
+				{
+					name: 'Swagger',
+					href: '/swagger',
+					onclickFn: undefined,
+				},
+			],
+		},
+	];
 
-  $: changeNavigationActiveElement($page);
+	$: changeNavigationActiveElement($page);
 
-  function changeNavigationActiveElement(
-    page: Page<Record<string, string>, string | null>
-  ) {
-    navigation.forEach((navElement, index) => {
-      const webPath = page.url.pathname + "/";
-      const webPathRegex = new RegExp(`${navElement.href}\/.*`);
-      const match = webPathRegex.test(webPath);
+	function changeNavigationActiveElement(page: Page<Record<string, string>, string | null>) {
+		navigation.forEach((navElement, index) => {
+			const webPath = page.url.pathname + '/';
+			const webPathRegex = new RegExp(`${navElement.href}/.*`);
+			const match = webPathRegex.test(webPath);
 
-      if (match) {
-        activeElementIndex = index;
-        return;
-      }
-    });
-  }
+			if (match) {
+				activeElementIndex = index;
+				return;
+			}
+		});
+	}
 </script>
 
 <ul class="navigation">
-  {#each navigation as nav, counter}
-    {@const activeElement = counter === activeElementIndex}
-    <li>
-      <a class:active-element={activeElement} href={nav.href}>{nav.name}</a>
-      {#if activeElement}
-        <div class="subelements" transition:slide>
-          {#if nav.subelements}
-            {#each nav.subelements as sub}
-              <div class="subelement">
-                <a href={sub.href}>{sub.name}</a>
-              </div>
-            {/each}
-          {/if}
-        </div>
-      {/if}
-    </li>
-  {/each}
-  <li style="margin-top: auto;"></li>
+	{#each navigation as nav, counter}
+		{@const activeElement = counter === activeElementIndex}
+		<li>
+			<a class:active-element={activeElement} href={nav.href}>{nav.name}</a>
+			{#if activeElement}
+				<div class="subelements" transition:slide>
+					{#if nav.subelements}
+						{#each nav.subelements as sub}
+							<div class="subelement">
+								<a href={sub.href}>{sub.name}</a>
+							</div>
+						{/each}
+					{/if}
+				</div>
+			{/if}
+		</li>
+	{/each}
+	<li style="margin-top: auto;"></li>
 </ul>
 
 <style lang="sass">

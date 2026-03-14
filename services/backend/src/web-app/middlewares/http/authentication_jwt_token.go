@@ -37,7 +37,7 @@ func (h *MiddlewareHandler) Authentication(requiredPermissions []string) func(c 
 		}
 
 		if !arePermissionsSatisfied(requiredPermissions, permissions) {
-			c.Status(http.StatusForbidden).SendString(customerrorconst.FORBIDDEN_ERROR_MESSAGE)
+			return c.Status(http.StatusForbidden).SendString(customerrorconst.FORBIDDEN_ERROR_MESSAGE)
 		}
 
 		// after jwt got evaluated, add information from jwt to fiber request context

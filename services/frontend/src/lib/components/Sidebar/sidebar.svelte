@@ -1,27 +1,27 @@
 <script lang="ts">
-  import { _ } from "svelte-i18n";
-  import { SidebarAccount } from "../SidebarAccount";
-  import { SidebarNavigation } from "../SidebarNavigation";
-  import type { SelfInformation } from "$lib/api/user/models/SelfInformation";
+	import { _ } from 'svelte-i18n';
+	import { SidebarAccount } from '../SidebarAccount';
+	import { SidebarNavigation } from '../SidebarNavigation';
+	import type { SelfInformation } from '$lib/api/user/models/SelfInformation';
 
-  export let user: SelfInformation;
+	export let user: SelfInformation;
 </script>
 
 <ul class="sidebar-content">
-  <li>
-    <SidebarNavigation />
-  </li>
-  <li class="margin-top" />
-  <li class="account-section">
-    <SidebarAccount {user} />
-  </li>
-  <li class="legal-section">
-    <hr />
-    <div class="legal">
-      <a href="/legal/imprint">{$_("page.navigation.imprint")}</a>
-      <a href="/legal/gdpr-notice">{$_("page.navigation.gdpr-notice")}</a>
-    </div>
-  </li>
+	<li>
+		<SidebarNavigation />
+	</li>
+	<li class="margin-top" />
+	<li class="account-section">
+		<SidebarAccount {user} />
+	</li>
+	<li class="legal-section">
+		<hr />
+		<div class="legal">
+			<a href="/legal/imprint">{$_('page.navigation.imprint')}</a>
+			<a href="/legal/gdpr-notice">{$_('page.navigation.gdpr-notice')}</a>
+		</div>
+	</li>
 </ul>
 
 <style lang="sass">
